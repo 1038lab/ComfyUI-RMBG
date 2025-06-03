@@ -14,9 +14,8 @@
 # Source: https://github.com/AILab-AI/ComfyUI-RMBG
 
 import os
-import sys
 import copy
-import requests
+from functools import lru_cache
 from urllib.parse import urlparse
 
 import torch
@@ -240,6 +239,7 @@ class Segment:
         
         return (pil2tensor(result_image), mask_tensor, mask_image_output)
 
+    @lru_cache
     def load_sam(self, model_name):
         sam_checkpoint_path = self.get_local_filepath(
             SAM_MODELS[model_name]["model_url"], "sam")
@@ -254,6 +254,7 @@ class Segment:
         sam.eval()
         return sam
 
+    @lru_cache
     def load_groundingdino(self, model_name):
         import sys
         from io import StringIO
