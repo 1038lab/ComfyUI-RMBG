@@ -1,4 +1,10 @@
 # ComfyUI-RMBG Update Log
+## V2.9.2 (2025/09/30)
+- Added `BiRefNet_toonOut` general purpose model (balanced performance) **(User request [#110](https://github.com/1038lab/ComfyUI-RMBG/issues/110) )**
+![v2.9.2_BiRefNet_toonOut](https://github.com/user-attachments/assets/17dc7268-5017-415f-b0b5-4184c02bdaf2)
+- `ImageStitch` Node Updates: Migrated to the latest architecture. Now supports 4-image input with a new 2x2 stitching mode. Automatically applies smart kontext_mode when 4 images are provided. Output layout configured as 3 images on the left and 1 on the right. Added support for magepixel and new upscaling methods.
+![v2.9.2_imagestitch](https://github.com/user-attachments/assets/07bd919e-3ddf-4526-af6a-e4fa3e9f69ab)
+
 ## V2.9.1 (2025/09/12)
 ![v2.9.1](https://github.com/user-attachments/assets/9b6c3e6c-5866-4807-91ba-669eb7efc52b)
 - Refactored `LoadImage` & `LoadImageAdvanced` Nodes
@@ -534,6 +540,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
