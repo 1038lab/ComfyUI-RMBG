@@ -169,6 +169,20 @@ MODEL_CONFIG = {
         "default_res": 1024,
         "max_res": 2048,
         "min_res": 512
+    },
+    "BiRefNet_toonout": {
+        "repo_id": "1038lab/BiRefNet",
+        "files": {
+            "birefnet.py": "birefnet.py",
+            "BiRefNet_config.py": "BiRefNet_config.py",
+            "BiRefNet_toonout.safetensors": "BiRefNet_toonout.safetensors",
+            "config.json": "config.json"
+        },
+        "cache_dir": "BiRefNet",
+        "description": "A model to get a toon style outline from an image.",
+        "default_res": 1024,
+        "max_res": 2048,
+        "min_res": 512
     }
 }
 
