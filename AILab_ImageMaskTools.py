@@ -1204,32 +1204,37 @@ class AILab_ImageStitch:
     def INPUT_TYPES(s):
         tooltips = {
             "image1": "First image to stitch",
-            "direction": "Direction to stitch the second image",
+            "stitch_mode": "Mode for stitching images together",
             "match_image_size": "If True, resize image2 to match image1's aspect ratio",
-            "max_width": "Maximum width of output image (0 = no limit)",
-            "max_height": "Maximum height of output image (0 = no limit)",
+            "megapixels": "Target megapixels for final output (0 = no limit, overrides max_width/max_height)",
+            "max_width": "Maximum width of output image (0 = no limit, ignored if megapixels > 0)",
+            "max_height": "Maximum height of output image (0 = no limit, ignored if megapixels > 0)",
+            "upscale_method": "Upscaling method for all resize operations",
             "spacing_width": "Width of spacing between images",
             "background_color": "Color for spacing between images and padding background",
             "kontext_mode": "Special mode that arranges 3 images in a specific layout (image1 and image2 stacked vertically, image3 on the right)"
         }
-        
         return {
             "required": {
                 "image1": ("IMAGE",),
-                "direction": (["right", "down", "left", "up", "kontext_mode"], {"default": "right", "tooltip": tooltips["direction"]}),
+                "stitch_mode": (["right", "down", "left", "up", "2x2", "kontext_mode"], {"default": "right", "tooltip": tooltips["stitch_mode"]}),
                 "match_image_size": ("BOOLEAN", {"default": True, "tooltip": tooltips["match_image_size"]}),
+                "megapixels": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 16.0, "step": 0.01, "tooltip": tooltips["megapixels"]}),
                 "max_width": ("INT", {"default": 0, "min": 0, "max": MAX_RESOLUTION, "step": 8, "tooltip": tooltips["max_width"]}),
                 "max_height": ("INT", {"default": 0, "min": 0, "max": MAX_RESOLUTION, "step": 8, "tooltip": tooltips["max_height"]}),
+                "upscale_method": (["nearest-exact", "bilinear", "area", "bicubic", "lanczos"], {"default": "lanczos", "tooltip": tooltips["upscale_method"]}),
                 "spacing_width": ("INT", {"default": 0, "min": 0, "max": 512, "step": 1, "tooltip": tooltips["spacing_width"]}),
                 "background_color": ("COLOR", {"default": "#FFFFFF", "tooltip": tooltips["background_color"]}),
             },
             "optional": {
                 "image2": ("IMAGE",),
                 "image3": ("IMAGE",),
+                "image4": ("IMAGE",),
             },
         }
 
-    RETURN_TYPES = ("IMAGE",)
+    RETURN_TYPES = ("IMAGE", "INT", "INT")
+    RETURN_NAMES = ("IMAGE", "WIDTH", "HEIGHT")
     FUNCTION = "stitch"
     CATEGORY = "🧪AILab/🖼️IMAGE"
 
@@ -1241,33 +1246,25 @@ class AILab_ImageStitch:
         return (r, g, b)
 
     def pad_with_color(self, image, padding, color_val):
-        """Pad image with specified color"""
         batch, height, width, channels = image.shape
         r, g, b = color_val
-        
         pad_top, pad_bottom, pad_left, pad_right = padding
-        
         new_height = height + pad_top + pad_bottom
         new_width = width + pad_left + pad_right
-        
         result = torch.zeros((batch, new_height, new_width, channels), device=image.device)
-        
         if channels >= 3:
             result[..., 0] = r
             result[..., 1] = g
             result[..., 2] = b
             if channels == 4:
                 result[..., 3] = 1.0
-                
         result[:, pad_top:pad_top+height, pad_left:pad_left+width, :] = image
-        
         return result
 
-    def match_dimensions(self, image1, image2, direction, color_val):
+    def match_dimensions(self, image1, image2, stitch_mode, color_val):
         h1, w1 = image1.shape[1:3]
         h2, w2 = image2.shape[1:3]
-        
-        if direction in ["left", "right"]:
+        if stitch_mode in ["left", "right"]:
             if h1 != h2:
                 target_h = max(h1, h2)
                 if h1 < target_h:
@@ -1278,7 +1275,7 @@ class AILab_ImageStitch:
                     pad_h = target_h - h2
                     pad_top, pad_bottom = pad_h // 2, pad_h - pad_h // 2
                     image2 = self.pad_with_color(image2, (pad_top, pad_bottom, 0, 0), color_val)
-        else:  
+        else:
             if w1 != w2:
                 target_w = max(w1, w2)
                 if w1 < target_w:
@@ -1289,7 +1286,6 @@ class AILab_ImageStitch:
                     pad_w = target_w - w2
                     pad_left, pad_right = pad_w // 2, pad_w - pad_w // 2
                     image2 = self.pad_with_color(image2, (0, 0, pad_left, pad_right), color_val)
-        
         return image1, image2
 
     def ensure_same_channels(self, image1, image2):
@@ -1307,13 +1303,11 @@ class AILab_ImageStitch:
                 ], dim=-1)
         return image1, image2
 
-    def create_spacing(self, image1, image2, spacing_width, direction, color_val):
+    def create_spacing(self, image1, image2, spacing_width, stitch_mode, color_val):
         if spacing_width <= 0:
             return None
-            
         spacing_width = spacing_width + (spacing_width % 2)
-        
-        if direction in ["left", "right"]:
+        if stitch_mode in ["left", "right"]:
             spacing_shape = (
                 image1.shape[0],
                 max(image1.shape[1], image2.shape[1]),
@@ -1327,9 +1321,7 @@ class AILab_ImageStitch:
                 max(image1.shape[2], image2.shape[2]),
                 image1.shape[-1],
             )
-        
         spacing = torch.zeros(spacing_shape, device=image1.device)
-        
         r, g, b = color_val
         if spacing.shape[-1] >= 3:
             spacing[..., 0] = r
@@ -1337,78 +1329,78 @@ class AILab_ImageStitch:
             spacing[..., 2] = b
             if spacing.shape[-1] == 4:
                 spacing[..., 3] = 1.0
-                
         return spacing
 
-    def stitch_kontext_mode(self, image1, image2, image3, match_image_size, spacing_width, color_val):
-        if image1 is None or image2 is None or image3 is None:
-            if image3 is None:
-                return self.stitch_two_images(image1, image2, "down", match_image_size, spacing_width, color_val)
-            elif image2 is None:
-                return self.stitch_two_images(image1, image3, "right", match_image_size, spacing_width, color_val)
+    def stitch_kontext_mode(self, image1, image2, image3, match_image_size, spacing_width, color_val, upscale_method, image4=None):
+        has_image4 = image4 is not None
+        if image1 is None or image2 is None:
+            if image2 is None and image3 is not None:
+                return self.stitch_two_images(image1, image3, "right", match_image_size, spacing_width, color_val, upscale_method)
             else:
                 return image1
-        
-        max_batch = max(image1.shape[0], image2.shape[0], image3.shape[0])
-        if image1.shape[0] < max_batch:
-            image1 = torch.cat([image1, image1[-1:].repeat(max_batch - image1.shape[0], 1, 1, 1)])
-        if image2.shape[0] < max_batch:
-            image2 = torch.cat([image2, image2[-1:].repeat(max_batch - image2.shape[0], 1, 1, 1)])
-        if image3.shape[0] < max_batch:
-            image3 = torch.cat([image3, image3[-1:].repeat(max_batch - image3.shape[0], 1, 1, 1)])
-        
+        images_to_align = [image1, image2]
+        if image3 is not None:
+            images_to_align.append(image3)
+        if has_image4:
+            images_to_align.append(image4)
+        max_batch = max(img.shape[0] for img in images_to_align)
+        for i, img in enumerate(images_to_align):
+            if img.shape[0] < max_batch:
+                images_to_align[i] = torch.cat([img, img[-1:].repeat(max_batch - img.shape[0], 1, 1, 1)])
+        image1, image2 = images_to_align[0], images_to_align[1]
+        image3 = images_to_align[2] if len(images_to_align) > 2 else None
+        image4 = images_to_align[3] if len(images_to_align) > 3 else None
+        if has_image4:
+            left_images = [image1, image2, image3]
+            right_image = image4
+        else:
+            left_images = [image1, image2]
+            right_image = image3
         if match_image_size:
             w1 = image1.shape[2]
-            h2, w2 = image2.shape[1:3]
-            aspect_ratio = h2 / w2
-            target_w = w1
-            target_h = int(w1 * aspect_ratio)
-            
-            image2 = common_upscale(
-                image2.movedim(-1, 1), target_w, target_h, "lanczos", "disabled"
-            ).movedim(1, -1)
+            for i, img in enumerate(left_images[1:], 1):
+                h, w = img.shape[1:3]
+                aspect_ratio = h / w
+                target_w = w1
+                target_h = int(w1 * aspect_ratio)
+                left_images[i] = common_upscale(
+                    img.movedim(-1, 1), target_w, target_h, upscale_method, "disabled"
+                ).movedim(1, -1)
         else:
-            image1, image2 = self.match_dimensions(image1, image2, "down", color_val)
-        
-        image1, image2 = self.ensure_same_channels(image1, image2)
-        
-        v_spacing = self.create_spacing(image1, image2, spacing_width, "down", color_val)
-        
-        v_images = [image1, image2]
-        if v_spacing is not None:
-            v_images.insert(1, v_spacing)
-        
-        left_column = torch.cat(v_images, dim=1)
-        
+            for i in range(1, len(left_images)):
+                left_images[0], left_images[i] = self.match_dimensions(left_images[0], left_images[i], "down", color_val)
+        for i in range(1, len(left_images)):
+            left_images[0], left_images[i] = self.ensure_same_channels(left_images[0], left_images[i])
+        left_column_parts = [left_images[0]]
+        for i in range(1, len(left_images)):
+            spacing = self.create_spacing(left_images[i-1], left_images[i], spacing_width, "down", color_val)
+            if spacing is not None:
+                left_column_parts.append(spacing)
+            left_column_parts.append(left_images[i])
+        left_column = torch.cat(left_column_parts, dim=1)
         if match_image_size:
             h_left = left_column.shape[1]
-            h3, w3 = image3.shape[1:3]
-            aspect_ratio = w3 / h3
+            hr, wr = right_image.shape[1:3]
+            aspect_ratio = wr / hr
             target_h = h_left
             target_w = int(h_left * aspect_ratio)
-            
-            image3 = common_upscale(
-                image3.movedim(-1, 1), target_w, target_h, "lanczos", "disabled"
+            right_image = common_upscale(
+                right_image.movedim(-1, 1), target_w, target_h, upscale_method, "disabled"
             ).movedim(1, -1)
         else:
-            left_column, image3 = self.match_dimensions(left_column, image3, "right", color_val)
-        
-        left_column, image3 = self.ensure_same_channels(left_column, image3)
-        
-        h_spacing = self.create_spacing(left_column, image3, spacing_width, "right", color_val)
-        
-        h_images = [left_column, image3]
+            left_column, right_image = self.match_dimensions(left_column, right_image, "right", color_val)
+        left_column, right_image = self.ensure_same_channels(left_column, right_image)
+        h_spacing = self.create_spacing(left_column, right_image, spacing_width, "right", color_val)
+        h_images = [left_column]
         if h_spacing is not None:
-            h_images.insert(1, h_spacing)
-        
+            h_images.append(h_spacing)
+        h_images.append(right_image)
         result = torch.cat(h_images, dim=2)
-        
         return result
 
-    def stitch_two_images(self, image1, image2, direction, match_image_size, spacing_width, color_val):
+    def stitch_two_images(self, image1, image2, stitch_mode, match_image_size, spacing_width, color_val, upscale_method):
         if image2 is None:
             return image1
-            
         if image1.shape[0] != image2.shape[0]:
             max_batch = max(image1.shape[0], image2.shape[0])
             if image1.shape[0] < max_batch:
@@ -1419,52 +1411,81 @@ class AILab_ImageStitch:
                 image2 = torch.cat(
                     [image2, image2[-1:].repeat(max_batch - image2.shape[0], 1, 1, 1)]
                 )
-
         if match_image_size:
             h1, w1 = image1.shape[1:3]
             h2, w2 = image2.shape[1:3]
             aspect_ratio = w2 / h2
-
-            if direction in ["left", "right"]:
+            if stitch_mode in ["left", "right"]:
                 target_h, target_w = h1, int(h1 * aspect_ratio)
             else:
                 target_w, target_h = w1, int(w1 / aspect_ratio)
-
             image2 = common_upscale(
-                image2.movedim(-1, 1), target_w, target_h, "lanczos", "disabled"
+                image2.movedim(-1, 1), target_w, target_h, upscale_method, "disabled"
             ).movedim(1, -1)
         else:
-            image1, image2 = self.match_dimensions(image1, image2, direction, color_val)
-
+            image1, image2 = self.match_dimensions(image1, image2, stitch_mode, color_val)
         image1, image2 = self.ensure_same_channels(image1, image2)
-
-        spacing = self.create_spacing(image1, image2, spacing_width, direction, color_val)
-
-        images = [image2, image1] if direction in ["left", "up"] else [image1, image2]
+        spacing = self.create_spacing(image1, image2, spacing_width, stitch_mode, color_val)
+        images = [image2, image1] if stitch_mode in ["left", "up"] else [image1, image2]
         if spacing is not None:
             images.insert(1, spacing)
-
-        concat_dim = 2 if direction in ["left", "right"] else 1
+        concat_dim = 2 if stitch_mode in ["left", "right"] else 1
         result = torch.cat(images, dim=concat_dim)
-        
         return result
 
-    def stitch(self, image1, direction, match_image_size, max_width, max_height, spacing_width, background_color, image2=None, image3=None,):
+    def create_blank_like(self, reference_image, color_val):
+        batch, height, width, channels = reference_image.shape
+        result = torch.zeros((batch, height, width, channels), device=reference_image.device)
+        r, g, b = color_val
+        if channels >= 3:
+            result[..., 0] = r
+            result[..., 1] = g
+            result[..., 2] = b
+            if channels == 4:
+                result[..., 3] = 1.0
+        return result
 
+    def stitch_multi_mode(self, image1, image2, image3, image4, stitch_mode, match_image_size, spacing_width, color_val, upscale_method):
+        images = [image for image in [image1, image2, image3, image4] if image is not None]
+        if len(images) == 0:
+            return torch.zeros((1, 64, 64, 3))
+        if len(images) == 1:
+            return images[0]
+        current = images[0]
+        for next_img in images[1:]:
+            current = self.stitch_two_images(current, next_img, stitch_mode, match_image_size, spacing_width, color_val, upscale_method)
+        return current
+
+    def stitch_grid_2x2(self, image1, image2, image3, image4, match_image_size, spacing_width, color_val, upscale_method):
+        ref = image1
+        img2 = image2 if image2 is not None else self.create_blank_like(ref, color_val)
+        row1 = self.stitch_two_images(ref, img2, "right", match_image_size, spacing_width, color_val, upscale_method)
+        img3 = image3 if image3 is not None else self.create_blank_like(ref, color_val)
+        img4 = image4 if image4 is not None else self.create_blank_like(ref, color_val)
+        row2 = self.stitch_two_images(img3, img4, "right", match_image_size, spacing_width, color_val, upscale_method)
+        result = self.stitch_two_images(row1, row2, "down", match_image_size, spacing_width, color_val, upscale_method)
+        return result
+
+    def stitch(self, image1, stitch_mode, match_image_size, megapixels, max_width, max_height, upscale_method, spacing_width, background_color, image2=None, image3=None, image4=None,):
         if image1 is None:
             return (torch.zeros((1, 64, 64, 3)),)
-            
         color_val = self.hex_to_rgb(background_color)
-        
-        if direction == "kontext_mode":
-            result = self.stitch_kontext_mode(image1, image2, image3, match_image_size, spacing_width, color_val)
+        if stitch_mode == "kontext_mode":
+            result = self.stitch_kontext_mode(image1, image2, image3, match_image_size, spacing_width, color_val, upscale_method, image4=image4)
+        elif stitch_mode == "2x2":
+            result = self.stitch_grid_2x2(image1, image2, image3, image4, match_image_size, spacing_width, color_val, upscale_method)
         else:
-            result = self.stitch_two_images(image1, image2, direction, match_image_size, spacing_width, color_val)
-        
-        if max_width > 0 or max_height > 0:
-            h, w = result.shape[1:3]
-            need_resize = False
-            
+            result = self.stitch_multi_mode(image1, image2, image3, image4, stitch_mode, match_image_size, spacing_width, color_val, upscale_method)
+        h, w = result.shape[1:3]
+        need_resize = False
+        target_w, target_h = w, h
+        if megapixels > 0:
+            aspect_ratio = w / h
+            target_pixels = int(megapixels * 1024 * 1024)
+            target_h = int((target_pixels / aspect_ratio) ** 0.5)
+            target_w = int(aspect_ratio * target_h)
+            need_resize = True
+        elif max_width > 0 or max_height > 0:
             if max_width > 0 and w > max_width:
                 scale_factor = max_width / w
                 target_w = max_width
@@ -1472,19 +1493,17 @@ class AILab_ImageStitch:
                 need_resize = True
             else:
                 target_w, target_h = w, h
-                
             if max_height > 0 and (target_h > max_height or (target_h == h and h > max_height)):
                 scale_factor = max_height / target_h
                 target_h = max_height
                 target_w = int(target_w * scale_factor)
                 need_resize = True
-                
-            if need_resize:
-                result = common_upscale(
-                    result.movedim(-1, 1), target_w, target_h, "lanczos", "disabled"
-                ).movedim(1, -1)
-                
-        return (result,)
+        if need_resize:
+            result = common_upscale(
+                result.movedim(-1, 1), target_w, target_h, upscale_method, "disabled"
+            ).movedim(1, -1)
+        final_height, final_width = result.shape[1:3]
+        return (result, final_width, final_height)
 
 # Image Crop node
 class AILab_ImageCrop:
