@@ -53,7 +53,7 @@ class FashionSegmentAccessories:
             # Head accessories
             "hat",
             "glasses", 
-            "headband, head covering, hair accessory",
+            "headband_head_covering_hair_accessory",
             # Neck and upper body accessories
             "scarf",
             "tie",
@@ -63,9 +63,9 @@ class FashionSegmentAccessories:
             # Waist accessories
             "belt",
             # Leg accessories
-            "leg warmer",
+            "leg_warmer",
             # Other accessories
-            "bag, wallet", 
+            "bag_wallet", 
             "umbrella"
         ]
         
@@ -114,12 +114,12 @@ class FashionSegmentClothing:
         self.model = None
         self.cache_dir = os.path.join(folder_paths.models_dir, "RMBG", "segformer_fashion")
         self.class_map = {
-            "Unlabelled": 0, "shirt, blouse": 1, "top, t-shirt, sweatshirt": 2, "sweater": 3,
+            "Unlabelled": 0, "shirt_blouse": 1, "top_t-shirt_sweatshirt": 2, "sweater": 3,
             "cardigan": 4, "jacket": 5, "vest": 6, "pants": 7, "shorts": 8, "skirt": 9, "coat": 10,
             "dress": 11, "jumpsuit": 12, "cape": 13, 
-            "glasses": 14, "hat": 15, "headband, head covering, hair accessory": 16, "tie": 17, "glove": 18,
-            "watch": 19, "belt": 20, "leg warmer": 21, "tights, stockings": 22,
-            "sock": 23, "shoe": 24, "bag, wallet": 25, "scarf": 26, "umbrella": 27,
+            "glasses": 14, "hat": 15, "headband_head_covering_hair_accessory": 16, "tie": 17, "glove": 18,
+            "watch": 19, "belt": 20, "leg_warmer": 21, "tights_stockings": 22,
+            "sock": 23, "shoe": 24, "bag_wallet": 25, "scarf": 26, "umbrella": 27,
             "hood": 28, "collar": 29, "lapel": 30, "epaulette": 31, "sleeve": 32,
             "pocket": 33, "neckline": 34, "buckle": 35, "zipper": 36, "applique": 37,
             "bead": 38, "bow": 39, "flower": 40, "fringe": 41, "ribbon": 42,
@@ -136,8 +136,8 @@ class FashionSegmentClothing:
             "vest",
             "sweater",
             "hood",
-            "shirt, blouse",
-            "top, t-shirt, sweatshirt",
+            "shirt_blouse",
+            "top_t-shirt_sweatshirt",
             "sleeve",
             # Full body
             "dress",
@@ -148,7 +148,7 @@ class FashionSegmentClothing:
             "shorts",
             "skirt",
             # Socks and shoes
-            "tights, stockings",
+            "tights_stockings",
             "sock",
             "shoe"
         ]
@@ -266,7 +266,7 @@ class FashionSegmentClothing:
             selected_classes.extend(accessories_options)
             
             if not selected_classes:
-                selected_classes = ["shirt, blouse"]
+                selected_classes = ["shirt_blouse"]
 
             transform_image = transforms.Compose([
                 transforms.Resize((process_res, process_res)),
