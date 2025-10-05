@@ -1,3 +1,4 @@
+
 # ComfyUI-RMBG
 #
 # This node facilitates background removal using various models, including RMBG-2.0, INSPYRENET, BEN, BEN2, and BIREFNET-HR.
@@ -244,7 +245,7 @@ class AILab_MaskOverlay(AILab_PreviewBase):
         return {
             "required": {
                 "mask_opacity": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.01, "tooltip": tooltips["mask_opacity"]}),
-                "mask_color": ("COLOR", {"default": "#0000FF", "tooltip": tooltips["mask_color"]}),
+                "mask_color": ("COLORCODE", {"default": "#0000FF", "tooltip": tooltips["mask_color"]}),
              },
             "optional": {
                 "image": ("IMAGE", {"tooltip": tooltips["image"]}),
@@ -1090,7 +1091,7 @@ class AILab_MaskExtractor:
                 "image": ("IMAGE",),
                 "mode": (["extract_masked_area", "apply_mask", "invert_mask"], {"default": "extract_masked_area"}),
                 "background": (["Alpha", "original", "Color"], {"default": "Alpha", "tooltip": "Choose background type"}),
-                "background_color": ("COLOR", {"default": "#FFFFFF", "tooltip": "Choose background color (Alpha = transparent)"})
+                "background_color": ("COLORCODE", {"default": "#FFFFFF", "tooltip": "Choose background color (Alpha = transparent)"})
             },
             "optional": {
                 "mask": ("MASK",),
@@ -1190,7 +1191,7 @@ class AILab_MaskExtractor:
                     result_np = image_np * (1 - mask_np) + image_np * mask_np
                 elif background == "Color":
                     r, g, b = self.hex_to_rgb(background_color)
-                    result_np = result_np + mask_np * np.array([r, g, b])
+                    result_np = result_np + (1 - mask_np) * np.array([r, g, b])
             
             result_pil = Image.fromarray(np.clip(result_np * 255, 0, 255).astype(np.uint8))
             return (pil2tensor(result_pil),)
@@ -1224,7 +1225,7 @@ class AILab_ImageStitch:
                 "max_height": ("INT", {"default": 0, "min": 0, "max": MAX_RESOLUTION, "step": 8, "tooltip": tooltips["max_height"]}),
                 "upscale_method": (["nearest-exact", "bilinear", "area", "bicubic", "lanczos"], {"default": "lanczos", "tooltip": tooltips["upscale_method"]}),
                 "spacing_width": ("INT", {"default": 0, "min": 0, "max": 512, "step": 1, "tooltip": tooltips["spacing_width"]}),
-                "background_color": ("COLOR", {"default": "#FFFFFF", "tooltip": tooltips["background_color"]}),
+                "background_color": ("COLORCODE", {"default": "#FFFFFF", "tooltip": tooltips["background_color"]}),
             },
             "optional": {
                 "image2": ("IMAGE",),
@@ -1904,7 +1905,7 @@ class AILab_ColorInput:
             },
         }
 
-    RETURN_TYPES = ("COLOR",)
+    RETURN_TYPES = ("COLORCODE",)
     RETURN_NAMES = ("COLOR",)
     FUNCTION = 'get_color'
     CATEGORY = '🧪AILab/🛠️UTIL/🔄IO'
@@ -1948,7 +1949,7 @@ class AILab_ImageMaskResize:
                 "scale_by": ("FLOAT", { "default": 1.0, "min": 0.01, "max": 8.0, "step": 0.01, "tooltip": tooltips["scale_by"] }),
                 "upscale_method": (s.upscale_methods, {"tooltip": tooltips["upscale_method"]}),
                 "resize_mode": (["stretch", "resize", "pad", "pad_edge", "crop"], { "default": "stretch", "tooltip": tooltips["resize_mode"] }),
-                "pad_color": ("COLOR", { "default": "#FFFFFF", "tooltip": tooltips["pad_color"] }),
+                "pad_color": ("COLORCODE", { "default": "#FFFFFF", "tooltip": tooltips["pad_color"] }),
                 "crop_position": (["center", "top", "bottom", "left", "right"], { "default": "center", "tooltip": tooltips["crop_position"] }),
                 "divisible_by": ("INT", { "default": 2, "min": 0, "max": 512, "step": 1, "tooltip": tooltips["divisible_by"] }),
             },
