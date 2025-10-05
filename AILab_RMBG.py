@@ -1,4 +1,4 @@
-# ComfyUI-RMBG V2.9.1
+# ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for background removal using various models,
 # including RMBG-2.0, INSPYRENET, BEN, BEN2 and BIREFNET-HR. It leverages deep learning techniques
 # to process images and generate masks for background removal.
@@ -547,7 +547,7 @@ class RMBG:
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
                 "refine_foreground": ("BOOLEAN", {"default": False, "tooltip": tooltips["refine_foreground"]}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
-                "background_color": ("COLOR", {"default": "#222222", "tooltip": tooltips["background_color"]}),
+                "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             }
         }
 

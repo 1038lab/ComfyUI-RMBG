@@ -176,7 +176,7 @@ class FashionSegmentClothing:
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
-                "background_color": ("COLOR", {"default": "#222222", "tooltip": tooltips["background_color"]}),
+                "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             },
         }
 

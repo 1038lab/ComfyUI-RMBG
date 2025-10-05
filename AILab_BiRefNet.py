@@ -389,7 +389,7 @@ class BiRefNetRMBG:
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
                 "refine_foreground": ("BOOLEAN", {"default": False, "tooltip": tooltips["refine_foreground"]}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
-                "background_color": ("COLOR", {"default": "#222222", "tooltip": tooltips["background_color"]}),
+                "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             }
         }
 

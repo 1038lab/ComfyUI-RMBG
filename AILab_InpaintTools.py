@@ -1,4 +1,4 @@
-# ComfyUI-RMBG v2.6.0
+# ComfyUI-RMBG
 #
 # AILab Inpaint Tools
 # A collection of specialized nodes for inpainting tasks in ComfyUI.
@@ -100,7 +100,7 @@ class AILab_ReferenceLatentMask:
     RETURN_TYPES = ("CONDITIONING", "LATENT", "MASK")
     RETURN_NAMES = ("CONDITIONING", "LATENT", "MASK")
     FUNCTION = "prepare_inpaint_conditioning"
-    CATEGORY = "🧪AILab/🧽RMBG/🎭Inpaint"
+    CATEGORY = "🧪AILab/🎭Inpaint"
 
     def add_latent_to_conditioning(self, conditioning, latent=None):
         if latent is not None:
