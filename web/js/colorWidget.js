@@ -23,16 +23,16 @@ const getContrastTextColor = (hexColor) => {
 };
 
 const AILabColorWidget = {
-    COLOR: (key, val) => {
+    COLORCODE: (key, val) => {
         const widget = {};
         widget.y = 0;
         widget.name = key;
-        widget.type = 'COLOR';
+        widget.type = 'COLORCODE';
         widget.options = { default: '#222222' };
-        widget.value = typeof val === 'string' ? val : '#222222'; // validate incoming value
+        widget.value = typeof val === 'string' ? val : '#222222';
 
         widget.draw = function (ctx, node, widgetWidth, widgetY, height) {
-            const hide = this.type !== 'COLOR' && app.canvas.ds.scale > 0.5;
+            const hide = this.type !== 'COLORCODE' && app.canvas.ds.scale > 0.5;
             if (hide) {
                 return;
             }
@@ -66,7 +66,7 @@ const AILabColorWidget = {
             ctx.font = '12px sans-serif';
             ctx.textAlign = 'center';
 
-            const text = `background_color (${this.value})`;
+            const text = `${this.name} (${this.value})`;
             ctx.fillText(text, widgetWidth * 0.5, widgetY + height * 0.65);
         };
 
@@ -112,10 +112,10 @@ app.registerExtension({
 
     getCustomWidgets() {
         return {
-            COLOR: (node, inputName, inputData) => {
+            COLORCODE: (node, inputName, inputData) => {
                 return {
                     widget: node.addCustomWidget(
-                        AILabColorWidget.COLOR(inputName, inputData?.[1]?.default || '#222222')
+                        AILabColorWidget.COLORCODE(inputName, inputData?.[1]?.default || '#222222')
                     ),
                     minWidth: 150,
                     minHeight: 32,
