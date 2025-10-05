@@ -1,4 +1,8 @@
 # ComfyUI-RMBG Update Log
+## V2.9.3 (2025/10/04)
+- Bug Fix: The latest ComfyUI update caused an issue with the `color` widget. We have addressed the problem and updated all related nodes. The widget now functions correctly.  **(User Reported [#118](https://github.com/1038lab/ComfyUI-RMBG/issues/118) )**
+![v2.9._color](https://github.com/user-attachments/assets/422a7ad2-1522-4ea4-98d4-34fe1989f4e8)
+
 ## V2.9.2 (2025/09/30)
 - Added `BiRefNet_toonOut` general purpose model (balanced performance) **(User request [#110](https://github.com/1038lab/ComfyUI-RMBG/issues/110) )**
 ![v2.9.2_BiRefNet_toonOut](https://github.com/user-attachments/assets/17dc7268-5017-415f-b0b5-4184c02bdaf2)
@@ -540,6 +544,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
