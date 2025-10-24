@@ -276,8 +276,7 @@ class ClothesSegment:
             self.clear_model()
             raise RuntimeError(f"Error in Clothes Segformer processing: {str(e)}")
         finally:
-
-            if not self.model.training:
+            if not getattr(self.model, "training", False):
                 self.clear_model()
 
 NODE_CLASS_MAPPINGS = {
@@ -286,4 +285,5 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ClothesSegment": "Clothes Segment (RMBG)"
+
 } 
