@@ -1,5 +1,5 @@
 # ComfyUI-RMBG Update Log
-## V2.9.4 (2025/10/12)
+## V2.9.4 (2025/10/24)
 - Added `SAM3 segmentation` node with Meta’s latest SAM3 segmentation model  
 ![v2.9.4_sam3](https://github.com/user-attachments/assets/70409f85-8814-47c4-8679-1e2389e5c78a)
 - `SAM3Segment`: RMBG-focused text segmentation using the official `SAM3` Model checkpoint
@@ -550,6 +550,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
