@@ -19,6 +19,7 @@ const NODE_COLORS = {
     "BiRefNetRMBG": "segment",
     "SAM2Segment": "segment",
     "SAM2SegmentDiscovery": "segment",
+    "SAM3Segment": "segment",
     "SAM2SegmentDiscoveryAdv": "segment",
 
     // Utility nodes
@@ -76,5 +77,6 @@ const ext = {
         }
     }
 };
+
 
 app.registerExtension(ext);
