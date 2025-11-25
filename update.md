@@ -1,4 +1,10 @@
 # ComfyUI-RMBG Update Log
+## V2.9.4 (2025/10/12)
+- Added SAM3 segmentation node with Meta’s latest SAM3 segmentation model  
+![v2.9.4_sam3](https://github.com/user-attachments/assets/70409f85-8814-47c4-8679-1e2389e5c78a)
+- `SAM3Segment`: RMBG-focused text segmentation using the official `SAM3` Model checkpoint
+  - Sharper edges and faster inference versus SAM2 in our tests; supports FP32/FP16 autocast on CUDA
+  - Alpha/Color background output, mask blur/offset/invert, plus RGB mask image for quick compositing
 ## V2.9.3 (2025/10/05)
 - Bug Fix: The latest ComfyUI update caused an issue with the `color` widget. We have addressed the problem and updated all related nodes. The widget now functions correctly.  **(User Reported [#118](https://github.com/1038lab/ComfyUI-RMBG/issues/118) )**
 ![v2.9._color](https://github.com/user-attachments/assets/422a7ad2-1522-4ea4-98d4-34fe1989f4e8)
@@ -544,6 +550,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
