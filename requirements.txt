@@ -15,3 +15,5 @@ iopath>=0.1.9
 
 #SAM3
 decord
+iopath
+ftfy
