@@ -1,4 +1,23 @@
 # ComfyUI-RMBG Update Log
+
+## V2.9.6 (2025/12/09)
+### ImageCompare Node Rebuilt
+- Rebuilt ImageCompare node with enhanced features
+- Added support for 3 images (previously 2)
+- Added size_base parameter: choose largest, smallest, or specific image as reference
+- Added customizable text_color and bg_color parameters
+
+![v2.9.6_Image Compare](https://github.com/user-attachments/assets/e4ee824d-207e-4f46-b2db-0110e99c84c7)
+
+### 🔧 ComfyUI New Schema Compatibility
+- Updated our nodes to match the latest ComfyUI V3 schema changes.
+- Fixed compatibility issues affecting multiple nodes, including `ImageCompositeMasked`.
+- Thanks to reports in https://github.com/1038lab/ComfyUI-RMBG/issues/132 and https://github.com/1038lab/ComfyUI-RMBG/issues/146
+
+### 🧹 SAM3Segment – Automatic Model Unload
+- Added model unload for SAM3 segmentation.
+- Helps free memory after each run and improves long-session stability.
+- Thanks to contribution and feedback from https://github.com/1038lab/ComfyUI-RMBG/issues/147
 ## V2.9.5 (2025/10/15)
 - Bug fix: SAM3 Segmentation CPU mode no longer crashes from mixed cuda/cpu tensors when a GPU is present. (https://github.com/1038lab/ComfyUI-RMBG/issues/135)
 - Added missing dependency `decord` to requirements.txt. (https://github.com/1038lab/ComfyUI-RMBG/issues/136)
@@ -558,6 +577,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
