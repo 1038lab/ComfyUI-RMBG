@@ -119,6 +119,7 @@ class SAM3Segment:
                 "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1}),
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1}),
                 "invert_output": ("BOOLEAN", {"default": False}),
+                "unload_model": ("BOOLEAN", {"default": False}),
                 "background": (["Alpha", "Color"], {"default": "Alpha"}),
                 "background_color": ("COLORCODE", {"default": "#222222"}),
             },
@@ -190,14 +191,18 @@ class SAM3Segment:
         mask_rgb = mask_tensor.reshape((-1, 1, mask_image.height, mask_image.width)).movedim(1, -1).expand(-1, -1, -1, 3)
         return result_image, mask_tensor, mask_rgb
 
-    def segment(self, image, prompt, sam3_model, device, confidence_threshold=0.5, mask_blur=0, mask_offset=0, invert_output=False, background="Alpha", background_color="#222222"):
+    def segment(self, image, prompt, sam3_model, device, confidence_threshold=0.5, mask_blur=0, mask_offset=0, invert_output=False, unload_model=False, background="Alpha", background_color="#222222"):
+
         if image.ndim == 3:
             image = image.unsqueeze(0)
+
         processor, torch_device = self._load_processor(sam3_model, device)
         autocast_device = comfy.model_management.get_autocast_device(torch_device)
         autocast_enabled = torch_device.type == "cuda" and not comfy.model_management.is_device_mps(torch_device)
         ctx = torch.autocast(autocast_device, dtype=torch.bfloat16) if autocast_enabled else nullcontext()
+
         result_images, result_masks, result_mask_images = [], [], []
+
         with ctx:
             for tensor_img in image:
                 img_pil, mask_tensor, mask_rgb = self._run_single(
@@ -214,6 +219,15 @@ class SAM3Segment:
                 result_images.append(pil2tensor(img_pil))
                 result_masks.append(mask_tensor)
                 result_mask_images.append(mask_rgb)
+
+        if unload_model:
+            device_str = "cuda" if torch_device.type == "cuda" else "cpu"
+            cache_key = (sam3_model, device_str)
+            if cache_key in self.processor_cache:
+                del self.processor_cache[cache_key]
+            if torch_device.type == "cuda":
+                torch.cuda.empty_cache()
+
         return torch.cat(result_images, dim=0), torch.cat(result_masks, dim=0), torch.cat(result_mask_images, dim=0)
 
 
