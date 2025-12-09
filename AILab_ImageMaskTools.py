@@ -294,7 +294,10 @@ class AILab_MaskOverlay(AILab_PreviewBase):
             mask_image[:, :, :, 1] = g
             mask_image[:, :, :, 2] = b
             
-            preview, = ImageCompositeMasked.composite(self, image, mask_image, 0, 0, True, mask_adjusted)
+            if hasattr(ImageCompositeMasked, "execute"):
+                preview, = ImageCompositeMasked.execute(image, mask_image, 0, 0, True, mask_adjusted)
+            else:
+                preview, = ImageCompositeMasked.composite(image, mask_image, 0, 0, True, mask_adjusted)
         
         if preview is None:
             preview = empty_image(64, 64)
@@ -1794,105 +1797,194 @@ class AILab_ImageCompare:
     def __init__(self):
         self.font_size = 20
         self.padding = 10
-        self.bg_color = "white"
-        self.font_color = "black"
-        self.text_align = "center"
+        #self.text_align = "center"
 
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
+                "text1": ("STRING", {"default": "Image 1"}),
+                "text2": ("STRING", {"default": "Image 2"}),
+                "text3": ("STRING", {"default": "Image 3"}),
+                "size_base": (["largest", "smallest", "image1", "image2", "image3"], {"default": "largest"}),
+                "text_color": ("COLORCODE", {"default": "#000000"}),
+                "bg_color": ("COLORCODE", {"default": "#FFFFFF"}),
+            },
+            "optional": {
                 "image1": ("IMAGE",),
                 "image2": ("IMAGE",),
-                "text1": ("STRING", {"default": "image 1"}),
-                "text2": ("STRING", {"default": "image 2"}),
-            }
+                "image3": ("IMAGE",),
+            },
         }
 
     RETURN_TYPES = ("IMAGE",)
     FUNCTION = "generate"
     CATEGORY = "🧪AILab/🖼️IMAGE"
 
-    def get_font(self) -> ImageFont.FreeTypeFont:
+    def get_font(self):
         try:
-            if os.name == 'nt':
+            if os.name == "nt":
                 return ImageFont.truetype("arial.ttf", self.font_size)
+            elif os.path.exists("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"):
+                return ImageFont.truetype(
+                    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+                    self.font_size,
+                )
             else:
-                return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", self.font_size)
-        except:
-            base_font = ImageFont.load_default()
-            scale_factor = self.font_size / 10
-            return ImageFont.TransposedFont(base_font, scale=scale_factor)
+                return ImageFont.load_default()
+        except Exception:
+            return ImageFont.load_default()
 
-    def create_text_panel(self, width: int, text: str) -> Image.Image:
+    def create_text_panel(self, width, text):
         font = self.get_font()
-        
-        temp_img = Image.new('RGB', (width, self.font_size * 4), self.bg_color)
+        temp_img = Image.new("RGB", (width, self.font_size * 2), self.bg_color)
         temp_draw = ImageDraw.Draw(temp_img)
-        
-        text_bbox = temp_draw.textbbox((0, self.font_size), text, font=font)
+        text_bbox = temp_draw.textbbox((0, 0), text, font=font)
         text_width = text_bbox[2] - text_bbox[0]
         text_height = text_bbox[3] - text_bbox[1]
-        
-        final_height = int(text_height * 1.5)
-        panel = Image.new('RGB', (width, final_height), self.bg_color)
+        final_height = max(int(text_height * 1.5), self.font_size * 2)
+        panel = Image.new("RGB", (width, final_height), self.bg_color)
         draw = ImageDraw.Draw(panel)
-        
         x = (width - text_width) // 2
         y = (final_height - text_height) // 2
-        
-        draw.text((x, y), text, font=font, fill=self.font_color)
+        draw.text((x, y), text, font=font, fill=self.text_color)
         return panel
 
-    def process_image(self, img: Image.Image, target_size: tuple) -> Image.Image:
-        target_width, target_height = target_size
-        img_width, img_height = img.size
-        
-        scale_width = target_width / img_width
-        scale_height = target_height / img_height
-        scale = max(scale_width, scale_height)
-        
-        new_width = int(img_width * scale)
-        new_height = int(img_height * scale)
-        
-        resized = resize_image(img, new_width, new_height)
-        left = (new_width - target_width) // 2
-        top = (new_height - target_height) // 2
-        right = left + target_width
-        bottom = top + target_height
-        
-        return resized.crop((left, top, right, bottom))
+    def _select_base_image(self, pil_map, size_base):
+        if size_base in ("image1", "image2", "image3") and size_base in pil_map:
+            return size_base
+        if size_base == "smallest":
+            best_label = None
+            best_area = float('inf')
+            for label, img in pil_map.items():
+                area = img.width * img.height
+                if area < best_area:
+                    best_area = area
+                    best_label = label
+            return best_label
+        if size_base != "largest":
+            print(
+                f"Warning: size_base '{size_base}' is not available, fallback to 'largest'."
+            )
+        best_label = None
+        best_area = -1
+        for label, img in pil_map.items():
+            area = img.width * img.height
+            if area > best_area:
+                best_area = area
+                best_label = label
+        return best_label
 
-    def generate(self, image1, image2, text1, text2):
-        img1 = tensor2pil(image1)
-        img2 = tensor2pil(image2)
-        
-        if img2.size != img1.size:
-            img2 = resize_image(img2, img1.size[0], img1.size[1])
-        
-        panel1 = None if not text1.strip() else self.create_text_panel(img1.width, text1)
-        panel2 = None if not text2.strip() else self.create_text_panel(img2.width, text2)
-        
-        total_width = img1.width + img2.width + self.padding * 3
-        img_height = img1.height
-        panel_height = (panel1.height if panel1 else 0) if (panel1 or panel2) else 0
-        total_height = img_height + (panel_height + self.padding if panel_height > 0 else 0) + self.padding * 2
-        
-        result = Image.new('RGB', (total_width, total_height), self.bg_color)
+    def generate(self, text1, text2, text3, size_base="largest", text_color="#000000", bg_color="#FFFFFF", image1=None, image2=None, image3=None,):
+        self.bg_color = bg_color
+        self.text_color = text_color
 
-        x1 = self.padding
-        x2 = x1 + img1.width + self.padding
-        y = self.padding
-        
-        result.paste(img1, (x1, y))
-        result.paste(img2, (x2, y))
-        
-        if panel1:
-            result.paste(panel1, (x1, y + img_height + self.padding))
-        if panel2:
-            result.paste(panel2, (x2, y + img_height + self.padding))
-        
-        return (pil2tensor(result),)
+        tensors = []
+        texts = []
+        labels = []
+
+        if image1 is not None and hasattr(image1, "shape") and image1.shape[0] > 0:
+            tensors.append(image1)
+            texts.append(text1)
+            labels.append("image1")
+        if image2 is not None and hasattr(image2, "shape") and image2.shape[0] > 0:
+            tensors.append(image2)
+            texts.append(text2)
+            labels.append("image2")
+        if image3 is not None and hasattr(image3, "shape") and image3.shape[0] > 0:
+            tensors.append(image3)
+            texts.append(text3)
+            labels.append("image3")
+
+        if len(tensors) < 2:
+            print("Warning: At least two images are required.")
+            return (torch.zeros((1, 64, 64, 3)),)
+
+        batch_sizes = [t.shape[0] for t in tensors]
+        batch_size = min(batch_sizes)
+        if len(set(batch_sizes)) > 1:
+            print(
+                f"Warning: Input batches have different sizes {batch_sizes}. "
+                f"Only processing the minimum size of {batch_size}."
+            )
+
+        output_images = []
+
+        for i in range(batch_size):
+            pil_map = {}
+            for t, label in zip(tensors, labels):
+                frame = t[i].unsqueeze(0)
+                img_pil = tensor2pil(frame)
+                pil_map[label] = img_pil
+
+            base_label = self._select_base_image(pil_map, size_base)
+            base_img = pil_map[base_label]
+            base_h = base_img.height
+
+            resized_pils = []
+            for label in labels:
+                img = pil_map[label]
+                w, h = img.size
+                
+                if w == 0 or h == 0:
+                    resized_pils.append(Image.new("RGB", (1, 1), self.bg_color))
+                    continue
+                
+                if label == base_label:
+                    resized_pils.append(img)
+                    continue
+                
+                scale = base_h / h
+                new_h = base_h
+                new_w = max(1, int(round(w * scale)))
+                
+                if img.size != (new_w, new_h):
+                    img = resize_image(img, new_w, new_h)
+                resized_pils.append(img)
+
+            panels = []
+            for img, text in zip(resized_pils, texts):
+                if text.strip():
+                    panels.append(self.create_text_panel(img.width, text))
+                else:
+                    panels.append(None)
+
+            total_width = (
+                sum(img.width for img in resized_pils)
+                + self.padding * (len(resized_pils) + 1)
+            )
+            img_height = max(img.height for img in resized_pils)
+
+            panel_heights = [p.height for p in panels if p is not None]
+            panel_height = max(panel_heights) if panel_heights else 0
+            panel_area_height = (panel_height + self.padding) if panel_height > 0 else 0
+
+            total_height = img_height + panel_area_height + self.padding * 2
+
+            result_pil = Image.new("RGB", (total_width, total_height), self.bg_color)
+
+            y_img = self.padding
+            y_panel = y_img + img_height + self.padding
+
+            x = self.padding
+            for img, panel in zip(resized_pils, panels):
+                result_pil.paste(img, (x, y_img))
+                if panel is not None and panel_height > 0:
+                    y_offset = (
+                        y_panel + (panel_height - panel.height)
+                        if panel.height < panel_height
+                        else y_panel
+                    )
+                    result_pil.paste(panel, (x, y_offset))
+                x += img.width + self.padding
+
+            output_images.append(pil2tensor(result_pil))
+
+        if not output_images:
+            return (torch.zeros((1, 64, 64, 3)),)
+
+        final_batch_tensor = torch.cat(output_images, dim=0)
+        return (final_batch_tensor,)
 
 # Color Input node
 class AILab_ColorInput:
@@ -2177,3 +2269,4 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "AILab_ColorInput": "Color Input (RMBG) 🎨",
     "AILab_ImageMaskResize": "Image Mask Resize (RMBG) 🖼️🎭"
 }
+
