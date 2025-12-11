@@ -17,3 +17,4 @@ iopath>=0.1.9
 decord
 ftfy
 typing_extensions
+# triton-windows
