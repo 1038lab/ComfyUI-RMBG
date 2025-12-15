@@ -25,14 +25,14 @@ except ImportError:
     print("Warning: GroundingDINO not available. Text prompts will use fallback method.")
 
 # Disable PyTorch JIT compilation
-torch.jit._state._python_cu = None
-torch._C._jit_set_profiling_mode(False)
-torch._C._jit_set_profiling_executor(False)
+# torch.jit._state._python_cu = None
+# torch._C._jit_set_profiling_mode(False)
+# torch._C._jit_set_profiling_executor(False)
 
-original_jit_script = torch.jit.script
-def patched_jit_script(obj):
-    return obj
-torch.jit.script = patched_jit_script
+# original_jit_script = torch.jit.script
+# def patched_jit_script(obj):
+#     return obj
+# torch.jit.script = patched_jit_script
 
 current_dir = os.path.dirname(__file__)
 sam2_path = os.path.join(current_dir, "sam2")
@@ -406,4 +406,5 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "SAM2Segment": "SAM2 Segmentation (RMBG)",
+
 }
