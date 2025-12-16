@@ -24,16 +24,6 @@ except ImportError:
     GROUNDINGDINO_AVAILABLE = False
     print("Warning: GroundingDINO not available. Text prompts will use fallback method.")
 
-# Disable PyTorch JIT compilation
-# torch.jit._state._python_cu = None
-# torch._C._jit_set_profiling_mode(False)
-# torch._C._jit_set_profiling_executor(False)
-
-# original_jit_script = torch.jit.script
-# def patched_jit_script(obj):
-#     return obj
-# torch.jit.script = patched_jit_script
-
 current_dir = os.path.dirname(__file__)
 sam2_path = os.path.join(current_dir, "sam2")
 sys.path.insert(0, sam2_path)
@@ -47,6 +37,17 @@ def patched_torch_load(*args, **kwargs):
     return original_torch_load(*args, **kwargs)
 
 torch.load = patched_torch_load
+
+from contextlib import contextmanager
+
+@contextmanager
+def _sam2_no_jit():
+    _orig = torch.jit.script
+    torch.jit.script = lambda x, *a, **k: x
+    try:
+        yield
+    finally:
+        torch.jit.script = _orig
 
 from sam2_image_predictor import SAM2ImagePredictor
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
@@ -247,7 +248,10 @@ class SAM2Segment:
             sam_model.load_state_dict(state_dict, strict=False)
             sam_model = sam_model.to(dtype).to(sam_device).eval()
             
-            predictor = SAM2ImagePredictor(sam_model)
+            # predictor = SAM2ImagePredictor(sam_model)
+            with _sam2_no_jit():
+                predictor = SAM2ImagePredictor(sam_model)
+                
             self.sam2_model_cache[cache_key] = predictor
         return self.sam2_model_cache[cache_key]
 
