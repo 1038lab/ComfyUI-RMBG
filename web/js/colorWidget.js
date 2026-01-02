@@ -10,7 +10,7 @@ import { app } from "/scripts/app.js";
 
 const getContrastTextColor = (hexColor) => {
     if (typeof hexColor !== 'string' || !/^#?[0-9a-fA-F]{6}$/.test(hexColor)) {
-        return '#cccccc'; // fallback text color
+        return '#cccccc';
     }
 
     const hex = hexColor.replace('#', '');
@@ -28,8 +28,21 @@ const AILabColorWidget = {
         widget.y = 0;
         widget.name = key;
         widget.type = 'COLORCODE';
-        widget.options = { default: '#222222' };
-        widget.value = typeof val === 'string' ? val : '#222222';
+        
+        const defaultColor = '#222222';
+        widget.options = { default: defaultColor };
+
+        let initialValue = defaultColor;
+        if (Array.isArray(val) && val.length > 1 && val[1] && val[1].default) {
+            initialValue = val[1].default;
+        }
+
+        if (typeof initialValue === 'string' && /^#?[0-9a-fA-F]{6}$/.test(initialValue)) {
+            widget.value = initialValue;
+        } else {
+            widget.value = defaultColor;
+        }
+
 
         widget.draw = function (ctx, node, widgetWidth, widgetY, height) {
             const hide = this.type !== 'COLORCODE' && app.canvas.ds.scale > 0.5;
@@ -37,24 +50,25 @@ const AILabColorWidget = {
                 return;
             }
 
+            const drawHeight = 22;
             const margin = 15;
-            const radius = 12;
+            const radius = 10;
 
             ctx.fillStyle = this.value;
             ctx.beginPath();
             const x = margin;
-            const y = widgetY;
+            const y = widgetY + (height - drawHeight) / 2;
             const w = widgetWidth - margin * 2;
-            const h = height;
+            const h = drawHeight;
             ctx.moveTo(x + radius, y);
             ctx.lineTo(x + w - radius, y);
-            ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+            ctx.arcTo(x + w, y, x + w, y + radius, radius);
             ctx.lineTo(x + w, y + h - radius);
-            ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+            ctx.arcTo(x + w, y + h, x + w - radius, y + h, radius);
             ctx.lineTo(x + radius, y + h);
-            ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+            ctx.arcTo(x, y + h, x, y + h - radius, radius);
             ctx.lineTo(x, y + radius);
-            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.arcTo(x, y, x + radius, y, radius);
             ctx.closePath();
             ctx.fill();
 
@@ -67,7 +81,7 @@ const AILabColorWidget = {
             ctx.textAlign = 'center';
 
             const text = `${this.name} (${this.value})`;
-            ctx.fillText(text, widgetWidth * 0.5, widgetY + height * 0.65);
+            ctx.fillText(text, widgetWidth * 0.5, y + drawHeight * 0.65);
         };
 
         widget.mouse = function (e, pos, node) {
@@ -100,7 +114,7 @@ const AILabColorWidget = {
         };
 
         widget.computeSize = function (width) {
-            return [width, 32];
+            return [width, 22];
         };
 
         return widget;
@@ -115,10 +129,10 @@ app.registerExtension({
             COLORCODE: (node, inputName, inputData) => {
                 return {
                     widget: node.addCustomWidget(
-                        AILabColorWidget.COLORCODE(inputName, inputData?.[1]?.default || '#222222')
+                        AILabColorWidget.COLORCODE(inputName, inputData) 
                     ),
                     minWidth: 150,
-                    minHeight: 32,
+                    minHeight: 22,
                 };
             }
         };

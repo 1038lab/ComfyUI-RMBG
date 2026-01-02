@@ -19,13 +19,16 @@ const NODE_COLORS = {
     "BiRefNetRMBG": "segment",
     "SAM2Segment": "segment",
     "SAM2SegmentDiscovery": "segment",
-    "SAM3Segment": "segment",
     "SAM2SegmentDiscoveryAdv": "segment",
+    "SAM3Segment": "segment",
+    "AILab_Florence2": "segment",
 
     // Utility nodes
     "AILab_LoadImage": "utility",
     "AILab_LoadImageSimple": "utility",
     "AILab_LoadImageAdvanced": "utility",
+    "AILab_LoadImageBatch": "utility",
+    "AILab_UnbatchImages": "utility",
     "AILab_Preview": "utility",
     "AILab_ImagePreview": "utility",
     "AILab_MaskPreview": "utility",
@@ -77,6 +80,5 @@ const ext = {
         }
     }
 };
-
 
 app.registerExtension(ext);
