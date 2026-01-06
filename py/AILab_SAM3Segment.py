@@ -304,7 +304,7 @@ class SAM3Segment:
 
         if unload_model:
             device_str = "cuda" if torch_device.type == "cuda" else "cpu"
-            cache_key = (sam3_model, device_str)
+            cache_key = ("sam3", device_str)
             if cache_key in self.processor_cache:
                 del self.processor_cache[cache_key]
             if torch_device.type == "cuda":
@@ -330,3 +330,4 @@ class SAM3Segment:
 
 NODE_CLASS_MAPPINGS = {"SAM3Segment": SAM3Segment}
 NODE_DISPLAY_NAME_MAPPINGS = {"SAM3Segment": "SAM3 Segmentation (RMBG)"}
+
