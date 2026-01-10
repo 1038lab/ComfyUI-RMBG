@@ -2,7 +2,9 @@
 huggingface-hub>=0.19.0
 transparent-background>=1.1.2
 segment-anything>=1.0
-groundingdino-py>=0.4.0
+# Optional: often fails to build on Windows (esp. Python 3.12); nodes fall back when unavailable.
+groundingdino-py>=0.4.0; platform_system != "Windows"
+
 opencv-python>=4.7.0
 onnxruntime>=1.15.0
 onnxruntime-gpu>=1.15.0
