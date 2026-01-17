@@ -25,6 +25,8 @@
 ### 📦 Dependency Update
 - `triton-windows` for proper SAM2, SAM3 model execution on Windows platforms.
 - `ultralytics` Required for YOLO node.
+> [!NOTE]
+> YOLO nodes require the optional `ultralytics` package. Install it only if you need YOLO to avoid dependency conflicts: `./ComfyUI/python_embeded/python -m pip install ultralytics --no-deps`.
 
 ## V2.9.6 (2025/12/09)
 ### ImageCompare Node Rebuilt
@@ -54,9 +56,7 @@
   - Sharper edges and faster inference versus SAM2 in our tests; supports FP32/FP16 autocast on CUDA
   - Alpha/Color background output, mask blur/offset/invert, plus RGB mask image for quick compositing
 
-
 https://github.com/user-attachments/assets/05cc101b-57a6-408d-b4ad-78e56dd927d6
-
 
 ## V2.9.3 (2025/10/05)
 - Bug Fix: The latest ComfyUI update caused an issue with the `color` widget. We have addressed the problem and updated all related nodes. The widget now functions correctly.  **(User Reported [#118](https://github.com/1038lab/ComfyUI-RMBG/issues/118) )**
@@ -603,6 +603,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
