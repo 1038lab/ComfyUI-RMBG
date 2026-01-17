@@ -1,0 +1,443 @@
+{
+  "id": "24f0d3f4-7207-455e-ae7f-3bd3ce2771bd",
+  "revision": 0,
+  "last_node_id": 25,
+  "last_link_id": 32,
+  "nodes": [
+    {
+      "id": 21,
+      "type": "AILab_Preview",
+      "pos": [
+        771.307386825688,
+        -660.2734157913325
+      ],
+      "size": [
+        952.968412178257,
+        371.1372162152344
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 27
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_Preview"
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 13,
+      "type": "AILab_MaskPreview",
+      "pos": [
+        771.3073868256879,
+        -232.29431299283743
+      ],
+      "size": [
+        952.968412178257,
+        258
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_MaskPreview"
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 22,
+      "type": "AILab_Preview",
+      "pos": [
+        771.307386825688,
+        77.6079037610424
+      ],
+      "size": [
+        952.968412178257,
+        382.4647323538029
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 31
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_Preview"
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 23,
+      "type": "AILab_MaskPreview",
+      "pos": [
+        771.307386825688,
+        511.9748528687251
+      ],
+      "size": [
+        952.968412178257,
+        297.0168186534602
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_MaskPreview"
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 25,
+      "type": "AILab_YoloV8Adv",
+      "pos": [
+        402.6933800921686,
+        71.91210239127162
+      ],
+      "size": [
+        340,
+        314
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ANNOTATED_IMAGE",
+          "type": "IMAGE",
+          "links": [
+            31
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            32
+          ]
+        },
+        {
+          "name": "MASK_LIST",
+          "type": "MASK",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_YoloV8Adv"
+      },
+      "widgets_values": [
+        "bbox\\face_yolov8m.pt",
+        "all",
+        "none",
+        0.25,
+        0.45,
+        "",
+        "auto",
+        300,
+        true,
+        false
+      ],
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 24,
+      "type": "AILab_YoloV8",
+      "pos": [
+        402.6933800921686,
+        -660.2734157913325
+      ],
+      "size": [
+        340,
+        146
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "ANNOTATED_IMAGE",
+          "type": "IMAGE",
+          "links": [
+            27
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            28
+          ]
+        },
+        {
+          "name": "MASK_LIST",
+          "type": "MASK",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_YoloV8"
+      },
+      "widgets_values": [
+        "bbox\\face_yolov8m.pt",
+        "3",
+        "1"
+      ],
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 20,
+      "type": "AILab_LoadImage",
+      "pos": [
+        -213.87327493951494,
+        -232.29431299283743
+      ],
+      "size": [
+        586.4611082986776,
+        680.5980175220382
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            25,
+            29
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "istockphoto-1368965646-612x612.jpg",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    }
+  ],
+  "links": [
+    [
+      25,
+      20,
+      0,
+      24,
+      0,
+      "IMAGE"
+    ],
+    [
+      26,
+      24,
+      2,
+      13,
+      0,
+      "MASK"
+    ],
+    [
+      27,
+      24,
+      0,
+      21,
+      0,
+      "IMAGE"
+    ],
+    [
+      28,
+      24,
+      1,
+      21,
+      1,
+      "MASK"
+    ],
+    [
+      29,
+      20,
+      0,
+      25,
+      0,
+      "IMAGE"
+    ],
+    [
+      30,
+      25,
+      2,
+      23,
+      0,
+      "MASK"
+    ],
+    [
+      31,
+      25,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      25,
+      1,
+      22,
+      1,
+      "MASK"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.699183592488379,
+      "offset": [
+        338.7066798641084,
+        1245.140691861602
+      ]
+    },
+    "workflowRendererVersion": "LG",
+    "frontendVersion": "1.38.3",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
