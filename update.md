@@ -1,7 +1,7 @@
 # ComfyUI-RMBG Update Log
 
 ## V3.0.0 (2026/01/01)  
-### New nodesss 
+### New nodes
 - Added `Florence2 Segmentation` node for Florence-2 tasks: polygon masks, phrase grounding (boxes), and region proposals.
 - Added `Florence2 To Coordinates` tool node to convert Florence-2 JSON into center coordinates, bounding boxes, and masks.
 ![v3.0.0_Florence2](example_workflows/florence2_node.jpg)
@@ -18,9 +18,8 @@
 ![image_compare_resize](https://github.com/user-attachments/assets/4c43b00e-8bba-44d7-a465-7398dcd7050e)
 
 ### 🔧 PyTorch JIT Compatibility Fix
-- Removed all global overrides of PyTorch and TorchScript behavior.
-- TorchScript is now handled locally with a safe fallback mechanism.
-- This prevents interference with other nodes or models that rely on `torch.jit.script`.
+- Removed global torch.load override; TorchScript handled locally in SAM2.
+- TorchScript is handled via a local fallback to avoid interfering with other nodes.
 - Improves overall compatibility and stability in mixed ComfyUI environments.
 
 ### 📦 Dependency Update
@@ -604,6 +603,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
