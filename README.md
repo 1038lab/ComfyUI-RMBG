@@ -191,6 +191,9 @@ install requirment.txt in the ComfyUI-RMBG folder
   ```bash
   ./ComfyUI/python_embeded/python -m pip install -r requirements.txt
   ```
+> [!NOTE]
+> Windows desktop app: if the app crashes after install, set `PYTHONUTF8=1` before installing requirements, then retry.
+
 > [!TIP]
 > Note: If your environment cannot install dependencies with the system Python, you can use ComfyUI's embedded Python instead.
 > Example (embedded Python): `./ComfyUI/python_embeded/python.exe -m pip install --no-user --no-cache-dir -r requirements.txt`
@@ -418,6 +421,7 @@ If this custom node helps you or you like my work, please give me ⭐ on this re
 
 ## License
 GPL-3.0 License
+
 
 
 
