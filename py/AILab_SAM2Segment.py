@@ -25,23 +25,11 @@ except ImportError:
     GROUNDINGDINO_AVAILABLE = False
     print("Warning: GroundingDINO not available. Text prompts will use fallback method.")
 
-# Disable PyTorch JIT compilation
-# torch.jit._state._python_cu = None
-# torch._C._jit_set_profiling_mode(False)
-# torch._C._jit_set_profiling_executor(False)
-
-# original_jit_script = torch.jit.script
-# def patched_jit_script(obj):
-#     return obj
-# torch.jit.script = patched_jit_script
-
 current_dir = Path(__file__).resolve().parent
 repo_root = current_dir.parent
-sam2_path = repo_root / "models" / "sam2"
-sys.path.insert(0, str(sam2_path))
-
-import torch.serialization
-original_torch_load = torch.load
+models_path = repo_root / "models"
+sam2_path = models_path / "sam2"
+sys.path.insert(0, str(models_path))
 
 from contextlib import contextmanager
 
@@ -54,14 +42,7 @@ def _sam2_no_jit():
     finally:
         torch.jit.script = _orig
 
-def patched_torch_load(*args, **kwargs):
-    if 'weights_only' not in kwargs:
-        kwargs['weights_only'] = False
-    return original_torch_load(*args, **kwargs)
-
-torch.load = patched_torch_load
-
-from sam2_image_predictor import SAM2ImagePredictor
+from sam2.sam2_image_predictor import SAM2ImagePredictor
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
 
 # SAM2 model definitions with FP32 and FP16 versions
