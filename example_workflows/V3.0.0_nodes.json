@@ -1,179 +1,22 @@
 {
   "id": "24f0d3f4-7207-455e-ae7f-3bd3ce2771bd",
   "revision": 0,
-  "last_node_id": 69,
-  "last_link_id": 115,
+  "last_node_id": 71,
+  "last_link_id": 118,
   "nodes": [
-    {
-      "id": 46,
-      "type": "AILab_ImageToList",
-      "pos": [
-        1047.8420447008732,
-        570.6909261432831
-      ],
-      "size": [
-        300,
-        158
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image_1",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "image_2",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "image_3",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "image_4",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "image_5",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "image_6",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "shape": 6,
-          "type": "IMAGE",
-          "links": null
-        },
-        {
-          "name": "WIDTH",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "HEIGHT",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "BATCH_SIZE",
-          "type": "INT",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_ImageToList"
-      },
-      "widgets_values": [
-        "crop"
-      ],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
-    {
-      "id": 48,
-      "type": "AILab_MaskToList",
-      "pos": [
-        1366.0461693416478,
-        570.6909261432831
-      ],
-      "size": [
-        300,
-        158
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask_1",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "mask_2",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "mask_3",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "mask_4",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "mask_5",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "mask_6",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "shape": 6,
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_MaskToList"
-      },
-      "widgets_values": [
-        "off"
-      ],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
     {
       "id": 49,
       "type": "AILab_ImageResize",
       "pos": [
-        696.620960299752,
-        575.6924334366491
+        1859.9373760296257,
+        571.7329376439255
       ],
       "size": [
         300,
         384
       ],
       "flags": {},
-      "order": 2,
+      "order": 0,
       "mode": 0,
       "inputs": [
         {
@@ -213,7 +56,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_ImageResize"
+        "Node name for S&R": "AILab_ImageResize",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         0,
@@ -236,15 +84,15 @@
       "id": 50,
       "type": "AILab_ImageCompare",
       "pos": [
-        365.8307279548751,
-        579.4682081332511
+        1529.1471436847492,
+        575.5087123405275
       ],
       "size": [
         300,
         222
       ],
       "flags": {},
-      "order": 3,
+      "order": 1,
       "mode": 0,
       "inputs": [
         {
@@ -276,7 +124,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_ImageCompare"
+        "Node name for S&R": "AILab_ImageCompare",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "Image 1",
@@ -290,67 +143,18 @@
       "bgcolor": "#4b5b73"
     },
     {
-      "id": 63,
-      "type": "AILab_Preview",
-      "pos": [
-        1408.0731152563624,
-        39.52132784074146
-      ],
-      "size": [
-        283.259375,
-        438.80841722170493
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": 98
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": 99
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": null
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Preview"
-      },
-      "widgets_values": [],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
-    {
       "id": 55,
       "type": "AILab_YoloV8Adv",
       "pos": [
-        1048.5475633455346,
-        -259.9253308715706
+        1106.6954443145785,
+        -248.84956665464262
       ],
       "size": [
         340,
         314
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -385,7 +189,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_YoloV8Adv"
+        "Node name for S&R": "AILab_YoloV8Adv",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "bbox\\face_yolov8m.pt",
@@ -406,15 +215,15 @@
       "id": 58,
       "type": "AILab_MaskPreview",
       "pos": [
-        1722.2462377484255,
-        -469.3506020431651
+        1780.3941187174694,
+        -458.2748378262371
       ],
       "size": [
         401.5947961026536,
         442.58226902843114
       ],
       "flags": {},
-      "order": 15,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
@@ -433,7 +242,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_MaskPreview"
+        "Node name for S&R": "AILab_MaskPreview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [],
       "color": "#2e3e57",
@@ -472,22 +286,27 @@
       ],
       "properties": {
         "showOutputText": false,
-        "horizontal": false
+        "horizontal": false,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       }
     },
     {
       "id": 57,
       "type": "AILab_Preview",
       "pos": [
-        1408.0731152563624,
-        -469.3506020431651
+        1466.2209962254062,
+        -458.2748378262371
       ],
       "size": [
         283.259375,
         438.80841722170493
       ],
       "flags": {},
-      "order": 14,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -518,7 +337,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Preview"
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [],
       "color": "#2e3e57",
@@ -528,15 +352,15 @@
       "id": 54,
       "type": "AILab_YoloV8",
       "pos": [
-        1052.1975314394726,
-        -469.3506020431651
+        1110.3454124085167,
+        -458.2748378262371
       ],
       "size": [
         340,
         146
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -571,7 +395,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_YoloV8"
+        "Node name for S&R": "AILab_YoloV8",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "bbox\\face_yolov8m.pt",
@@ -582,18 +411,717 @@
       "bgcolor": "#364254"
     },
     {
-      "id": 47,
-      "type": "AILab_ImageMaskToList",
+      "id": 51,
+      "type": "AILab_ColorToMask",
       "pos": [
-        1684.250293982423,
-        570.6909261432831
+        -531.5995980504493,
+        764.9238570850627
       ],
       "size": [
-        300,
-        278
+        340,
+        108
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 110
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            113
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_ColorToMask",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        false,
+        10,
+        "#ff0000"
+      ],
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 68,
+      "type": "AILab_Preview",
+      "pos": [
+        -170.87878303826133,
+        426.71576629110774
+      ],
+      "size": [
+        296.5573523869766,
+        441.34686577474065
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 112
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 113
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 66,
+      "type": "RMBG",
+      "pos": [
+        -534.5376706425178,
+        425.3063505946878
+      ],
+      "size": [
+        340,
+        292
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 109
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            110,
+            112
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "MASK_IMAGE",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "RMBG",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "RMBG-2.0",
+        1,
+        1024,
+        0,
+        0,
+        false,
+        false,
+        "Color",
+        "#ff0000"
+      ],
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 69,
+      "type": "PreviewAny",
+      "pos": [
+        244.62952344276502,
+        195.42117803366267
+      ],
+      "size": [
+        276.1929030268334,
+        202.87891754385805
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 115
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.9.2",
+        "Node name for S&R": "PreviewAny",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 71,
+      "type": "AILab_Preview",
+      "pos": [
+        539.498302417183,
+        562.9259020699316
+      ],
+      "size": [
+        958.5569880026655,
+        546.8248365836976
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 116
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 117
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 70,
+      "type": "SAM3Segment",
+      "pos": [
+        185.01637077517245,
+        573.908803596129
+      ],
+      "size": [
+        340,
+        394
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 118
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            116
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            117
+          ]
+        },
+        {
+          "name": "MASK_IMAGE",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "SAM3Segment",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        "woman",
+        "Separate",
+        0.4,
+        0,
+        0,
+        0,
+        0,
+        "Auto",
+        false,
+        false,
+        "Alpha",
+        "#222222"
+      ],
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 56,
+      "type": "AILab_LoadImage",
+      "pos": [
+        -549.683873506715,
+        -454.7919287780781
+      ],
+      "size": [
+        695.4327134441896,
+        781.8028451383616
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            101,
+            107,
+            108,
+            109,
+            118
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        "ComfyUI_0073.png",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 63,
+      "type": "AILab_Preview",
+      "pos": [
+        1463.8765372052192,
+        28.71511679440584
+      ],
+      "size": [
+        283.259375,
+        438.80841722170493
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 98
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 99
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 62,
+      "type": "AILab_MaskPreview",
+      "pos": [
+        1771.3522160957707,
+        37.823692544479144
+      ],
+      "size": [
+        409.40977875045064,
+        308.1645913357711
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 100
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_MaskPreview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 60,
+      "type": "AILab_MaskPreview",
+      "pos": [
+        546.2448700509548,
+        89.52957011754467
+      ],
+      "size": [
+        505.42747202485566,
+        381.06855367187836
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 91
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_MaskPreview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 46,
+      "type": "AILab_ImageToList",
+      "pos": [
+        180.6625658779424,
+        -761.571779713704
+      ],
+      "size": [
+        241.7502215286886,
+        158
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image_4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image_5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image_6",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "shape": 6,
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "BATCH_SIZE",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_ImageToList",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "crop"
+      ],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 48,
+      "type": "AILab_MaskToList",
+      "pos": [
+        443.2172880042158,
+        -761.571779713704
+      ],
+      "size": [
+        261.51358669799527,
+        158
       ],
       "flags": {},
       "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask_1",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "mask_2",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "mask_3",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "mask_4",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "mask_5",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "mask_6",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "shape": 6,
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_MaskToList",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "off"
+      ],
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 47,
+      "type": "AILab_ImageMaskToList",
+      "pos": [
+        725.5353752997958,
+        -761.571779713704
+      ],
+      "size": [
+        334.32578002751234,
+        278
+      ],
+      "flags": {},
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -701,48 +1229,16 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_ImageMaskToList"
+        "Node name for S&R": "AILab_ImageMaskToList",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "crop"
       ],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
-    {
-      "id": 62,
-      "type": "AILab_MaskPreview",
-      "pos": [
-        1709.043701852234,
-        43.3906995024993
-      ],
-      "size": [
-        409.40977875045064,
-        308.1645913357711
-      ],
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 100
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_MaskPreview"
-      },
-      "widgets_values": [],
       "color": "#2e3e57",
       "bgcolor": "#4b5b73"
     },
@@ -754,11 +1250,11 @@
         -342.4068451313019
       ],
       "size": [
-        450.69917785327516,
-        365.464710830832
+        500.54024886297543,
+        379.30942930534457
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -789,289 +1285,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Preview"
-      },
-      "widgets_values": [],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
-    {
-      "id": 51,
-      "type": "AILab_ColorToMask",
-      "pos": [
-        -347.29113802664796,
-        861.0253090772748
-      ],
-      "size": [
-        340,
-        108
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 110
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
         }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [
-            113
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_ColorToMask"
-      },
-      "widgets_values": [
-        false,
-        10,
-        "#ff0000"
-      ],
-      "color": "#222e40",
-      "bgcolor": "#364254"
-    },
-    {
-      "id": 68,
-      "type": "AILab_Preview",
-      "pos": [
-        13.429676985540132,
-        522.8172182833199
-      ],
-      "size": [
-        296.5573523869766,
-        441.34686577474065
-      ],
-      "flags": {},
-      "order": 20,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": 112
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": 113
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": []
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Preview"
-      },
-      "widgets_values": [],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
-    {
-      "id": 66,
-      "type": "RMBG",
-      "pos": [
-        -350.2292106187164,
-        521.4078025869
-      ],
-      "size": [
-        340,
-        292
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 109
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            110,
-            112
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "MASK_IMAGE",
-          "type": "IMAGE",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "RMBG"
-      },
-      "widgets_values": [
-        "RMBG-2.0",
-        1,
-        1024,
-        0,
-        0,
-        false,
-        false,
-        "Color",
-        "#ff0000"
-      ],
-      "color": "#222e40",
-      "bgcolor": "#364254"
-    },
-    {
-      "id": 56,
-      "type": "AILab_LoadImage",
-      "pos": [
-        -507.8036001213148,
-        -449.76630875267523
-      ],
-      "size": [
-        658.5781239884182,
-        749.9739396122188
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            101,
-            107,
-            108,
-            109
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        },
-        {
-          "name": "WIDTH",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "HEIGHT",
-          "type": "INT",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_LoadImage"
-      },
-      "widgets_values": [
-        "",
-        "ComfyUI_0073.png",
-        "lanczos",
-        0,
-        1,
-        "longest_side",
-        0,
-        "image"
-      ],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
-    {
-      "id": 69,
-      "type": "PreviewAny",
-      "pos": [
-        244.62952344276502,
-        195.42117803366267
-      ],
-      "size": [
-        276.1929030268334,
-        202.87891754385805
-      ],
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "source",
-          "type": "*",
-          "link": 115
-        }
-      ],
-      "outputs": [],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.9.2",
-        "Node name for S&R": "PreviewAny"
-      },
-      "widgets_values": [
-        null,
-        null,
-        false
-      ]
-    },
-    {
-      "id": 60,
-      "type": "AILab_MaskPreview",
-      "pos": [
-        544.8603137020481,
-        63.22458389060715
-      ],
-      "size": [
-        445.8952459605439,
-        346.45675748559734
-      ],
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 91
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_MaskPreview"
       },
       "widgets_values": [],
       "color": "#2e3e57",
@@ -1122,7 +1341,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Florence2"
+        "Node name for S&R": "AILab_Florence2",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "microsoft/Florence-2-base",
@@ -1132,7 +1356,7 @@
         true,
         "",
         false,
-        "woman"
+        "girl"
       ],
       "color": "#222e40",
       "bgcolor": "#364254"
@@ -1149,7 +1373,7 @@
         122
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -1188,7 +1412,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Florence2ToCoordinates"
+        "Node name for S&R": "AILab_Florence2ToCoordinates",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "1,2",
@@ -1350,6 +1579,30 @@
       69,
       0,
       "BBOX"
+    ],
+    [
+      116,
+      70,
+      0,
+      71,
+      0,
+      "IMAGE"
+    ],
+    [
+      117,
+      70,
+      1,
+      71,
+      1,
+      "MASK"
+    ],
+    [
+      118,
+      56,
+      0,
+      70,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [
@@ -1357,10 +1610,10 @@
       "id": 1,
       "title": "YOLO",
       "bounding": [
-        1036.2030447017617,
-        -546.8580933670634,
-        1092.1675251452946,
-        1028.9358284618384
+        1094.3509256708055,
+        -535.7823291501353,
+        1086.9666541931867,
+        1010.2127406496438
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -1372,8 +1625,8 @@
       "bounding": [
         173.18021222894134,
         -418.087161768548,
-        829.1530693477696,
-        834.3299632484777
+        896.9922109982444,
+        895.2465344080572
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -1383,10 +1636,10 @@
       "id": 4,
       "title": "Batch List",
       "bounding": [
-        1037.8420447008732,
-        497.09092614328324,
-        956.4082492815496,
-        361.6
+        170.66256587794263,
+        -835.1717797137039,
+        901.2789854456039,
+        365.7607126334851
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -1396,8 +1649,8 @@
       "id": 5,
       "title": "Image Resise & Compare",
       "bounding": [
-        355.8307279548751,
-        502.0924334366491,
+        1519.1471436847492,
+        498.1329376439257,
         650.790232344877,
         467.6
       ],
@@ -1409,10 +1662,23 @@
       "id": 6,
       "title": "Color to Mask",
       "bounding": [
-        -360.2292106187164,
-        445.9895601481211,
+        -544.5376706425178,
+        349.88810815590887,
         684.334084226326,
         527.7008311466786
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "SAM3",
+      "bounding": [
+        173.29710082703508,
+        489.32590206993143,
+        1334.7581895928138,
+        630.4248365836976
       ],
       "color": "#3f789e",
       "font_size": 24,
@@ -1422,10 +1688,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.9306133616020476,
+      "scale": 0.6991835924883918,
       "offset": [
-        755.9456821662792,
-        524.7089130117238
+        1565.753166209203,
+        1064.886096350305
       ]
     },
     "workflowRendererVersion": "LG",
@@ -1433,7 +1699,9 @@
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
-    "VHS_KeepIntermediate": true
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "links_added_by_ue": []
   },
   "version": 0.4
 }
