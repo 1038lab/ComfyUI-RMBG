@@ -16,8 +16,10 @@
 - Added `ImageResize` Node: Comprehensive all-in-one image resizing tool with robust handling for most scenarios. Supports custom width and height, megapixel constraints, longest/shortest side resizing, padding, cropping, and additional flexible options.
 - Enhanced the `Compare` node by adding support for bg_color and text_color properties. These improvements are now applicable for both side-by-side image comparison and video comparison.
 ![image_compare_resize](https://github.com/user-attachments/assets/4c43b00e-8bba-44d7-a465-7398dcd7050e)
+- Updated `SAM3 Segmentation` node: added output mode (merged/separate), max segment, segment_pick, and device controls.  
+![image_compare_resize](https://github.com/user-attachments/assets/f270471b-ff33-4a27-9abb-cecb735b534d)  
 
-### 🔧 PyTorch JIT Compatibility Fix
+### 🔧 PyTorch JIT Compatibility Fix  
 - Removed global torch.load override; TorchScript handled locally in SAM2.
 - TorchScript is handled via a local fallback to avoid interfering with other nodes.
 - Improves overall compatibility and stability in mixed ComfyUI environments.
@@ -603,6 +605,7 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
+
 
 
 
