@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-rmbg"
-description = "A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, INSPYRENET, BEN, BEN2, BiRefNet, SDMatte models, SAM, SAM2 and GroundingDINO, while also incorporating a new feature for real-time background replacement and enhanced edge detection for improved accuracy."
-version = "2.9.6"
+description = "A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, INSPYRENET, BEN, BEN2, BiRefNet, SDMatte models, SAM, SAM2, SAM3 and GroundingDINO, while also incorporating a new feature for real-time background replacement and enhanced edge detection for improved accuracy."
+version = "3.0.0"
 license = {file = "LICENSE"}
 
 dependencies = ["huggingface-hub>=0.19.0", "transparent-background>=1.1.2", "segment-anything>=1.0", "groundingdino-py>=0.4.0", "opencv-python>=4.7.0", "onnxruntime>=1.15.0", "onnxruntime-gpu>=1.15.0", "protobuf>=3.20.2,<6.0.0", "hydra-core>=1.3.0", "omegaconf>=2.3.0", "iopath>=0.1.9"]
@@ -14,3 +14,4 @@ Repository = "https://github.com/1038lab/ComfyUI-RMBG"
 PublisherId = "ailab"
 DisplayName = "ComfyUI-RMBG"
 Icon = ""
+
