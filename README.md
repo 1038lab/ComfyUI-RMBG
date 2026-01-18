@@ -4,7 +4,7 @@ A sophisticated ComfyUI custom node engineered for advanced image background rem
 
 ## News & Updates
 - **2026/01/01**: Update ComfyUI-RMBG to **v3.0.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v300-20260101) )
-![V3 0 0_nodes](example_workflows/V3.0.0_nodes.jpg)  
+![V3 0 0_nodes](example_workflows/V3.0.0_nodes.jpg)
 - **2025/12/09**: Update ComfyUI-RMBG to **v2.9.6** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v296-20251209) )  
 ![v2.9.6_Image Compare](https://github.com/user-attachments/assets/e4ee824d-207e-4f46-b2db-0110e99c84c7)
 - **2025/11/25**: Update ComfyUI-RMBG to **v2.9.5** SAM3 Segmentaion bug fixed( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v295-20251125) )  
@@ -426,5 +426,6 @@ If this custom node helps you or you like my work, please give me ⭐ on this re
 
 ## License
 GPL-3.0 License
+
 
 
