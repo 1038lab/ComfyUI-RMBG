@@ -547,7 +547,7 @@ class AILab_BaseImageLoader:
         input_dir = folder_paths.get_input_directory()
         os.makedirs(input_dir, exist_ok=True)
         return [f for f in os.listdir(input_dir) if os.path.isdir(os.path.join(input_dir, f))]
-
+         
     def download_image(self, url):
         try:
             import requests
@@ -557,14 +557,17 @@ class AILab_BaseImageLoader:
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
             }
 
-            response = requests.get(url, stream=True, timeout=10, headers=headers)
+            response = requests.get(url, timeout=10, headers=headers, allow_redirects=True)
             if response.status_code != 200:
                 raise ValueError(f"Failed to download image from URL: {url}, status code: {response.status_code}")
-            return Image.open(BytesIO(response.content))
+
+            img = Image.open(BytesIO(response.content))
+            img.load()
+            return img
 
         except Exception as e:
             print(f"Error downloading image from URL: {str(e)}")
-            raise e
+            raise
 
     def get_image(self, image_path_or_URL="", image=""):
         if not image_path_or_URL and (not image or image == ""):
