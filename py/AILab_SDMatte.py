@@ -52,13 +52,8 @@ except ImportError:
     SAFETENSORS_AVAILABLE = False
     print("Warning: safetensors not available. Will use torch.load for model loading.")
 
-try:
-    import diffusers
-    import transformers
-    DIFFUSERS_AVAILABLE = True
-except ImportError:
-    DIFFUSERS_AVAILABLE = False
-    print("Warning: diffusers/transformers not available. SDMatte functionality will be limited.")
+# Lazy: diffusers/transformers availability is checked on first use to avoid ~3.7s import at startup
+DIFFUSERS_AVAILABLE = None  # Tri-state: None = not yet checked
 
 current_dir = Path(__file__).resolve().parent
 repo_root = current_dir.parent
@@ -251,6 +246,14 @@ class AILab_SDMatte:
                 torch.cuda.empty_cache()
         
         if cache_key not in self.model_cache:
+            global DIFFUSERS_AVAILABLE
+            if DIFFUSERS_AVAILABLE is None:
+                try:
+                    import diffusers  # noqa: F401
+                    import transformers  # noqa: F401
+                    DIFFUSERS_AVAILABLE = True
+                except ImportError:
+                    DIFFUSERS_AVAILABLE = False
             if not DIFFUSERS_AVAILABLE:
                 raise ImportError("diffusers and transformers are required for SDMatte functionality")
         
