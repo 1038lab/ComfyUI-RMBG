@@ -187,6 +187,7 @@ class RMBGModel(BaseModelLoader):
 
                     module_name = f"custom_birefnet_model_{hash(birefnet_path)}"
                     module = types.ModuleType(module_name)
+                    module.__file__ = birefnet_path
                     sys.modules[module_name] = module
                     exec(birefnet_content, module.__dict__)
 
