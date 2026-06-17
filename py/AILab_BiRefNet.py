@@ -22,7 +22,8 @@ import importlib.util
 from safetensors.torch import load_file
 import cv2
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+from AILab_utils import get_device
+device = get_device()
 
 # Add model path
 folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))

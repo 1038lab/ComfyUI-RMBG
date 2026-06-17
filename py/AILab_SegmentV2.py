@@ -15,6 +15,7 @@ from groundingdino.util import box_ops
 from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
 
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
+from AILab_utils import get_device
 
 SAM_MODELS = {
     "sam_vit_h (2.56GB)": {
@@ -165,7 +166,7 @@ class SegmentV2:
     def segment_v2(self, image, prompt, sam_model, dino_model, threshold=0.30,
                    mask_blur=0, mask_offset=0, background="Alpha", 
                    background_color="#222222", invert_output=False):
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        device = get_device()
 
         batch_size = image.shape[0] if len(image.shape) == 4 else 1
         if len(image.shape) == 3:

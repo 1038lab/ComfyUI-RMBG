@@ -45,7 +45,8 @@ def RGB2RGBA(image: Image.Image, mask: Union[Image.Image, torch.Tensor]) -> Imag
         mask = mask.resize(image.size, Image.Resampling.LANCZOS)
     return Image.merge('RGBA', (*image.convert('RGB').split(), mask.convert('L')))
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+from AILab_utils import get_device
+device = get_device()
 
 folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
