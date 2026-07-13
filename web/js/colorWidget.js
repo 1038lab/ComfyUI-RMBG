@@ -102,6 +102,7 @@ const AILabColorWidget = {
                     picker.addEventListener('change', () => {
                         this.value = picker.value;
                         node.graph._version++;
+                        this.callback?.(this.value);
                         node.setDirtyCanvas(true, true);
                         picker.remove();
                     });
