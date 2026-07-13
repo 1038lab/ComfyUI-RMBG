@@ -16,7 +16,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+            const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
 
             const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
             console.log(`Owner: ${owner}, Repo: ${repo}`);
@@ -56,7 +56,7 @@ jobs:
                       console.log(`Skipping issue #${issue.number} as it's marked as 'good first issue'`);
                       continue;
                     }
-                    if (new Date(issue.updated_at) < thirtyDaysAgo) {
+                    if (new Date(issue.updated_at) < ninetyDaysAgo) {
                       try {
                         await github.rest.issues.update({
                           owner,
@@ -69,7 +69,7 @@ jobs:
                           owner,
                           repo,
                           issue_number: issue.number,
-                          body: 'This issue has been automatically closed due to 30-day inactivity. Please feel free to reopen it with \`/reopen\` if needed.'
+                          body: `This issue has been automatically closed due to 90-day inactivity. If you're still experiencing this issue, feel free to reopen it or leave a new comment.`
                         });
                         console.log(`Closed issue #${issue.number} due to inactivity.`);
                       } catch (error) {
