@@ -3,6 +3,17 @@ import numpy as np
 import torch
 from PIL import Image
 from comfy.utils import common_upscale
+import comfy.model_management as mm
+
+
+def get_device():
+    """Return the torch device ComfyUI selected (CUDA, MPS, or CPU).
+
+    Defers to ComfyUI's device management instead of assuming CUDA-or-CPU, so nodes
+    follow whatever backend ComfyUI chose. Fixes models silently running on CPU on
+    Apple Silicon (MPS). See issues #200 and #135.
+    """
+    return mm.get_torch_device()
 
 
 def tensor2pil(image: torch.Tensor) -> Image.Image:
