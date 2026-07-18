@@ -396,6 +396,10 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
   - Delete `%USERPROFILE%\.cache\huggingface\token` (and `%USERPROFILE%\.huggingface\token` if present)
   - Ensure no `HF_TOKEN`/`HUGGINGFACE_TOKEN` env vars are set
   - Re-run; public repos download anonymously (no login required)
+- Windows: ComfyUI exits when running `RMBG-2.0`:
+  - This can be a native crash inside PyTorch when importing/executing the bundled model code.
+  - The node can run `RMBG-2.0` in a subprocess (default on Windows). Set `COMFYUI_RMBG_RMBG2_SUBPROCESS=0` to disable.
+  - Set `COMFYUI_RMBG_DEBUG_PROGRESS=1` to write a debug log to `ComfyUI/user/rmbg_progress.log`.
 - Preview shows "Required input is missing: images":
   - Ensure image outputs are connected and upstream nodes ran successfully
 

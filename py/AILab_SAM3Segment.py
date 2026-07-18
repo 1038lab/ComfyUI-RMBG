@@ -23,8 +23,6 @@ if str(MODELS_ROOT) not in sys.path:
     sys.path.insert(0, str(MODELS_ROOT))
 
 SAM3_BPE_PATH = SAM3_LOCAL_DIR / "assets" / "bpe_simple_vocab_16e6.txt.gz"
-if not os.path.isfile(SAM3_BPE_PATH):
-    raise RuntimeError("SAM3 assets missing; ensure sam3/assets/bpe_simple_vocab_16e6.txt.gz exists.")
 
 _DEFAULT_PT_ENTRY = {
     "model_url": "https://huggingface.co/1038lab/sam3/resolve/main/sam3.pt",
@@ -104,8 +102,16 @@ def _resolve_device(user_choice):
     return auto_device
 
 
-from sam3.model_builder import build_sam3_image_model  # noqa: E402
-from sam3.model.sam3_image_processor import Sam3Processor  # noqa: E402
+
+def _lazy_import_sam3():
+    if not os.path.isfile(SAM3_BPE_PATH):
+        raise RuntimeError("SAM3 assets missing; ensure models/sam3/assets/bpe_simple_vocab_16e6.txt.gz exists.")
+
+    # Import only when node is used to avoid breaking ComfyUI startup if optional deps are missing.
+    from sam3.model_builder import build_sam3_image_model  # noqa: E402
+    from sam3.model.sam3_image_processor import Sam3Processor  # noqa: E402
+
+    return build_sam3_image_model, Sam3Processor
 
 
 class SAM3Segment:
@@ -140,6 +146,7 @@ class SAM3Segment:
         self.processor_cache = {}
 
     def _load_processor(self, device_choice):
+        build_sam3_image_model, Sam3Processor = _lazy_import_sam3()
         torch_device = _resolve_device(device_choice)
         device_str = "cuda" if torch_device.type == "cuda" else "cpu"
         cache_key = ("sam3", device_str)
