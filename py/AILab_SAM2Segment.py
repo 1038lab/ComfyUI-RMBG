@@ -14,16 +14,9 @@ import comfy.model_management
 from hydra import initialize_config_dir
 from hydra.core.global_hydra import GlobalHydra
 
-try:
-    from groundingdino.util.slconfig import SLConfig
-    from groundingdino.models import build_model
-    from groundingdino.util.utils import clean_state_dict
-    from groundingdino.util import box_ops
-    from groundingdino.datasets.transforms import Compose, RandomResize, ToTensor, Normalize
-    GROUNDINGDINO_AVAILABLE = True
-except ImportError:
-    GROUNDINGDINO_AVAILABLE = False
-    print("Warning: GroundingDINO not available. Text prompts will use fallback method.")
+# GroundingDINO imports are deferred to first use (segment_v2) to avoid ~12.5s import at startup.
+# The GROUNDINGDINO_AVAILABLE flag is checked lazily on first invocation.
+GROUNDINGDINO_AVAILABLE = None  # Tri-state: None = not yet checked, True/False = checked
 
 current_dir = Path(__file__).resolve().parent
 repo_root = current_dir.parent
@@ -249,8 +242,25 @@ class SAM2Segment:
         return self.sam2_model_cache[cache_key]
 
     def segment_v2(self, image, prompt, sam2_model, dino_model, device, threshold=0.35,
-                   mask_blur=0, mask_offset=0, background="Alpha", 
+                   mask_blur=0, mask_offset=0, background="Alpha",
                    background_color="#222222", invert_output=False):
+        # Lazy import groundingdino (~12.5s) -- only when the node is actually executed
+        global GROUNDINGDINO_AVAILABLE
+        if GROUNDINGDINO_AVAILABLE is None:
+            try:
+                from groundingdino.util.slconfig import SLConfig  # noqa: F401
+                GROUNDINGDINO_AVAILABLE = True
+            except ImportError:
+                GROUNDINGDINO_AVAILABLE = False
+                print("Warning: GroundingDINO not available. Text prompts will use fallback method.")
+        if not GROUNDINGDINO_AVAILABLE:
+            raise RuntimeError("GroundingDINO is required for SAM2Segment but is not installed.")
+        from groundingdino.util.slconfig import SLConfig
+        from groundingdino.models import build_model
+        from groundingdino.util.utils import clean_state_dict
+        from groundingdino.util import box_ops
+        from groundingdino.datasets.transforms import Compose, RandomResize, ToTensor, Normalize
+
         device_obj = comfy.model_management.get_torch_device()
 
         # Process batch images

@@ -16,7 +16,6 @@ import torch.nn as nn
 import numpy as np
 from typing import Tuple, Union
 from PIL import Image, ImageFilter
-import onnxruntime
 import folder_paths
 from huggingface_hub import hf_hub_download
 import shutil
@@ -135,6 +134,7 @@ class BodySegment:
             
             # Load model if needed
             if self.model is None:
+                import onnxruntime  # Lazy: onnxruntime is heavy and only needed when node executes
                 self.model = onnxruntime.InferenceSession(
                     os.path.join(self.cache_dir, self.model_file)
                 )

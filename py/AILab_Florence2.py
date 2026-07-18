@@ -4,11 +4,6 @@ import random
 from typing import Any, Dict, List, Tuple
 from unittest.mock import patch
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.patches as patches
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torchvision.transforms.functional as TF
@@ -17,9 +12,6 @@ from PIL import Image, ImageColor, ImageDraw
 import comfy.model_management as mm
 from comfy.utils import ProgressBar
 import folder_paths
-import transformers
-from transformers import AutoModelForCausalLM, AutoProcessor
-from transformers.dynamic_module_utils import get_imports
 
 MODEL_DIR = os.path.join(folder_paths.models_dir, "LLM")
 os.makedirs(MODEL_DIR, exist_ok=True)
@@ -64,6 +56,7 @@ COLOR_BANK = ["blue", "orange", "green", "purple", "pink", "cyan"]
 
 
 def _fixed_get_imports(filename):
+    from transformers.dynamic_module_utils import get_imports  # Lazy: avoid top-level transformers import (~3.7s)
     try:
         if not str(filename).endswith("modeling_florence2.py"):
             return get_imports(filename)
@@ -148,6 +141,9 @@ class AILab_Florence2:
         return target
 
     def _get_model(self, model_name: str, precision: str, attention: str) -> Dict[str, Any]:
+        import transformers  # Lazy: transformers is ~3.7s to import
+        from transformers import AutoModelForCausalLM, AutoProcessor
+
         key = (model_name, precision, attention)
         if key in self.MODEL_CACHE:
             return self.MODEL_CACHE[key]
@@ -194,6 +190,11 @@ class AILab_Florence2:
         fill_mask: bool,
         select_filter: List[str],
     ) -> Tuple[torch.Tensor, torch.Tensor]:
+        import matplotlib  # Lazy: matplotlib is ~0.4s to import
+        matplotlib.use("Agg")
+        import matplotlib.patches as patches
+        import matplotlib.pyplot as plt
+
         width, height = image_pil.size
         fig, ax = plt.subplots(figsize=(width / 100, height / 100), dpi=100)
         fig.subplots_adjust(left=0, right=1, top=1, bottom=0)

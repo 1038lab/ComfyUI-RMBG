@@ -8,11 +8,6 @@ from torch.hub import download_url_to_file
 
 import folder_paths
 from segment_anything import sam_model_registry, SamPredictor
-from groundingdino.util.slconfig import SLConfig
-from groundingdino.models import build_model
-from groundingdino.util.utils import clean_state_dict
-from groundingdino.util import box_ops
-from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
 
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
 
@@ -107,6 +102,7 @@ def apply_background_color(image: Image.Image, mask_image: Image.Image,
     return rgba_image
 
 def get_groundingdino_model(device):
+    from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection  # Lazy: transformers is ~3.7s to import
     processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-tiny")
     model = AutoModelForZeroShotObjectDetection.from_pretrained("IDEA-Research/grounding-dino-tiny").to(device)
     return processor, model
@@ -163,8 +159,14 @@ class SegmentV2:
         self.sam_model_cache = {}
 
     def segment_v2(self, image, prompt, sam_model, dino_model, threshold=0.30,
-                   mask_blur=0, mask_offset=0, background="Alpha", 
+                   mask_blur=0, mask_offset=0, background="Alpha",
                    background_color="#222222", invert_output=False):
+        # Lazy import groundingdino (~12.5s) -- only when the node is actually executed
+        from groundingdino.util.slconfig import SLConfig
+        from groundingdino.models import build_model
+        from groundingdino.util.utils import clean_state_dict
+        from groundingdino.util import box_ops
+
         device = "cuda" if torch.cuda.is_available() else "cpu"
 
         batch_size = image.shape[0] if len(image.shape) == 4 else 1

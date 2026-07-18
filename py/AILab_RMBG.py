@@ -27,8 +27,6 @@ from huggingface_hub import hf_hub_download
 import shutil
 import sys
 import importlib.util
-from transformers import AutoModelForImageSegmentation
-import cv2
 import types
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -220,6 +218,7 @@ class RMBGModel(BaseModelLoader):
                 except Exception as modern_e:
                     print(f"[RMBG INFO] Using standard transformers loading (fallback mode)...")
                     try:
+                        from transformers import AutoModelForImageSegmentation  # Lazy: transformers is ~3.7s to import
                         self.model = AutoModelForImageSegmentation.from_pretrained(
                             cache_dir,
                             trust_remote_code=True,
@@ -474,19 +473,20 @@ class BEN2Model(BaseModelLoader):
             handle_model_error(f"Error in BEN2 processing: {str(e)}")
 
 def refine_foreground(image_bchw, masks_b1hw):
+    import cv2  # Lazy import: cv2 is heavy (~0.4s) and only needed for foreground refinement
     b, c, h, w = image_bchw.shape
     if b != masks_b1hw.shape[0]:
         raise ValueError("images and masks must have the same batch size")
-    
+
     image_np = image_bchw.cpu().numpy()
     mask_np = masks_b1hw.cpu().numpy()
-    
+
     refined_fg = []
     for i in range(b):
-        mask = mask_np[i, 0]      
+        mask = mask_np[i, 0]
         thresh = 0.45
         mask_binary = (mask > thresh).astype(np.float32)
-        
+
         edge_blur = cv2.GaussianBlur(mask_binary, (3, 3), 0)
         transition_mask = np.logical_and(mask > 0.05, mask < 0.95)
         

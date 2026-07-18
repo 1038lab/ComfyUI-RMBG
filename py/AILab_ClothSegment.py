@@ -15,7 +15,6 @@ import torch.nn as nn
 import numpy as np
 from typing import Tuple, Union
 from PIL import Image, ImageFilter
-from transformers import SegformerImageProcessor, AutoModelForSemanticSegmentation
 import folder_paths
 from huggingface_hub import hf_hub_download
 import shutil
@@ -155,6 +154,7 @@ class ClothesSegment:
             
             # Load model if needed
             if self.processor is None:
+                from transformers import SegformerImageProcessor, AutoModelForSemanticSegmentation  # Lazy: transformers is ~3.7s to import
                 self.processor = SegformerImageProcessor.from_pretrained(self.cache_dir)
                 self.model = AutoModelForSemanticSegmentation.from_pretrained(self.cache_dir)
                 self.model.eval()

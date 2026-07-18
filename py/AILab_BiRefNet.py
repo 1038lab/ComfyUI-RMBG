@@ -20,7 +20,6 @@ from huggingface_hub import hf_hub_download
 import sys
 import importlib.util
 from safetensors.torch import load_file
-import cv2
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -198,19 +197,20 @@ def handle_model_error(message):
     raise RuntimeError(message)
 
 def refine_foreground(image_bchw, masks_b1hw):
+    import cv2  # Lazy import: cv2 is heavy (~0.4s) and only needed for foreground refinement
     b, c, h, w = image_bchw.shape
     if b != masks_b1hw.shape[0]:
         raise ValueError("images and masks must have the same batch size")
-    
+
     image_np = image_bchw.cpu().numpy()
     mask_np = masks_b1hw.cpu().numpy()
-    
+
     refined_fg = []
     for i in range(b):
-        mask = mask_np[i, 0]      
+        mask = mask_np[i, 0]
         thresh = 0.45
         mask_binary = (mask > thresh).astype(np.float32)
-        
+
         edge_blur = cv2.GaussianBlur(mask_binary, (3, 3), 0)
         transition_mask = np.logical_and(mask > 0.05, mask < 0.95)
         

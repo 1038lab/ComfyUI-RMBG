@@ -51,7 +51,6 @@ import folder_paths
 import numpy as np
 import hashlib
 import torch
-import cv2
 import re
 from nodes import MAX_RESOLUTION
 from comfy.utils import common_upscale
@@ -60,7 +59,6 @@ import torchvision.transforms.functional as T
 import torch.nn.functional as F
 from comfy import model_management
 from comfy_extras.nodes_mask import ImageCompositeMasked
-from scipy import ndimage
 from AILab_utils import (
     tensor2pil,
     pil2tensor,
@@ -409,6 +407,7 @@ class AILab_MaskEnhancer:
 
     def fill_mask_region(self, mask_pil):
         """Fill holes in the mask"""
+        import cv2  # Lazy import: cv2 is heavy (~0.4s) and only needed for hole filling
         mask_np = np.array(mask_pil)
         contours, _ = cv2.findContours(mask_np, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         filled_mask = np.zeros_like(mask_np)
@@ -425,6 +424,7 @@ class AILab_MaskEnhancer:
             m = torch.clamp(m, 0, 1)
             
             if smooth > 0:
+                from scipy import ndimage  # Lazy import: scipy is heavy and only needed for smoothing
                 mask_np = m.cpu().numpy()
                 binary_mask = (mask_np > 0.5).astype(np.float32)
                 blurred_mask = ndimage.gaussian_filter(binary_mask, sigma=smooth)
@@ -547,7 +547,7 @@ class AILab_BaseImageLoader:
         input_dir = folder_paths.get_input_directory()
         os.makedirs(input_dir, exist_ok=True)
         return [f for f in os.listdir(input_dir) if os.path.isdir(os.path.join(input_dir, f))]
-         
+
     def download_image(self, url):
         try:
             import requests
@@ -557,17 +557,14 @@ class AILab_BaseImageLoader:
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
             }
 
-            response = requests.get(url, timeout=10, headers=headers, allow_redirects=True)
+            response = requests.get(url, stream=True, timeout=10, headers=headers)
             if response.status_code != 200:
                 raise ValueError(f"Failed to download image from URL: {url}, status code: {response.status_code}")
-
-            img = Image.open(BytesIO(response.content))
-            img.load()
-            return img
+            return Image.open(BytesIO(response.content))
 
         except Exception as e:
             print(f"Error downloading image from URL: {str(e)}")
-            raise
+            raise e
 
     def get_image(self, image_path_or_URL="", image=""):
         if not image_path_or_URL and (not image or image == ""):
