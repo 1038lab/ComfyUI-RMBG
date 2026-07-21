@@ -1,8 +1,13 @@
 # ComfyUI-RMBG
 
-A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, INSPYRENET, BEN, BEN2, BiRefNet, SDMatte models, SAM, SAM2 and GroundingDINO, while also incorporating a new feature for real-time background replacement and enhanced edge detection for improved accuracy.
+A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte models, SAM, SAM2 and GroundingDINO, while also incorporating a new feature for real-time background replacement and enhanced edge detection for improved accuracy.
 
 ## News & Updates
+
+- **2026/07/21**: Update ComfyUI-RMBG to **v3.1.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v310-20260721) )
+![V3 1 0_nodes](https://github.com/user-attachments/assets/b11bb478-1a89-4d05-bd60-a50c9ebd2bbf)
+  - Added `Lucida` model to BiRefNet node — BiRefNet fine-tune for transparent objects, camouflage, text/logos, glow/VFX, and illustrations)
+  - Added `sensitivity` parameter to BiRefNet node
 - **2026/01/01**: Update ComfyUI-RMBG to **v3.0.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v300-20260101) )
 ![V3 0 0_nodes](example_workflows/V3.0.0_nodes.jpg)
 - **2025/12/09**: Update ComfyUI-RMBG to **v2.9.6** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v296-20251209) )  
@@ -330,6 +335,16 @@ BIREFNET is a powerful model for image segmentation, offering:
 - BiRefNet-HR-matting model (high resolution matting)
 - BiRefNet_lite model (lightweight version for faster processing)
 - BiRefNet_lite-2K model (lightweight version for 2K resolution)
+
+## Lucida
+Lucida is a [BiRefNet](https://github.com/ZhengPeng7/BiRefNet) fine-tune by [egeorcun](https://github.com/egeorcun/lucida) (MIT License), optimized for cases where general-purpose background removers fall apart:
+- Semi-transparent objects (glass, reflections)
+- Camouflaged subjects
+- Text, logos, and typography with soft shadows
+- Glow/VFX effects
+- Illustrations and line art
+- Print designs (stickers, tees)
+- Original model: [egeorcun/lucida](https://huggingface.co/egeorcun/lucida)
   
 ## SAM
 SAM is a powerful model for object detection and segmentation, offering:
@@ -366,6 +381,7 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
 - BiRefNet-HR-matting model (high resolution matting)
 - BiRefNet_lite model (lightweight version for faster processing)
 - BiRefNet_lite-2K model (lightweight version for 2K resolution)
+- Lucida model (BiRefNet fine-tune for transparent objects, camouflage, text/logos, glow/VFX, illustrations)
 </details>
 
 
@@ -405,6 +421,7 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
 - BEN: https://huggingface.co/PramaLLC/BEN
 - BEN2: https://huggingface.co/PramaLLC/BEN2
 - BiRefNet: https://huggingface.co/ZhengPeng7
+- Lucida: https://huggingface.co/egeorcun/lucida
 - SAM: https://huggingface.co/facebook/sam-vit-base
 - GroundingDINO: https://github.com/IDEA-Research/GroundingDINO
 - Clothes Segment: https://huggingface.co/mattmdjaga/segformer_b2_clothes
