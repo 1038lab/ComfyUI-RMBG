@@ -3,7 +3,7 @@ import sys
 import os
 import importlib.util
 
-__version__ = "3.0.0"
+__version__ = "3.1.0"
 
 # Locate current and node directories
 current_dir = Path(__file__).parent
