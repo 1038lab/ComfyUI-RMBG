@@ -3,12 +3,13 @@
 #
 # Model License Notice:
 # - BiRefNet Models: Apache-2.0 License (https://huggingface.co/ZhengPeng7)
+# - Lucida: MIT License (https://huggingface.co/egeorcun/lucida)
 #
 # This integration script follows GPL-3.0 License.
 # When using or modifying this code, please respect both the original model licenses
 # and this integration's license terms.
 #
-# Source: https://github.com/AILab-AI/ComfyUI-RMBG
+# Source: https://github.com/1038lab/ComfyUI-RMBG
 
 import os
 import torch
@@ -180,6 +181,20 @@ MODEL_CONFIG = {
         },
         "cache_dir": "BiRefNet",
         "description": "A model to get a toon style outline from an image.",
+        "default_res": 1024,
+        "max_res": 2048,
+        "min_res": 512
+    },
+    "Lucida": {
+        "repo_id": "1038lab/BiRefNet",
+        "files": {
+            "birefnet.py": "birefnet.py",
+            "BiRefNet_config.py": "BiRefNet_config.py",
+            "Lucida.safetensors": "Lucida.safetensors",
+            "config.json": "config.json"
+        },
+        "cache_dir": "BiRefNet",
+        "description": "BiRefNet fine-tune for transparent objects, camouflage, text/logos, glow/VFX, and illustrations.",
         "default_res": 1024,
         "max_res": 2048,
         "min_res": 512
@@ -371,6 +386,7 @@ class BiRefNetRMBG:
         tooltips = {
             "image": "Input image to be processed for background removal.",
             "model": "Select the BiRefNet model variant to use.",
+            "sensitivity": "Adjust the strength of mask detection (higher values result in more aggressive detection).",
             "mask_blur": "Specify the amount of blur to apply to the mask edges (0 for no blur, higher values for more blur).",
             "mask_offset": "Adjust the mask boundary (positive values expand the mask, negative values shrink it).",
             "invert_output": "Enable to invert both the image and mask output (useful for certain effects).",
@@ -384,6 +400,7 @@ class BiRefNetRMBG:
                 "model": (list(MODEL_CONFIG.keys()), {"tooltip": tooltips["model"]}),
             },
             "optional": {
+                "sensitivity": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01, "tooltip": tooltips["sensitivity"]}),
                 "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1, "tooltip": tooltips["mask_blur"]}),
                 "mask_offset": ("INT", {"default": 0, "min": -20, "max": 20, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
@@ -420,8 +437,14 @@ class BiRefNetRMBG:
                     handle_model_error(download_message)
                 print("Model files downloaded successfully")
             self.model.load_model(model)
+            sensitivity = params.get("sensitivity", 1.0)
             for img in image:
                 mask = self.model.process_image(img, params)
+                if sensitivity < 1.0:
+                    mask_np = np.array(mask).astype(np.float32) / 255.0
+                    mask_np = mask_np * (1 + (1 - sensitivity))
+                    mask_np = np.clip(mask_np, 0, 1)
+                    mask = Image.fromarray((mask_np * 255).astype(np.uint8))
                 if params["mask_blur"] > 0:
                     mask = mask.filter(ImageFilter.GaussianBlur(radius=params["mask_blur"]))
                 if params["mask_offset"] != 0:
