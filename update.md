@@ -2,6 +2,17 @@
 
 ## V3.0.0 (2026/01/01)  
 ### New nodes
+
+## V3.1.0 (2026/07/21)  
+### New Model
+- Added `Lucida` model to BiRefNet node — a BiRefNet fine-tune by [egeorcun](https://github.com/egeorcun/lucida) (MIT License) optimized for:
+![V3 1 0_nodes](https://github.com/user-attachments/assets/b11bb478-1a89-4d05-bd60-a50c9ebd2bbf)
+  - Semi-transparent objects (glass, reflections)
+  - Camouflaged subjects
+  - Text, logos, and typography with soft shadows
+  - Glow/VFX effects
+  - Illustrations and print designs (stickers, tees)
+
 - Added `Florence2 Segmentation` node for Florence-2 tasks: polygon masks, phrase grounding (boxes), and region proposals.
 - Added `Florence2 To Coordinates` tool node to convert Florence-2 JSON into center coordinates, bounding boxes, and masks.
 ![v3.0.0_Florence2](example_workflows/florence2_node.jpg)
