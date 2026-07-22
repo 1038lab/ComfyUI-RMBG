@@ -9,7 +9,7 @@
   - Text, logos, and typography with soft shadows
   - Glow/VFX effects
   - Illustrations and print designs (stickers, tees)
-  - 
+
 ## V3.0.0 (2026/01/01)  
 ### New nodes
 - Added `Florence2 Segmentation` node for Florence-2 tasks: polygon masks, phrase grounding (boxes), and region proposals.
