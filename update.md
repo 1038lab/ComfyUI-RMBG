@@ -2,7 +2,7 @@
 
 ## V3.1.0 (2026/07/21)  
 ### New Model
-- Added `Lucida` model to BiRefNet node — a BiRefNet fine-tune by [egeorcun](https://github.com/egeorcun/lucida) (MIT License) optimized for:
+- Added `Lucida` model to BiRefNet node
 ![V3 1 0_nodes](https://github.com/user-attachments/assets/b11bb478-1a89-4d05-bd60-a50c9ebd2bbf)
   - Semi-transparent objects (glass, reflections)
   - Camouflaged subjects
