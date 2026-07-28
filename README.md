@@ -431,11 +431,11 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
 
 ## Star History
 
-<a href="https://www.star-history.com/#1038lab/comfyui-rmbg&Date">
+<a href="https://www.star-history.com/?repos=1038lab%2Fcomfyui-rmbg&type=date&legend=bottom-right">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=1038lab/comfyui-rmbg&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=1038lab/comfyui-rmbg&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=1038lab/comfyui-rmbg&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=1038lab/comfyui-rmbg&type=date&theme=dark&legend=bottom-right&sealed_token=_r4Yead61QJlSCAqS6Zz9tfOuXeFkjZhDxyS1QyOU0Vg2po4sjwfRUuUrwGP2l1ZsfQZxi6LksxNtt5KsLn0cdUGQmFy-7yZ53ACJbkes4stgYf-evrrteKWj_vqco3RoSYziix99iaywn8Lwm5RoxZgJw6PBdyMNNmJwbNvIyY3i6a0LBJUERBFJp4W" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=1038lab/comfyui-rmbg&type=date&legend=bottom-right&sealed_token=_r4Yead61QJlSCAqS6Zz9tfOuXeFkjZhDxyS1QyOU0Vg2po4sjwfRUuUrwGP2l1ZsfQZxi6LksxNtt5KsLn0cdUGQmFy-7yZ53ACJbkes4stgYf-evrrteKWj_vqco3RoSYziix99iaywn8Lwm5RoxZgJw6PBdyMNNmJwbNvIyY3i6a0LBJUERBFJp4W" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=1038lab/comfyui-rmbg&type=date&legend=bottom-right&sealed_token=_r4Yead61QJlSCAqS6Zz9tfOuXeFkjZhDxyS1QyOU0Vg2po4sjwfRUuUrwGP2l1ZsfQZxi6LksxNtt5KsLn0cdUGQmFy-7yZ53ACJbkes4stgYf-evrrteKWj_vqco3RoSYziix99iaywn8Lwm5RoxZgJw6PBdyMNNmJwbNvIyY3i6a0LBJUERBFJp4W" />
  </picture>
 </a>
 
