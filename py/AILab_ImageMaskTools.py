@@ -1656,7 +1656,6 @@ class AILab_ImageStitch:
             ).movedim(1, -1)
         final_height, final_width = result.shape[1:3]
         return (result, final_width, final_height)
-   
 
 # Image Crop node
 class AILab_ImageCrop:
@@ -1713,34 +1712,11 @@ class AILab_ImageCrop:
             y = 0
 
         crop = image[:, y:y2, x:x2, :]
-        rest = None
         if split:
-            top = image[:, 0:y, :, :] if y > 0 else None
-            bottom = image[:, y2:oh, :, :] if y2 < oh else None
-            left = image[:, y:y2, 0:x, :] if x > 0 else None
-            right = image[:, y:y2, x2:ow, :] if x2 < ow else None
-
-            parts = []
-            if top is not None:
-                parts.append(top)
-            if left is not None or right is not None:
-                row_parts = []
-                if left is not None:
-                    row_parts.append(left)
-                if right is not None:
-                    row_parts.append(right)
-                if row_parts:
-                    row = torch.cat(row_parts, dim=2)
-                    parts.append(row)
-            if bottom is not None:
-                parts.append(bottom)
-            if parts:
-                rest = torch.cat(parts, dim=1)
-            else:
-                rest = torch.zeros_like(image[:, :0, :0, :])
-        else:
             rest = image.clone()
-            rest[:] = 0
+            rest[:, y:y2, x:x2, :] = 0
+        else:
+            rest = torch.zeros_like(image)
         return (crop, rest)
 
 # ICLoRA Concat node
