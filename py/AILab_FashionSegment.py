@@ -38,7 +38,8 @@ def mask2image(mask: torch.Tensor) -> Image.Image:
         mask = mask.unsqueeze(0)
     return tensor2pil(mask)
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+from AILab_utils import get_device
+device = get_device()
 
 folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
