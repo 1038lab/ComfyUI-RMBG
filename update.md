@@ -2,9 +2,17 @@
 
 ## V3.2.0 (2026/09/30)
 ### New Features & Model Upgrades
+<img width="800" alt="sm3" src="https://github.com/user-attachments/assets/e01201e2-2871-4a7e-bbbc-2e2930cb2752" />
+
 - **SAM3 Multiplex Upgrade**: Upgraded to the new SAM3 Multiplex node with native support for `safetensors` format models (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`).
 - **Instant VRAM Release (`unload_model`)**: Added an optional `unload_model` toggle across all nodes (`RMBG`, `BiRefNet`, `SAM2`, `SAM3`, `Segment`, `SDMatte`, `YOLOv8`, `LamaRemover`, etc.) to instantly free up GPU memory after execution.
 - **Apple Silicon (MPS) Acceleration**: Added native GPU acceleration support for macOS users across segmentation nodes.
+
+### New Nodes
+- Added `Resolution Selector` node: Pick an aspect ratio and a target megapixel count, and it calculates width and height for you (rounded to your chosen multiple), then outputs an empty latent - so you no longer need to do the math or reach for a separate Empty Latent Image node.
+- Added `Image Compare View` node: An interactive compare view rendered right on the node canvas. Drag the wipe line left/right or up/down, blend two images with adjustable opacity, view a pixel-difference map, or switch between side-by-side and highlight-diff modes. It also outputs a difference mask for further processing. (The original `Side By Side Compare` node is unchanged and still there for labeled multi-image collages.)
+
+<img width="800" alt="new_node" src="https://github.com/user-attachments/assets/9b165789-a291-4df0-a147-67cca8011262" />
 
 ### Performance & Startup Speed
 - **Ultra-Fast ComfyUI Startup**: Drastically optimized startup loading time, reducing node registration scan time from ~15s to <0.1s. ([#183](https://github.com/1038lab/ComfyUI-RMBG/pull/183))
