@@ -4,8 +4,10 @@ A sophisticated ComfyUI custom node engineered for advanced image background rem
 
 ## News & Updates
 - **2026/09/30**: Update ComfyUI-RMBG to **v3.2.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v320-20260930) )
+  ![v2.9.4_sam3](https://github.com/user-attachments/assets/9b165789-a291-4df0-a147-67cca8011262)
   - Upgraded to new `SAM3 Multiplex` segmentation node with native `safetensors` support (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
   - Added `unload_model` toggle across all nodes for instant GPU VRAM release
+  - Added New `Resolution Selector` & `Image Compare` nodes
   - Added native Apple Silicon (MPS) GPU acceleration for macOS
   - Optimized ComfyUI startup time from ~15s to <0.1s
   - Full compatibility fixes for `transformers >= 5.0.0`
