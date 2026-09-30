@@ -3,7 +3,8 @@ import sys
 import os
 import importlib.util
 
-__version__ = "3.1.0"
+__repo_name__ = "ComfyUI-RMBG"
+__version__ = "3.2.0"
 
 # Locate current and node directories
 current_dir = Path(__file__).parent
@@ -49,12 +50,14 @@ def load_nodes():
                     if hasattr(module, "Paths") and hasattr(module.Paths, "LLM_DIR"):
                         os.makedirs(module.Paths.LLM_DIR, exist_ok=True)
             except Exception as e:
-                print(f"Error loading {file}: {e}")
+                print(f"[{__repo_name__}] Error loading {module_name}: {e}")
 
 # Load all nodes
 load_nodes()
 
-__all__ = ["NODE_CLASS_MAPPINGS","NODE_DISPLAY_NAME_MAPPINGS"]
+__all__ = ["NODE_CLASS_MAPPINGS", "NODE_DISPLAY_NAME_MAPPINGS", "WEB_DIRECTORY"]
 
-print(f'\033[34m[ComfyUI-RMBG]\033[0m v\033[93m{__version__}\033[0m | '
-      f'\033[93m{len(NODE_CLASS_MAPPINGS)} nodes\033[0m \033[92mLoaded\033[0m')
+print(f'\033[36m[{__repo_name__}]\033[0m v'
+      f'\033[93m{__version__}\033[0m | '
+      f'\033[37m{len(NODE_CLASS_MAPPINGS)} nodes\033[0m '
+      f'\033[92mLoaded\033[0m')
