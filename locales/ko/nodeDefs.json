@@ -2,503 +2,2154 @@
   "RMBG": {
     "display_name": "배경 제거 (RMBG)",
     "inputs": {
-      "image": { "name": "이미지" },
-      "model": { "name": "모델" },
-      "sensitivity": { "name": "민감도" },
-      "process_res": { "name": "처리 해상도" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "refine_foreground": { "name": "전경 정제" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "image": {
+        "name": "이미지"
+      },
+      "model": {
+        "name": "모델"
+      },
+      "sensitivity": {
+        "name": "민감도"
+      },
+      "process_res": {
+        "name": "처리 해상도"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "refine_foreground": {
+        "name": "전경 정제"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "BodySegment": {
     "display_name": "신체 부위 분할 (RMBG)",
     "inputs": {
-      "images": { "name": "이미지" },
-      "Hair": { "name": "머리" },
-      "Glasses": { "name": "안경" },
-      "Top-clothes": { "name": "상의" },
-      "Bottom-clothes": { "name": "하의" },
-      "Torso-skin": { "name": "몸통 피부" },
-      "Face": { "name": "얼굴" },
-      "Left-arm": { "name": "왼팔" },
-      "Right-arm": { "name": "오른팔" },
-      "Left-leg": { "name": "왼다리" },
-      "Right-leg": { "name": "오른다리" },
-      "Left-foot": { "name": "왼발" },
-      "Right-foot": { "name": "오른발" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "images": {
+        "name": "이미지"
+      },
+      "Hair": {
+        "name": "머리"
+      },
+      "Glasses": {
+        "name": "안경"
+      },
+      "Top-clothes": {
+        "name": "상의"
+      },
+      "Bottom-clothes": {
+        "name": "하의"
+      },
+      "Torso-skin": {
+        "name": "몸통 피부"
+      },
+      "Face": {
+        "name": "얼굴"
+      },
+      "Left-arm": {
+        "name": "왼팔"
+      },
+      "Right-arm": {
+        "name": "오른팔"
+      },
+      "Left-leg": {
+        "name": "왼다리"
+      },
+      "Right-leg": {
+        "name": "오른다리"
+      },
+      "Left-foot": {
+        "name": "왼발"
+      },
+      "Right-foot": {
+        "name": "오른발"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "BiRefNetRMBG": {
     "display_name": "BiRefNet 배경 제거 (RMBG)",
     "inputs": {
-      "image": { "name": "이미지" },
-      "model": { "name": "모델" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "refine_foreground": { "name": "전경 정제" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "image": {
+        "name": "이미지"
+      },
+      "model": {
+        "name": "모델"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "refine_foreground": {
+        "name": "전경 정제"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "sensitivity": {
+        "name": "민감도"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "ClothesSegment": {
     "display_name": "의류 분할 (RMBG)",
     "inputs": {
-      "images": { "name": "이미지" },
-      "Hat": { "name": "모자" },
-      "Hair": { "name": "머리" },
-      "Face": { "name": "얼굴" },
-      "Sunglasses": { "name": "선글라스" },
-      "Upper-clothes": { "name": "상의" },
-      "Skirt": { "name": "치마" },
-      "Dress": { "name": "드레스" },
-      "Belt": { "name": "벨트" },
-      "Pants": { "name": "바지" },
-      "Left-arm": { "name": "왼팔" },
-      "Right-arm": { "name": "오른팔" },
-      "Left-leg": { "name": "왼다리" },
-      "Right-leg": { "name": "오른다리" },
-      "Bag": { "name": "가방" },
-      "Scarf": { "name": "스카프" },
-      "Left-shoe": { "name": "왼발" },
-      "Right-shoe": { "name": "오른발" },
-      "process_res": { "name": "처리 해상도" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "images": {
+        "name": "이미지"
+      },
+      "Hat": {
+        "name": "모자"
+      },
+      "Hair": {
+        "name": "머리"
+      },
+      "Face": {
+        "name": "얼굴"
+      },
+      "Sunglasses": {
+        "name": "선글라스"
+      },
+      "Upper-clothes": {
+        "name": "상의"
+      },
+      "Skirt": {
+        "name": "치마"
+      },
+      "Dress": {
+        "name": "드레스"
+      },
+      "Belt": {
+        "name": "벨트"
+      },
+      "Pants": {
+        "name": "바지"
+      },
+      "Left-arm": {
+        "name": "왼팔"
+      },
+      "Right-arm": {
+        "name": "오른팔"
+      },
+      "Left-leg": {
+        "name": "왼다리"
+      },
+      "Right-leg": {
+        "name": "오른다리"
+      },
+      "Bag": {
+        "name": "가방"
+      },
+      "Scarf": {
+        "name": "스카프"
+      },
+      "Left-shoe": {
+        "name": "왼발"
+      },
+      "Right-shoe": {
+        "name": "오른발"
+      },
+      "process_res": {
+        "name": "처리 해상도"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "Background": {
+        "name": "배경"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "FaceSegment": {
     "display_name": "얼굴 분할 (RMBG)",
     "inputs": {
-      "images": { "name": "이미지" },
-      "Skin": { "name": "피부" },
-      "Nose": { "name": "코" },
-      "Eyeglasses": { "name": "안경" },
-      "Left-eye": { "name": "왼쪽 눈" },
-      "Right-eye": { "name": "오른쪽 눈" },
-      "Left-eyebrow": { "name": "왼쪽 눈썹" },
-      "Right-eyebrow": { "name": "오른쪽 눈썹" },
-      "Left-ear": { "name": "왼쪽 귀" },
-      "Right-ear": { "name": "오른쪽 귀" },
-      "Mouth": { "name": "입" },
-      "Upper-lip": { "name": "윗입술" },
-      "Lower-lip": { "name": "아랫입술" },
-      "Hair": { "name": "머리" },
-      "Earring": { "name": "귀걸이" },
-      "Neck": { "name": "목" },
-      "process_res": { "name": "처리 해상도" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "images": {
+        "name": "이미지"
+      },
+      "Skin": {
+        "name": "피부"
+      },
+      "Nose": {
+        "name": "코"
+      },
+      "Eyeglasses": {
+        "name": "안경"
+      },
+      "Left-eye": {
+        "name": "왼쪽 눈"
+      },
+      "Right-eye": {
+        "name": "오른쪽 눈"
+      },
+      "Left-eyebrow": {
+        "name": "왼쪽 눈썹"
+      },
+      "Right-eyebrow": {
+        "name": "오른쪽 눈썹"
+      },
+      "Left-ear": {
+        "name": "왼쪽 귀"
+      },
+      "Right-ear": {
+        "name": "오른쪽 귀"
+      },
+      "Mouth": {
+        "name": "입"
+      },
+      "Upper-lip": {
+        "name": "윗입술"
+      },
+      "Lower-lip": {
+        "name": "아랫입술"
+      },
+      "Hair": {
+        "name": "머리"
+      },
+      "Earring": {
+        "name": "귀걸이"
+      },
+      "Neck": {
+        "name": "목"
+      },
+      "process_res": {
+        "name": "처리 해상도"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "FashionSegmentClothing": {
     "display_name": "패션 분할 (RMBG)",
     "inputs": {
-      "images": { "name": "이미지" },
-      "accessories_options": { "name": "액세서리 옵션" },
-      "coat": { "name": "코트" },
-      "jacket": { "name": "재킷" },
-      "cardigan": { "name": "가디건" },
-      "vest": { "name": "조끼" },
-      "sweater": { "name": "스웨터" },
-      "hood": { "name": "후드" },
-      "shirt, blouse": { "name": "셔츠, 블라우스" },
-      "top, t-shirt, sweatshirt": { "name": "상의, 티셔츠, 스웨트셔츠" },
-      "sleeve": { "name": "소매" },
-      "dress": { "name": "드레스" },
-      "jumpsuit": { "name": "점프수트" },
-      "cape": { "name": "망토" },
-      "pants": { "name": "바지" },
-      "shorts": { "name": "반바지" },
-      "skirt": { "name": "치마" },
-      "tights, stockings": { "name": "타이츠, 스톡" },
-      "sock": { "name": "양말" },
-      "shoe": { "name": "신발" },
-      "process_res": { "name": "처리 해상도" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "images": {
+        "name": "이미지"
+      },
+      "accessories_options": {
+        "name": "액세서리 옵션"
+      },
+      "coat": {
+        "name": "코트"
+      },
+      "jacket": {
+        "name": "재킷"
+      },
+      "cardigan": {
+        "name": "가디건"
+      },
+      "vest": {
+        "name": "조끼"
+      },
+      "sweater": {
+        "name": "스웨터"
+      },
+      "hood": {
+        "name": "후드"
+      },
+      "shirt, blouse": {
+        "name": "셔츠, 블라우스"
+      },
+      "top, t-shirt, sweatshirt": {
+        "name": "상의, 티셔츠, 스웨트셔츠"
+      },
+      "sleeve": {
+        "name": "소매"
+      },
+      "dress": {
+        "name": "드레스"
+      },
+      "jumpsuit": {
+        "name": "점프수트"
+      },
+      "cape": {
+        "name": "망토"
+      },
+      "pants": {
+        "name": "바지"
+      },
+      "shorts": {
+        "name": "반바지"
+      },
+      "skirt": {
+        "name": "치마"
+      },
+      "tights, stockings": {
+        "name": "타이츠, 스톡"
+      },
+      "sock": {
+        "name": "양말"
+      },
+      "shoe": {
+        "name": "신발"
+      },
+      "process_res": {
+        "name": "처리 해상도"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "FashionSegmentAccessories": {
     "display_name": "패션 액세서리 분할 (RMBG)",
     "inputs": {
-      "images": { "name": "이미지" },
-      "hat": { "name": "모자" },
-      "glasses": { "name": "안경" },
-      "headband, head covering, hair accessory": { "name": "헤드밴드" },
-      "scarf": { "name": "스카프" },
-      "tie": { "name": "넥타이" },
-      "glove": { "name": "장갑" },
-      "watch": { "name": "시계" },
-      "belt": { "name": "벨트" },
-      "leg warmer": { "name": "레그 워머" },
-      "bag, wallet": { "name": "가방" },
-      "umbrella": { "name": "우산" },
-      "collar": { "name": "칼라" },
-      "lapel": { "name": "라펠" },
-      "neckline": { "name": "넥라인" },
-      "epaulette": { "name": "어깨" },
-      "pocket": { "name": "주머니" },
-      "buckle": { "name": "버클" },
-      "zipper": { "name": "지퍼" },
-      "applique": { "name": "아플리케" },
-      "bow": { "name": "리본" },
-      "flower": { "name": "꽃" },
-      "bead": { "name": "구슬" },
-      "fringe": { "name": "프린지" },
-      "ribbon": { "name": "리본" },
-      "rivet": { "name": "리벳" },
-      "ruffle": { "name": "프릴" },
-      "sequin": { "name": "스팽글" },
-      "tassel": { "name": "태슬" }
+      "images": {
+        "name": "이미지"
+      },
+      "hat": {
+        "name": "모자"
+      },
+      "glasses": {
+        "name": "안경"
+      },
+      "headband, head covering, hair accessory": {
+        "name": "헤드밴드"
+      },
+      "scarf": {
+        "name": "스카프"
+      },
+      "tie": {
+        "name": "넥타이"
+      },
+      "glove": {
+        "name": "장갑"
+      },
+      "watch": {
+        "name": "시계"
+      },
+      "belt": {
+        "name": "벨트"
+      },
+      "leg warmer": {
+        "name": "레그 워머"
+      },
+      "bag, wallet": {
+        "name": "가방"
+      },
+      "umbrella": {
+        "name": "우산"
+      },
+      "collar": {
+        "name": "칼라"
+      },
+      "lapel": {
+        "name": "라펠"
+      },
+      "neckline": {
+        "name": "넥라인"
+      },
+      "epaulette": {
+        "name": "어깨"
+      },
+      "pocket": {
+        "name": "주머니"
+      },
+      "buckle": {
+        "name": "버클"
+      },
+      "zipper": {
+        "name": "지퍼"
+      },
+      "applique": {
+        "name": "아플리케"
+      },
+      "bow": {
+        "name": "리본"
+      },
+      "flower": {
+        "name": "꽃"
+      },
+      "bead": {
+        "name": "구슬"
+      },
+      "fringe": {
+        "name": "프린지"
+      },
+      "ribbon": {
+        "name": "리본"
+      },
+      "rivet": {
+        "name": "리벳"
+      },
+      "ruffle": {
+        "name": "프릴"
+      },
+      "sequin": {
+        "name": "스팽글"
+      },
+      "tassel": {
+        "name": "태슬"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "0": { "name": "액세서리 옵션" }
+      "0": {
+        "name": "액세서리 옵션"
+      }
     }
   },
   "Segment": {
     "display_name": "신체 분할 V1 (RMBG)",
     "inputs": {
-      "image": { "name": "이미지" },
-      "prompt": { "name": "프롬프트" },
-      "sam_model": { "name": "SAM 모델" },
-      "dino_model": { "name": "DINO 모델" },
-      "threshold": { "name": "임계값" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "image": {
+        "name": "이미지"
+      },
+      "prompt": {
+        "name": "프롬프트"
+      },
+      "sam_model": {
+        "name": "SAM 모델"
+      },
+      "dino_model": {
+        "name": "DINO 모델"
+      },
+      "threshold": {
+        "name": "임계값"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "SegmentV2": {
     "display_name": "신체 분할 V2 (RMBG)",
     "inputs": {
-      "image": { "name": "이미지" },
-      "prompt": { "name": "프롬프트" },
-      "sam_model": { "name": "SAM 모델" },
-      "dino_model": { "name": "DINO 모델" },
-      "threshold": { "name": "임계값" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "image": {
+        "name": "이미지"
+      },
+      "prompt": {
+        "name": "프롬프트"
+      },
+      "sam_model": {
+        "name": "SAM 모델"
+      },
+      "dino_model": {
+        "name": "DINO 모델"
+      },
+      "threshold": {
+        "name": "임계값"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_SAM2Segment": {
     "display_name": "SAM2Segment (RMBG)",
     "inputs": {
-      "image": { "name": "이미지" },
-      "prompt": { "name": "프롬프트" },
-      "sam_model": { "name": "SAM 모델" },
-      "dino_model": { "name": "DINO 모델" },
-      "threshold": { "name": "임계값" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "image": {
+        "name": "이미지"
+      },
+      "prompt": {
+        "name": "프롬프트"
+      },
+      "sam_model": {
+        "name": "SAM 모델"
+      },
+      "dino_model": {
+        "name": "DINO 모델"
+      },
+      "threshold": {
+        "name": "임계값"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" }
+      "2": {
+        "name": "마스크 이미지"
+      }
     }
-  },  
+  },
   "AILab_Preview": {
     "display_name": "이미지/마스크 미리보기 (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "이미지" },
-      "mask": { "name": "마스크" }
+      "image": {
+        "name": "이미지"
+      },
+      "mask": {
+        "name": "마스크"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_ImagePreview": {
     "display_name": "이미지 미리보기 (RMBG) 🖼️",
     "inputs": {
-      "image": { "name": "이미지" }
+      "image": {
+        "name": "이미지"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      }
     }
   },
   "AILab_MaskPreview": {
     "display_name": "마스크 미리보기 (RMBG) 🎭",
     "inputs": {
-      "mask": { "name": "마스크" }
+      "mask": {
+        "name": "마스크"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_LoadImage": {
     "display_name": "이미지 로드 (RMBG) 🖼️",
     "inputs": {
-      "image_path_or_URL": { "name": "이미지 경로 또는 URL" },
-      "image": { "name": "이미지" },
-      "mask_channel": { "name": "마스크 채널" },
-      "upscale_method": { "name": "업스케일 방법" },
-      "scale_by": { "name": "스케일 비율" },
-      "resize_mode": { "name": "리사이즈 모드" },
-      "size": { "name": "리사이즈 크기" }
+      "image_path_or_URL": {
+        "name": "이미지 경로 또는 URL"
+      },
+      "image": {
+        "name": "이미지"
+      },
+      "mask_channel": {
+        "name": "마스크 채널"
+      },
+      "upscale_method": {
+        "name": "업스케일 방법"
+      },
+      "scale_by": {
+        "name": "스케일 비율"
+      },
+      "resize_mode": {
+        "name": "리사이즈 모드"
+      },
+      "size": {
+        "name": "리사이즈 크기"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "megapixels": {
+        "name": "메가픽셀"
+      }
     },
     "outputs": {
-      "2": { "name": "너비" },
-      "3": { "name": "높이" }
+      "2": {
+        "name": "너비"
+      },
+      "3": {
+        "name": "높이"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_LoadImageSimple": {
     "display_name": "이미지 로드 간단 (RMBG) 🖼️",
     "inputs": {
-      "image_path_or_URL": { "name": "이미지 경로 또는 URL" },
-      "image": { "name": "이미지" }
+      "image_path_or_URL": {
+        "name": "이미지 경로 또는 URL"
+      },
+      "image": {
+        "name": "이미지"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "1": { "name": "너비" },
-      "2": { "name": "높이" }
+      "1": {
+        "name": "너비"
+      },
+      "2": {
+        "name": "높이"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "3": {
+        "name": "높이"
+      }
     }
   },
   "AILab_LoadImageAdvanced": {
     "display_name": "이미지 로드 고급 (RMBG) 🖼️",
     "inputs": {
-      "image_path_or_URL": { "name": "이미지 경로 또는 URL" },
-      "image": { "name": "이미지" },
-      "mask_channel": { "name": "마스크 채널" },
-      "upscale_method": { "name": "업스케일 방법" },
-      "scale_by": { "name": "스케일 비율" },
-      "resize_mode": { "name": "리사이즈 모드" },
-      "size": { "name": "리사이즈 크기" }
+      "image_path_or_URL": {
+        "name": "이미지 경로 또는 URL"
+      },
+      "image": {
+        "name": "이미지"
+      },
+      "mask_channel": {
+        "name": "마스크 채널"
+      },
+      "upscale_method": {
+        "name": "업스케일 방법"
+      },
+      "scale_by": {
+        "name": "스케일 비율"
+      },
+      "resize_mode": {
+        "name": "리사이즈 모드"
+      },
+      "size": {
+        "name": "리사이즈 크기"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "megapixels": {
+        "name": "메가픽셀"
+      }
     },
     "outputs": {
-      "2": { "name": "마스크 이미지" },
-      "3": { "name": "너비" },
-      "4": { "name": "높이" }
+      "2": {
+        "name": "마스크 이미지"
+      },
+      "3": {
+        "name": "너비"
+      },
+      "4": {
+        "name": "높이"
+      },
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "5": {
+        "name": "Metadata"
+      }
     }
   },
   "AILab_ImageCombiner": {
     "display_name": "이미지 결합 (RMBG) 🖼️",
     "inputs": {
-      "foreground": { "name": "전경" },
-      "background": { "name": "배경" },
-      "mode": { "name": "모드" },
-      "foreground_opacity": { "name": "전경 불투명도" },
-      "foreground_scale": { "name": "전경 스케일" },
-      "position_x": { "name": "위치 X" },
-      "position_y": { "name": "위치 Y" },
-      "foreground_mask": { "name": "전경 마스크" }
+      "foreground": {
+        "name": "전경"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "mode": {
+        "name": "모드"
+      },
+      "foreground_opacity": {
+        "name": "전경 불투명도"
+      },
+      "foreground_scale": {
+        "name": "전경 스케일"
+      },
+      "position_x": {
+        "name": "위치 X"
+      },
+      "position_y": {
+        "name": "위치 Y"
+      },
+      "foreground_mask": {
+        "name": "전경 마스크"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "너비"
+      },
+      "2": {
+        "name": "높이"
+      }
     }
   },
   "AILab_MaskCombiner": {
     "display_name": "마스크 결합 (RMBG) 🎭",
     "inputs": {
-      "mask_1": { "name": "마스크 1" },
-      "mode": { "name": "모드" },
-      "mask_2": { "name": "마스크 2" },
-      "mask_3": { "name": "마스크 3" },
-      "mask_4": { "name": "마스크 4" }
+      "mask_1": {
+        "name": "마스크 1"
+      },
+      "mode": {
+        "name": "모드"
+      },
+      "mask_2": {
+        "name": "마스크 2"
+      },
+      "mask_3": {
+        "name": "마스크 3"
+      },
+      "mask_4": {
+        "name": "마스크 4"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_MaskEnhancer": {
     "display_name": "마스크 강화 (RMBG) 🖼️",
     "inputs": {
-      "mask": { "name": "마스크" },
-      "sensitivity": { "name": "민감도" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "smooth": { "name": "부드럽게" },
-      "fill_holes": { "name": "구멍 채우기" },
-      "invert_output": { "name": "출력 반전" }
+      "mask": {
+        "name": "마스크"
+      },
+      "sensitivity": {
+        "name": "민감도"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "smooth": {
+        "name": "부드럽게"
+      },
+      "fill_holes": {
+        "name": "구멍 채우기"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_ImageMaskConvert": {
     "display_name": "이미지/마스크 변환 (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "이미지" },
-      "mask": { "name": "마스크" },
-      "mask_channel": { "name": "마스크 채널" }
+      "image": {
+        "name": "이미지"
+      },
+      "mask": {
+        "name": "마스크"
+      },
+      "mask_channel": {
+        "name": "마스크 채널"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_MaskExtractor": {
     "display_name": "마스크 추출 (RMBG) 🎭",
     "inputs": {
-      "image": { "name": "이미지" },
-      "mask": { "name": "마스크" },
-      "mode": { "name": "모드" },
-      "background": { "name": "배경" }
+      "image": {
+        "name": "이미지"
+      },
+      "mask": {
+        "name": "마스크"
+      },
+      "mode": {
+        "name": "모드"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "background_color": {
+        "name": "배경색"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      }
     }
   },
   "AILab_ImageStitch": {
     "display_name": "이미지 결합 (RMBG) 🖼️",
     "inputs": {
-      "images": { "name": "이미지" },
-      "direction": { "name": "방향" }
+      "images": {
+        "name": "이미지"
+      },
+      "direction": {
+        "name": "방향"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "image1": {
+        "name": "Image1"
+      },
+      "stitch_mode": {
+        "name": "Stitch Mode"
+      },
+      "match_image_size": {
+        "name": "Match Image Size"
+      },
+      "megapixels": {
+        "name": "메가픽셀"
+      },
+      "max_width": {
+        "name": "Max Width"
+      },
+      "max_height": {
+        "name": "Max Height"
+      },
+      "upscale_method": {
+        "name": "업스케일 방식"
+      },
+      "spacing_width": {
+        "name": "Spacing Width"
+      },
+      "background_color": {
+        "name": "배경색"
+      },
+      "image2": {
+        "name": "Image2"
+      },
+      "image3": {
+        "name": "Image3"
+      },
+      "image4": {
+        "name": "Image4"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "너비"
+      },
+      "2": {
+        "name": "높이"
+      }
     }
   },
   "AILab_ImageCrop": {
     "display_name": "이미지 자르기 (RMBG) 🖼️",
     "inputs": {
-      "image": { "name": "이미지" },
-      "anchor": { "name": "앵커" },
-      "offset_x": { "name": "오프셋 X" },
-      "offset_y": { "name": "오프셋 Y" },
-      "split_output": { "name": "분리 출력" }
+      "image": {
+        "name": "이미지"
+      },
+      "anchor": {
+        "name": "앵커"
+      },
+      "offset_x": {
+        "name": "오프셋 X"
+      },
+      "offset_y": {
+        "name": "오프셋 Y"
+      },
+      "split_output": {
+        "name": "분리 출력"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "width": {
+        "name": "너비"
+      },
+      "height": {
+        "name": "높이"
+      },
+      "x_offset": {
+        "name": "X Offset"
+      },
+      "y_offset": {
+        "name": "Y Offset"
+      },
+      "split": {
+        "name": "Split"
+      },
+      "position": {
+        "name": "Position"
+      }
     },
     "outputs": {
-      "0": { "name": "자르기" },
-      "1": { "name": "나머지" }
+      "0": {
+        "name": "자르기"
+      },
+      "1": {
+        "name": "나머지"
+      }
     }
   },
   "AILab_ICLoRAConcat": {
     "display_name": "ICLoRA 결합 (RMBG) 🖼️",
     "inputs": {
-      "object_image": { "name": "오브젝트 이미지" },
-      "layout": { "name": "레이아웃" },
-      "pixels": { "name": "픽셀" },
-      "object_mask": { "name": "오브젝트 마스크" },
-      "base_image": { "name": "베이스 이미지" },
-      "base_mask": { "name": "베이스 마스크" }
+      "object_image": {
+        "name": "오브젝트 이미지"
+      },
+      "layout": {
+        "name": "레이아웃"
+      },
+      "pixels": {
+        "name": "픽셀"
+      },
+      "object_mask": {
+        "name": "오브젝트 마스크"
+      },
+      "base_image": {
+        "name": "베이스 이미지"
+      },
+      "base_mask": {
+        "name": "베이스 마스크"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "custom_size": {
+        "name": "Custom Size"
+      }
     },
     "outputs": {
-      "0": { "name": "이미지" },
-      "1": { "name": "오브젝트 마스크" },
-      "2": { "name": "베이스 마스크" },
-      "3": { "name": "너비" },
-      "4": { "name": "높이" },
-      "5": { "name": "X" },
-      "6": { "name": "Y" }
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "오브젝트 마스크"
+      },
+      "2": {
+        "name": "베이스 마스크"
+      },
+      "3": {
+        "name": "너비"
+      },
+      "4": {
+        "name": "높이"
+      },
+      "5": {
+        "name": "X"
+      },
+      "6": {
+        "name": "Y"
+      }
     }
   },
   "AILab_CropObject": {
     "display_name": "객체 자르기 (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "이미지" },
-      "mask": { "name": "마스크" },
-      "padding": { "name": "패딩" }
+      "image": {
+        "name": "이미지"
+      },
+      "mask": {
+        "name": "마스크"
+      },
+      "padding": {
+        "name": "패딩"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "0": { "name": "이미지" },
-      "1": { "name": "마스크" }
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_ImageCompare": {
     "display_name": "이미지 비교 (RMBG) 🖼️🖼️",
     "inputs": {
-      "image_1": { "name": "이미지 1" },
-      "image_2": { "name": "이미지 2" },
-      "text_1": { "name": "텍스트 1" },
-      "text_2": { "name": "텍스트 2" }
+      "image_1": {
+        "name": "이미지 1"
+      },
+      "image_2": {
+        "name": "이미지 2"
+      },
+      "text_1": {
+        "name": "텍스트 1"
+      },
+      "text_2": {
+        "name": "텍스트 2"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "text1": {
+        "name": "Text1"
+      },
+      "text2": {
+        "name": "Text2"
+      },
+      "text3": {
+        "name": "Text3"
+      },
+      "size_base": {
+        "name": "Size Base"
+      },
+      "text_color": {
+        "name": "Text Color"
+      },
+      "bg_color": {
+        "name": "Bg Color"
+      },
+      "image1": {
+        "name": "Image1"
+      },
+      "image2": {
+        "name": "Image2"
+      },
+      "image3": {
+        "name": "Image3"
+      }
     },
     "outputs": {
-      "0": { "name": "이미지" }
+      "0": {
+        "name": "이미지"
+      }
     }
   },
   "AILab_ColorInput": {
     "display_name": "색상 입력 (RMBG) 🎨",
     "inputs": {
-      "color": { "name": "색상" }
+      "color": {
+        "name": "색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "preset": {
+        "name": "Preset"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Color"
+      }
     }
   },
   "AILab_LamaRemover": {
     "display_name": "객체 제거 (RMBG) 🖼️🎭",
     "inputs": {
-      "images": { "name": "이미지" },
-      "masks": { "name": "마스크" },
-      "removal_strength": { "name": "제거 강도" },
-      "edge_smoothness": { "name": "가장자리 부드러움" }
+      "images": {
+        "name": "이미지"
+      },
+      "masks": {
+        "name": "마스크"
+      },
+      "removal_strength": {
+        "name": "제거 강도"
+      },
+      "edge_smoothness": {
+        "name": "가장자리 부드러움"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      }
     }
   },
   "AILab_ImageMaskResize": {
     "display_name": "이미지/마스크 리사이즈 (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "이미지" },
-      "mask": { "name": "마스크" },
-      "width": { "name": "너비" },
-      "height": { "name": "높이" },
-      "scale_by": { "name": "스케일 비율" },
-      "upscale_method": { "name": "업스케일 방법" },
-      "resize_mode": { "name": "리사이즈 모드" },
-      "pad_color": { "name": "패딩 색상" },
-      "crop_position": { "name": "크롭 위치" },
-      "divisible_by": { "name": "나누어지는" },
-      "device": { "name": "장치" }
+      "image": {
+        "name": "이미지"
+      },
+      "mask": {
+        "name": "마스크"
+      },
+      "width": {
+        "name": "너비"
+      },
+      "height": {
+        "name": "높이"
+      },
+      "scale_by": {
+        "name": "스케일 비율"
+      },
+      "upscale_method": {
+        "name": "업스케일 방법"
+      },
+      "resize_mode": {
+        "name": "리사이즈 모드"
+      },
+      "pad_color": {
+        "name": "패딩 색상"
+      },
+      "crop_position": {
+        "name": "크롭 위치"
+      },
+      "divisible_by": {
+        "name": "나누어지는"
+      },
+      "device": {
+        "name": "장치"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "0": { "name": "이미지" },
-      "1": { "name": "마스크" },
-      "2": { "name": "너비" },
-      "3": { "name": "높이" }
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "너비"
+      },
+      "3": {
+        "name": "높이"
+      }
     }
   },
   "AILab_ReferenceLatentMask": {
     "display_name": "Kontext 참조 잠재 마스크 (RMBG) 🎭",
     "inputs": {
-      "conditioning": { "name": "조건" },
-      "latent": { "name": "잠재" },
-      "mask": { "name": "마스크" },
-      "expand": { "name": "확장" },
-      "blur": { "name": "블러" },
-      "mask_only": { "name": "마스크 전용" }
+      "conditioning": {
+        "name": "조건"
+      },
+      "latent": {
+        "name": "잠재"
+      },
+      "mask": {
+        "name": "마스크"
+      },
+      "expand": {
+        "name": "확장"
+      },
+      "blur": {
+        "name": "블러"
+      },
+      "mask_only": {
+        "name": "마스크 전용"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
     },
     "outputs": {
-      "0": { "name": "조건" },
-      "1": { "name": "잠재" },
-      "2": { "name": "마스크" }
+      "0": {
+        "name": "조건"
+      },
+      "1": {
+        "name": "잠재"
+      },
+      "2": {
+        "name": "마스크"
+      }
     }
   },
   "AILab_SDMatte": {
     "display_name": "SDMatte Matting (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "이미지" },
-      "mask": { "name": "마스크" },
-      "model_path": { "name": "모델 경로" },
-      "device": { "name": "장치" },
-      "process_res": { "name": "처리 해상도" },
-      "transparent_object": { "name": "투명 객체" },
-      "mask_refine": { "name": "마스크 강화" },
-      "sensitivity": { "name": "민감도" },
-      "mask_blur": { "name": "마스크 블러" },
-      "mask_offset": { "name": "마스크 오프셋" },
-      "invert_output": { "name": "출력 반전" },
-      "background": { "name": "배경" },
-      "background_color": { "name": "배경 색상" }
+      "image": {
+        "name": "이미지"
+      },
+      "mask": {
+        "name": "마스크"
+      },
+      "model_path": {
+        "name": "모델 경로"
+      },
+      "device": {
+        "name": "장치"
+      },
+      "process_res": {
+        "name": "처리 해상도"
+      },
+      "transparent_object": {
+        "name": "투명 객체"
+      },
+      "mask_refine": {
+        "name": "마스크 강화"
+      },
+      "sensitivity": {
+        "name": "민감도"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경 색상"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "model": {
+        "name": "모델"
+      }
     },
     "outputs": {
-      "0": { "name": "이미지" },
-      "1": { "name": "마스크" }
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 이미지"
+      }
+    }
+  },
+  "SAM2Segment": {
+    "display_name": "SAM2 객체 분할 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "이미지"
+      },
+      "prompt": {
+        "name": "프롬프트"
+      },
+      "sam2_model": {
+        "name": "SAM2 모델"
+      },
+      "dino_model": {
+        "name": "GroundingDINO 모델"
+      },
+      "device": {
+        "name": "디바이스"
+      },
+      "threshold": {
+        "name": "임계값"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경색"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 이미지"
+      }
+    }
+  },
+  "SAM3Segment": {
+    "display_name": "SAM3 객체 분할 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "이미지"
+      },
+      "model_name": {
+        "name": "모델 이름"
+      },
+      "prompt": {
+        "name": "프롬프트"
+      },
+      "output_mode": {
+        "name": "출력 모드"
+      },
+      "confidence_threshold": {
+        "name": "신뢰도 임계값"
+      },
+      "max_segments": {
+        "name": "최대 분할 수"
+      },
+      "segment_pick": {
+        "name": "분할 항목 선택"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "device": {
+        "name": "디바이스"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경색"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 이미지"
+      }
+    }
+  },
+  "Lucida": {
+    "display_name": "Lucida 배경 제거 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "이미지"
+      },
+      "sensitivity": {
+        "name": "민감도"
+      },
+      "process_res": {
+        "name": "처리 해상도"
+      },
+      "mask_blur": {
+        "name": "마스크 블러"
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋"
+      },
+      "invert_output": {
+        "name": "출력 반전"
+      },
+      "refine_foreground": {
+        "name": "전경 다듬기"
+      },
+      "background": {
+        "name": "배경"
+      },
+      "background_color": {
+        "name": "배경색"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 이미지"
+      }
+    }
+  },
+  "AILab_ColorToMask": {
+    "display_name": "색상 기반 마스크 (RMBG) 🎭",
+    "inputs": {
+      "images": {
+        "name": "이미지"
+      },
+      "invert": {
+        "name": "반전"
+      },
+      "threshold": {
+        "name": "임계값"
+      },
+      "mask_color": {
+        "name": "마스크 색상"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "마스크"
+      }
+    }
+  },
+  "AILab_Florence2": {
+    "display_name": "Florence2 분할 (RMBG)",
+    "inputs": {
+      "images": {
+        "name": "이미지"
+      },
+      "florence2_model": {
+        "name": "Florence2 모델"
+      },
+      "text_input": {
+        "name": "텍스트 입력"
+      },
+      "task": {
+        "name": "작업"
+      },
+      "precision": {
+        "name": "정밀도"
+      },
+      "max_new_tokens": {
+        "name": "최대 토큰 수"
+      },
+      "num_beams": {
+        "name": "빔 수"
+      },
+      "do_sample": {
+        "name": "샘플링"
+      },
+      "fill_mask": {
+        "name": "마스크 채우기"
+      },
+      "device": {
+        "name": "디바이스"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      },
+      "image": {
+        "name": "이미지"
+      },
+      "model_name": {
+        "name": "모델 이름"
+      },
+      "attention": {
+        "name": "Attention"
+      },
+      "output_mask_select": {
+        "name": "Output Mask Select"
+      },
+      "keep_model_loaded": {
+        "name": "Keep Model Loaded"
+      },
+      "text_prompt": {
+        "name": "Text Prompt"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "주석 달린 이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 목록"
+      },
+      "3": {
+        "name": "JSON 데이터"
+      }
+    }
+  },
+  "AILab_Florence2ToCoordinates": {
+    "display_name": "Florence2 좌표 변환 (RMBG)",
+    "inputs": {
+      "json_data": {
+        "name": "JSON 데이터"
+      },
+      "image_width": {
+        "name": "이미지 너비"
+      },
+      "image_height": {
+        "name": "이미지 높이"
+      },
+      "index": {
+        "name": "인덱스"
+      },
+      "data": {
+        "name": "Data"
+      },
+      "batch": {
+        "name": "Batch"
+      },
+      "image": {
+        "name": "이미지"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "중심 좌표"
+      },
+      "1": {
+        "name": "경계 상자"
+      },
+      "2": {
+        "name": "마스크"
+      },
+      "3": {
+        "name": "총 개수"
+      }
+    }
+  },
+  "AILab_ImageMaskToList": {
+    "display_name": "이미지 및 마스크 목록 변환 (RMBG)",
+    "inputs": {
+      "resize_mode": {
+        "name": "크기 조절 모드"
+      },
+      "image_1": {
+        "name": "이미지 1"
+      },
+      "mask_1": {
+        "name": "마스크 1"
+      },
+      "image_2": {
+        "name": "이미지 2"
+      },
+      "mask_2": {
+        "name": "마스크 2"
+      },
+      "image_3": {
+        "name": "이미지 3"
+      },
+      "mask_3": {
+        "name": "마스크 3"
+      },
+      "image_4": {
+        "name": "이미지 4"
+      },
+      "mask_4": {
+        "name": "마스크 4"
+      },
+      "image_5": {
+        "name": "이미지 5"
+      },
+      "mask_5": {
+        "name": "마스크 5"
+      },
+      "image_6": {
+        "name": "이미지 6"
+      },
+      "mask_6": {
+        "name": "마스크 6"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "너비"
+      },
+      "3": {
+        "name": "높이"
+      },
+      "4": {
+        "name": "배치 크기"
+      }
+    }
+  },
+  "AILab_ImageResize": {
+    "display_name": "이미지 크기 조절 (RMBG) 🖼️🎭",
+    "inputs": {
+      "image": {
+        "name": "이미지"
+      },
+      "custom_width": {
+        "name": "사용자 지정 너비"
+      },
+      "custom_height": {
+        "name": "사용자 지정 높이"
+      },
+      "megapixels": {
+        "name": "메가픽셀"
+      },
+      "scale_by": {
+        "name": "배율 기준"
+      },
+      "resize_mode": {
+        "name": "크기 조절 모드"
+      },
+      "resize_value": {
+        "name": "크기 값"
+      },
+      "upscale_method": {
+        "name": "업스케일 방식"
+      },
+      "device": {
+        "name": "디바이스"
+      },
+      "divisible_by": {
+        "name": "나눌 수"
+      },
+      "output_mode": {
+        "name": "출력 모드"
+      },
+      "crop_position": {
+        "name": "자르기 위치"
+      },
+      "pad_color": {
+        "name": "패딩 색상"
+      },
+      "mask": {
+        "name": "마스크"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "너비"
+      },
+      "3": {
+        "name": "높이"
+      }
+    }
+  },
+  "AILab_ImageToList": {
+    "display_name": "이미지 목록 변환 (RMBG)",
+    "inputs": {
+      "resize_mode": {
+        "name": "크기 조절 모드"
+      },
+      "image_1": {
+        "name": "이미지 1"
+      },
+      "image_2": {
+        "name": "이미지 2"
+      },
+      "image_3": {
+        "name": "이미지 3"
+      },
+      "image_4": {
+        "name": "이미지 4"
+      },
+      "image_5": {
+        "name": "이미지 5"
+      },
+      "image_6": {
+        "name": "이미지 6"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "너비"
+      },
+      "2": {
+        "name": "높이"
+      },
+      "3": {
+        "name": "배치 크기"
+      }
+    }
+  },
+  "AILab_LoadImageBatch": {
+    "display_name": "이미지 일괄 로드 (RMBG) 🖼️",
+    "inputs": {
+      "path_or_urls": {
+        "name": "경로 또는 URL"
+      },
+      "upscale_method": {
+        "name": "업스케일 방식"
+      },
+      "megapixels": {
+        "name": "메가픽셀"
+      },
+      "scale_by": {
+        "name": "배율 기준"
+      },
+      "resize_mode": {
+        "name": "크기 조절 모드"
+      },
+      "size": {
+        "name": "크기"
+      },
+      "batch_size": {
+        "name": "배치 크기"
+      },
+      "start_from": {
+        "name": "시작 위치"
+      },
+      "sort_method": {
+        "name": "정렬 방법"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "너비"
+      },
+      "3": {
+        "name": "높이"
+      }
+    }
+  },
+  "AILab_MaskOverlay": {
+    "display_name": "마스크 오버레이 (RMBG) 🖼️🎭",
+    "inputs": {
+      "mask_opacity": {
+        "name": "마스크 불투명도"
+      },
+      "mask_color": {
+        "name": "마스크 색상"
+      },
+      "image": {
+        "name": "이미지"
+      },
+      "mask": {
+        "name": "마스크"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      }
+    }
+  },
+  "AILab_MaskToList": {
+    "display_name": "마스크 목록 변환 (RMBG)",
+    "inputs": {
+      "resize_mode": {
+        "name": "크기 조절 모드"
+      },
+      "mask_1": {
+        "name": "마스크 1"
+      },
+      "mask_2": {
+        "name": "마스크 2"
+      },
+      "mask_3": {
+        "name": "마스크 3"
+      },
+      "mask_4": {
+        "name": "마스크 4"
+      },
+      "mask_5": {
+        "name": "마스크 5"
+      },
+      "mask_6": {
+        "name": "마스크 6"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "마스크"
+      }
+    }
+  },
+  "AILab_Resolution_Selector": {
+    "display_name": "해상도 선택기 (RMBG) ⛶",
+    "inputs": {
+      "aspect_ratio": {
+        "name": "화면 비율"
+      },
+      "megapixels": {
+        "name": "메가픽셀"
+      },
+      "multiple": {
+        "name": "배수"
+      },
+      "batch_size": {
+        "name": "배치 크기"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Latent"
+      },
+      "1": {
+        "name": "너비"
+      },
+      "2": {
+        "name": "높이"
+      }
+    }
+  },
+  "AILab_UnbatchImages": {
+    "display_name": "이미지 배치 해제 (RMBG) 🖼️",
+    "inputs": {
+      "images": {
+        "name": "이미지 배치"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지 1"
+      },
+      "1": {
+        "name": "이미지 2"
+      },
+      "2": {
+        "name": "이미지 3"
+      },
+      "3": {
+        "name": "이미지 4"
+      },
+      "4": {
+        "name": "이미지 5"
+      },
+      "5": {
+        "name": "이미지 6"
+      },
+      "6": {
+        "name": "이미지 7"
+      },
+      "7": {
+        "name": "이미지 8"
+      }
+    }
+  },
+  "AILab_YoloV8": {
+    "display_name": "YOLOv8 객체 감지 (RMBG)",
+    "inputs": {
+      "images": {
+        "name": "이미지"
+      },
+      "yolo_model": {
+        "name": "YOLO 모델"
+      },
+      "mask_count": {
+        "name": "마스크 수"
+      },
+      "select_mask_index": {
+        "name": "마스크 인덱스 선택"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "주석 달린 이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 목록"
+      }
+    }
+  },
+  "AILab_YoloV8Adv": {
+    "display_name": "YOLOv8 고급 객체 감지 (RMBG)",
+    "inputs": {
+      "images": {
+        "name": "이미지"
+      },
+      "yolo_model": {
+        "name": "YOLO 모델"
+      },
+      "mask_count": {
+        "name": "마스크 수"
+      },
+      "select_mask_index": {
+        "name": "마스크 인덱스 선택"
+      },
+      "conf": {
+        "name": "신뢰도 임계값"
+      },
+      "iou": {
+        "name": "IoU 임계값"
+      },
+      "classes": {
+        "name": "클래스 필터"
+      },
+      "device": {
+        "name": "디바이스"
+      },
+      "max_det": {
+        "name": "최대 감지 수"
+      },
+      "retina_masks": {
+        "name": "Retina 마스크"
+      },
+      "agnostic_nms": {
+        "name": "클래스 비의존 NMS"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "주석 달린 이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 목록"
+      }
     }
   }
 }

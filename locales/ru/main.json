@@ -1,5 +1,9 @@
 {
   "nodeCategories": {
-    "🧪AILab/🧽RMBG": "🧪AILab/🧽RMBG"
+    "🧪AILab/🧽RMBG": "🧪AILab/🧽RMBG",
+    "🧪AILab/🖼️IMAGE": "🧪AILab/🖼️IMAGE",
+    "🧪AILab/🛠️UTIL/🔄IO": "🧪AILab/🛠️UTIL/🔄IO",
+    "🧪AILab/🦠MASK": "🧪AILab/🦠MASK",
+    "🧪AILab/🎭Inpaint": "🧪AILab/🎭Inpaint"
   }
 }

@@ -2,504 +2,2151 @@
   "RMBG": {
     "display_name": "Удалить фон (RMBG)",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "model": { "name": "Модель" },
-      "sensitivity": { "name": "Чувствительность" },
-      "process_res": { "name": "Разрешение обработки" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "refine_foreground": { "name": "Уточнить передний план" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "image": {
+        "name": "Изображение"
+      },
+      "model": {
+        "name": "Модель"
+      },
+      "sensitivity": {
+        "name": "Чувствительность"
+      },
+      "process_res": {
+        "name": "Разрешение обработки"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "refine_foreground": {
+        "name": "Уточнить передний план"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "BodySegment": {
     "display_name": "Сегментация частей тела (RMBG)",
     "inputs": {
-      "images": { "name": "Изображения" },
-      "Hair": { "name": "Волосы" },
-      "Glasses": { "name": "Очки" },
-      "Top-clothes": { "name": "Верхняя одежда" },
-      "Bottom-clothes": { "name": "Нижняя одежда" },
-      "Torso-skin": { "name": "Кожа торса" },
-      "Face": { "name": "Лицо" },
-      "Left-arm": { "name": "Левая рука" },
-      "Right-arm": { "name": "Правая рука" },
-      "Left-leg": { "name": "Левая нога" },
-      "Right-leg": { "name": "Правая нога" },
-      "Left-foot": { "name": "Левый носок" },
-      "Right-foot": { "name": "Правый носок" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "images": {
+        "name": "Изображения"
+      },
+      "Hair": {
+        "name": "Волосы"
+      },
+      "Glasses": {
+        "name": "Очки"
+      },
+      "Top-clothes": {
+        "name": "Верхняя одежда"
+      },
+      "Bottom-clothes": {
+        "name": "Нижняя одежда"
+      },
+      "Torso-skin": {
+        "name": "Кожа торса"
+      },
+      "Face": {
+        "name": "Лицо"
+      },
+      "Left-arm": {
+        "name": "Левая рука"
+      },
+      "Right-arm": {
+        "name": "Правая рука"
+      },
+      "Left-leg": {
+        "name": "Левая нога"
+      },
+      "Right-leg": {
+        "name": "Правая нога"
+      },
+      "Left-foot": {
+        "name": "Левый носок"
+      },
+      "Right-foot": {
+        "name": "Правый носок"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "BiRefNetRMBG": {
     "display_name": "Удалить фон BiRefNet (RMBG)",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "model": { "name": "Модель" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "refine_foreground": { "name": "Уточнить передний план" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "image": {
+        "name": "Изображение"
+      },
+      "model": {
+        "name": "Модель"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "refine_foreground": {
+        "name": "Уточнить передний план"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "sensitivity": {
+        "name": "Чувствительность"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "ClothesSegment": {
     "display_name": "Сегментация одежды (RMBG)",
     "inputs": {
-      "images": { "name": "Изображения" },
-      "Hat": { "name": "Шляпа" },
-      "Hair": { "name": "Волосы" },
-      "Face": { "name": "Лицо" },
-      "Sunglasses": { "name": "Солнцезащитные очки" },
-      "Upper-clothes": { "name": "Верхняя одежда" },
-      "Skirt": { "name": "Юбка" },
-      "Dress": { "name": "Платье" },
-      "Belt": { "name": "Ремень" },
-      "Pants": { "name": "Штаны" },
-      "Left-arm": { "name": "Левая рука" },
-      "Right-arm": { "name": "Правая рука" },
-      "Left-leg": { "name": "Левая нога" },
-      "Right-leg": { "name": "Правая нога" },
-      "Bag": { "name": "Сумка" },
-      "Scarf": { "name": "Шарф" },
-      "Left-shoe": { "name": "Левый ботинок" },
-      "Right-shoe": { "name": "Правый ботинок" },
-      "process_res": { "name": "Разрешение обработки" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "images": {
+        "name": "Изображения"
+      },
+      "Hat": {
+        "name": "Шляпа"
+      },
+      "Hair": {
+        "name": "Волосы"
+      },
+      "Face": {
+        "name": "Лицо"
+      },
+      "Sunglasses": {
+        "name": "Солнцезащитные очки"
+      },
+      "Upper-clothes": {
+        "name": "Верхняя одежда"
+      },
+      "Skirt": {
+        "name": "Юбка"
+      },
+      "Dress": {
+        "name": "Платье"
+      },
+      "Belt": {
+        "name": "Ремень"
+      },
+      "Pants": {
+        "name": "Штаны"
+      },
+      "Left-arm": {
+        "name": "Левая рука"
+      },
+      "Right-arm": {
+        "name": "Правая рука"
+      },
+      "Left-leg": {
+        "name": "Левая нога"
+      },
+      "Right-leg": {
+        "name": "Правая нога"
+      },
+      "Bag": {
+        "name": "Сумка"
+      },
+      "Scarf": {
+        "name": "Шарф"
+      },
+      "Left-shoe": {
+        "name": "Левый ботинок"
+      },
+      "Right-shoe": {
+        "name": "Правый ботинок"
+      },
+      "process_res": {
+        "name": "Разрешение обработки"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "Background": {
+        "name": "Фон"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "FaceSegment": {
     "display_name": "Сегментация лица (RMBG)",
     "inputs": {
-      "images": { "name": "Изображения" },
-      "Skin": { "name": "Кожа" },
-      "Nose": { "name": "Нос" },
-      "Eyeglasses": { "name": "Очки" },
-      "Left-eye": { "name": "Левый глаз" },
-      "Right-eye": { "name": "Правый глаз" },
-      "Left-eyebrow": { "name": "Левая бровь" },
-      "Right-eyebrow": { "name": "Правая бровь" },
-      "Left-ear": { "name": "Левое ухо" },
-      "Right-ear": { "name": "Правое ухо" },
-      "Mouth": { "name": "Рот" },
-      "Upper-lip": { "name": "Верхняя губа" },
-      "Lower-lip": { "name": "Нижняя губа" },
-      "Hair": { "name": "Волосы" },
-      "Earring": { "name": "Серьга" },
-      "Neck": { "name": "Шея" },
-      "process_res": { "name": "Разрешение обработки" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "images": {
+        "name": "Изображения"
+      },
+      "Skin": {
+        "name": "Кожа"
+      },
+      "Nose": {
+        "name": "Нос"
+      },
+      "Eyeglasses": {
+        "name": "Очки"
+      },
+      "Left-eye": {
+        "name": "Левый глаз"
+      },
+      "Right-eye": {
+        "name": "Правый глаз"
+      },
+      "Left-eyebrow": {
+        "name": "Левая бровь"
+      },
+      "Right-eyebrow": {
+        "name": "Правая бровь"
+      },
+      "Left-ear": {
+        "name": "Левое ухо"
+      },
+      "Right-ear": {
+        "name": "Правое ухо"
+      },
+      "Mouth": {
+        "name": "Рот"
+      },
+      "Upper-lip": {
+        "name": "Верхняя губа"
+      },
+      "Lower-lip": {
+        "name": "Нижняя губа"
+      },
+      "Hair": {
+        "name": "Волосы"
+      },
+      "Earring": {
+        "name": "Серьга"
+      },
+      "Neck": {
+        "name": "Шея"
+      },
+      "process_res": {
+        "name": "Разрешение обработки"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "FashionSegmentClothing": {
     "display_name": "Сегментация моды (RMBG)",
     "inputs": {
-      "images": { "name": "Изображения" },
-      "accessories_options": { "name": "Опции аксессуаров" },
-      "coat": { "name": "Пальто" },
-      "jacket": { "name": "Куртка" },
-      "cardigan": { "name": "Кардиган" },
-      "vest": { "name": "Жилет" },
-      "sweater": { "name": "Свитер" },
-      "hood": { "name": "Капюшон" },
-      "shirt, blouse": { "name": "Рубашка, блузка" },
-      "top, t-shirt, sweatshirt": { "name": "топ, футболка, свитшот" },
-      "sleeve": { "name": "Рукав" },
-      "dress": { "name": "Платье" },
-      "jumpsuit": { "name": "Комбинезон" },
-      "cape": { "name": "Плащ" },
-      "pants": { "name": "Штаны" },
-      "shorts": { "name": "Шорты" },
-      "skirt": { "name": "Юбка" },
-      "tights, stockings": { "name": "Колготки" },
-      "sock": { "name": "Носок" },
-      "shoe": { "name": "Обувь" },
-      "process_res": { "name": "Разрешение обработки" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "images": {
+        "name": "Изображения"
+      },
+      "accessories_options": {
+        "name": "Опции аксессуаров"
+      },
+      "coat": {
+        "name": "Пальто"
+      },
+      "jacket": {
+        "name": "Куртка"
+      },
+      "cardigan": {
+        "name": "Кардиган"
+      },
+      "vest": {
+        "name": "Жилет"
+      },
+      "sweater": {
+        "name": "Свитер"
+      },
+      "hood": {
+        "name": "Капюшон"
+      },
+      "shirt, blouse": {
+        "name": "Рубашка, блузка"
+      },
+      "top, t-shirt, sweatshirt": {
+        "name": "топ, футболка, свитшот"
+      },
+      "sleeve": {
+        "name": "Рукав"
+      },
+      "dress": {
+        "name": "Платье"
+      },
+      "jumpsuit": {
+        "name": "Комбинезон"
+      },
+      "cape": {
+        "name": "Плащ"
+      },
+      "pants": {
+        "name": "Штаны"
+      },
+      "shorts": {
+        "name": "Шорты"
+      },
+      "skirt": {
+        "name": "Юбка"
+      },
+      "tights, stockings": {
+        "name": "Колготки"
+      },
+      "sock": {
+        "name": "Носок"
+      },
+      "shoe": {
+        "name": "Обувь"
+      },
+      "process_res": {
+        "name": "Разрешение обработки"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "FashionSegmentAccessories": {
     "display_name": "Сегментация модных аксессуаров (RMBG)",
     "inputs": {
-      "images": { "name": "Изображения" },
-      "hat": { "name": "Шляпа" },
-      "glasses": { "name": "Очки" },
-      "headband, head covering, hair accessory": { "name": "Повязка на голову, головной убор, прическа" },
-      "scarf": { "name": "Шарф" },
-      "tie": { "name": "Галстук" },
-      "glove": { "name": "Перчатка" },
-      "watch": { "name": "Часы" },
-      "belt": { "name": "Ремень" },
-      "leg warmer": { "name": "Гетры" },
-      "bag, wallet": { "name": "Сумка" },
-      "umbrella": { "name": "Зонт" },
-      "collar": { "name": "Воротник" },
-      "lapel": { "name": "Реверс" },
-      "neckline": { "name": "Вырез" },
-      "epaulette": { "name": "Эполет" },
-      "pocket": { "name": "Карман" },
-      "buckle": { "name": "Пряжка" },
-      "zipper": { "name": "Молния" },
-      "applique": { "name": "Аппликация" },
-      "bow": { "name": "Бант" },
-      "flower": { "name": "Цветок" },
-      "bead": { "name": "Бусина" },
-      "fringe": { "name": "Кисточка" },
-      "ribbon": { "name": "Лента" },
-      "rivet": { "name": "Заклепка" },
-      "ruffle": { "name": "Рюша" },
-      "sequin": { "name": "Блестка" },
-      "tassel": { "name": "Пуховик" }
+      "images": {
+        "name": "Изображения"
+      },
+      "hat": {
+        "name": "Шляпа"
+      },
+      "glasses": {
+        "name": "Очки"
+      },
+      "headband, head covering, hair accessory": {
+        "name": "Повязка на голову, головной убор, прическа"
+      },
+      "scarf": {
+        "name": "Шарф"
+      },
+      "tie": {
+        "name": "Галстук"
+      },
+      "glove": {
+        "name": "Перчатка"
+      },
+      "watch": {
+        "name": "Часы"
+      },
+      "belt": {
+        "name": "Ремень"
+      },
+      "leg warmer": {
+        "name": "Гетры"
+      },
+      "bag, wallet": {
+        "name": "Сумка"
+      },
+      "umbrella": {
+        "name": "Зонт"
+      },
+      "collar": {
+        "name": "Воротник"
+      },
+      "lapel": {
+        "name": "Реверс"
+      },
+      "neckline": {
+        "name": "Вырез"
+      },
+      "epaulette": {
+        "name": "Эполет"
+      },
+      "pocket": {
+        "name": "Карман"
+      },
+      "buckle": {
+        "name": "Пряжка"
+      },
+      "zipper": {
+        "name": "Молния"
+      },
+      "applique": {
+        "name": "Аппликация"
+      },
+      "bow": {
+        "name": "Бант"
+      },
+      "flower": {
+        "name": "Цветок"
+      },
+      "bead": {
+        "name": "Бусина"
+      },
+      "fringe": {
+        "name": "Кисточка"
+      },
+      "ribbon": {
+        "name": "Лента"
+      },
+      "rivet": {
+        "name": "Заклепка"
+      },
+      "ruffle": {
+        "name": "Рюша"
+      },
+      "sequin": {
+        "name": "Блестка"
+      },
+      "tassel": {
+        "name": "Пуховик"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "0": { "name": "Опции аксессуаров" }
+      "0": {
+        "name": "Опции аксессуаров"
+      }
     }
   },
   "Segment": {
     "display_name": "Сегментация V1 (RMBG)",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "prompt": { "name": "Подсказка" },
-      "sam_model": { "name": "Модель SAM" },
-      "dino_model": { "name": "Модель DINO" },
-      "threshold": { "name": "Порог" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "image": {
+        "name": "Изображение"
+      },
+      "prompt": {
+        "name": "Подсказка"
+      },
+      "sam_model": {
+        "name": "Модель SAM"
+      },
+      "dino_model": {
+        "name": "Модель DINO"
+      },
+      "threshold": {
+        "name": "Порог"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "SegmentV2": {
     "display_name": "Сегментация V2 (RMBG)",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "prompt": { "name": "Подсказка" },
-      "sam_model": { "name": "Модель SAM" },
-      "dino_model": { "name": "Модель DINO" },
-      "threshold": { "name": "Порог" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },  
-      "invert_output": { "name": "Инвертировать вывод" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "image": {
+        "name": "Изображение"
+      },
+      "prompt": {
+        "name": "Подсказка"
+      },
+      "sam_model": {
+        "name": "Модель SAM"
+      },
+      "dino_model": {
+        "name": "Модель DINO"
+      },
+      "threshold": {
+        "name": "Порог"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "AILab_SAM2Segment": {
     "display_name": "SAM2Segment (RMBG)",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "prompt": { "name": "Подсказка" },  
-      "sam_model": { "name": "Модель SAM" },
-      "dino_model": { "name": "Модель DINO" },
-      "threshold": { "name": "Порог" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" }, 
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "image": {
+        "name": "Изображение"
+      },
+      "prompt": {
+        "name": "Подсказка"
+      },
+      "sam_model": {
+        "name": "Модель SAM"
+      },
+      "dino_model": {
+        "name": "Модель DINO"
+      },
+      "threshold": {
+        "name": "Порог"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      }
     }
   },
-
   "AILab_Preview": {
     "display_name": "Предварительный просмотр изображения/маски (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "mask": { "name": "Маска" }
+      "image": {
+        "name": "Изображение"
+      },
+      "mask": {
+        "name": "Маска"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "AILab_ImagePreview": {
     "display_name": "Предварительный просмотр изображения (RMBG) 🖼️",
     "inputs": {
-      "image": { "name": "Изображение" }
+      "image": {
+        "name": "Изображение"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображение"
+      }
     }
   },
   "AILab_MaskPreview": {
     "display_name": "Предварительный просмотр маски (RMBG) 🎭",
     "inputs": {
-      "mask": { "name": "Маска" }
+      "mask": {
+        "name": "Маска"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Маска"
+      }
     }
   },
   "AILab_LoadImage": {
     "display_name": "Загрузить изображение (RMBG) 🖼️",
     "inputs": {
-      "image_path_or_URL": { "name": "Путь к изображению или URL" },
-      "image": { "name": "Изображение" },
-      "upscale_method": { "name": "Метод увеличения" },
-      "scale_by": { "name": "Масштаб" },
-      "resize_mode": { "name": "Режим масштабирования" },
-      "size": { "name": "Размер" }
+      "image_path_or_URL": {
+        "name": "Путь к изображению или URL"
+      },
+      "image": {
+        "name": "Изображение"
+      },
+      "upscale_method": {
+        "name": "Метод увеличения"
+      },
+      "scale_by": {
+        "name": "Масштаб"
+      },
+      "resize_mode": {
+        "name": "Режим масштабирования"
+      },
+      "size": {
+        "name": "Размер"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "megapixels": {
+        "name": "Мегапиксели"
+      }
     },
     "outputs": {
-      "1": { "name": "ШИРИНА" },
-      "2": { "name": "ВЫСОТА" }
+      "1": {
+        "name": "ШИРИНА"
+      },
+      "2": {
+        "name": "ВЫСОТА"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "3": {
+        "name": "Высота"
+      }
     }
   },
   "AILab_LoadImageSimple": {
     "display_name": "Загрузить изображение простое (RMBG) 🖼️",
     "inputs": {
-      "image_path_or_URL": { "name": "Путь к изображению или URL" },
-      "image": { "name": "Изображение" }
+      "image_path_or_URL": {
+        "name": "Путь к изображению или URL"
+      },
+      "image": {
+        "name": "Изображение"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "1": { "name": "ШИРИНА" },
-      "2": { "name": "ВЫСОТА" }
+      "1": {
+        "name": "ШИРИНА"
+      },
+      "2": {
+        "name": "ВЫСОТА"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "3": {
+        "name": "Высота"
+      }
     }
   },
   "AILab_LoadImageAdvanced": {
     "display_name": "Загрузить изображение расширенное (RMBG) 🖼️",
     "inputs": {
-      "image_path_or_URL": { "name": "Путь к изображению или URL" },
-      "image": { "name": "Изображение" },
-      "mask_channel": { "name": "Канал маски" },
-      "upscale_method": { "name": "Метод увеличения" },
-      "scale_by": { "name": "Масштаб" },
-      "resize_mode": { "name": "Режим масштабирования" },
-      "size": { "name": "Размер" }
+      "image_path_or_URL": {
+        "name": "Путь к изображению или URL"
+      },
+      "image": {
+        "name": "Изображение"
+      },
+      "mask_channel": {
+        "name": "Канал маски"
+      },
+      "upscale_method": {
+        "name": "Метод увеличения"
+      },
+      "scale_by": {
+        "name": "Масштаб"
+      },
+      "resize_mode": {
+        "name": "Режим масштабирования"
+      },
+      "size": {
+        "name": "Размер"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "megapixels": {
+        "name": "Мегапиксели"
+      }
     },
     "outputs": {
-      "2": { "name": "МАСКА ИЗОБРАЖЕНИЯ" },
-      "3": { "name": "ШИРИНА" },
-      "4": { "name": "ВЫСОТА" }
+      "2": {
+        "name": "МАСКА ИЗОБРАЖЕНИЯ"
+      },
+      "3": {
+        "name": "ШИРИНА"
+      },
+      "4": {
+        "name": "ВЫСОТА"
+      },
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      },
+      "5": {
+        "name": "Metadata"
+      }
     }
   },
   "AILab_ImageCombiner": {
     "display_name": "Комбинировать изображения (RMBG) 🖼️",
     "inputs": {
-      "foreground": { "name": "Передний план" },
-      "background": { "name": "Фон" },
-      "mode": { "name": "Режим" },
-      "foreground_opacity": { "name": "Непрозрачность переднего плана" },
-      "foreground_scale": { "name": "Масштаб переднего плана" },
-      "position_x": { "name": "Позиция X" },
-      "position_y": { "name": "Позиция Y" },
-      "foreground_mask": { "name": "Маска переднего плана" }
+      "foreground": {
+        "name": "Передний план"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "mode": {
+        "name": "Режим"
+      },
+      "foreground_opacity": {
+        "name": "Непрозрачность переднего плана"
+      },
+      "foreground_scale": {
+        "name": "Масштаб переднего плана"
+      },
+      "position_x": {
+        "name": "Позиция X"
+      },
+      "position_y": {
+        "name": "Позиция Y"
+      },
+      "foreground_mask": {
+        "name": "Маска переднего плана"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Ширина"
+      },
+      "2": {
+        "name": "Высота"
+      }
     }
   },
   "AILab_MaskCombiner": {
     "display_name": "Комбинировать маски (RMBG) 🎭",
     "inputs": {
-      "mask_1": { "name": "Маска 1" },
-      "mode": { "name": "Режим" },
-      "mask_2": { "name": "Маска 2" },
-      "mask_3": { "name": "Маска 3" },
-      "mask_4": { "name": "Маска 4" }
+      "mask_1": {
+        "name": "Маска 1"
+      },
+      "mode": {
+        "name": "Режим"
+      },
+      "mask_2": {
+        "name": "Маска 2"
+      },
+      "mask_3": {
+        "name": "Маска 3"
+      },
+      "mask_4": {
+        "name": "Маска 4"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Маска"
+      }
     }
   },
   "AILab_MaskEnhancer": {
     "display_name": "Улучшение маски (RMBG) 🖼️",
     "inputs": {
-      "mask": { "name": "Маска" },
-      "sensitivity": { "name": "Чувствительность" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "smooth": { "name": "Сглаживание" },
-      "fill_holes": { "name": "Заполнение области" },
-      "invert_output": { "name": "Инвертировать вывод" }
+      "mask": {
+        "name": "Маска"
+      },
+      "sensitivity": {
+        "name": "Чувствительность"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "smooth": {
+        "name": "Сглаживание"
+      },
+      "fill_holes": {
+        "name": "Заполнение области"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Маска"
+      }
     }
   },
   "AILab_ImageMaskConvert": {
     "display_name": "Конвертация изображения/маски (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "mask": { "name": "Маска" },
-      "mask_channel": { "name": "Канал маски" }
+      "image": {
+        "name": "Изображение"
+      },
+      "mask": {
+        "name": "Маска"
+      },
+      "mask_channel": {
+        "name": "Канал маски"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      }
     }
   },
   "AILab_MaskExtractor": {
     "display_name": "Извлечение маски (RMBG) 🎭",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "mask": { "name": "Маска" },
-      "mode": { "name": "Режим" },
-      "background": { "name": "Фон" }
+      "image": {
+        "name": "Изображение"
+      },
+      "mask": {
+        "name": "Маска"
+      },
+      "mode": {
+        "name": "Режим"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображение"
+      }
     }
   },
   "AILab_ImageStitch": {
     "display_name": "Сшить изображения (RMBG) 🖼️",
     "inputs": {
-      "images": { "name": "Изображения" },
-      "direction": { "name": "Направление" }
+      "images": {
+        "name": "Изображения"
+      },
+      "direction": {
+        "name": "Направление"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "image1": {
+        "name": "Image1"
+      },
+      "stitch_mode": {
+        "name": "Stitch Mode"
+      },
+      "match_image_size": {
+        "name": "Match Image Size"
+      },
+      "megapixels": {
+        "name": "Мегапиксели"
+      },
+      "max_width": {
+        "name": "Max Width"
+      },
+      "max_height": {
+        "name": "Max Height"
+      },
+      "upscale_method": {
+        "name": "Метод апскейла"
+      },
+      "spacing_width": {
+        "name": "Spacing Width"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "image2": {
+        "name": "Image2"
+      },
+      "image3": {
+        "name": "Image3"
+      },
+      "image4": {
+        "name": "Image4"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Ширина"
+      },
+      "2": {
+        "name": "Высота"
+      }
     }
   },
   "AILab_ImageCrop": {
     "display_name": "Обрезка изображения (RMBG) 🖼️",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "anchor": { "name": "Якорь" },
-      "offset_x": { "name": "Смещение X" },
-      "offset_y": { "name": "Смещение Y" },
-      "split_output": { "name": "Разделить вывод" }
+      "image": {
+        "name": "Изображение"
+      },
+      "anchor": {
+        "name": "Якорь"
+      },
+      "offset_x": {
+        "name": "Смещение X"
+      },
+      "offset_y": {
+        "name": "Смещение Y"
+      },
+      "split_output": {
+        "name": "Разделить вывод"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "width": {
+        "name": "Ширина"
+      },
+      "height": {
+        "name": "Высота"
+      },
+      "x_offset": {
+        "name": "X Offset"
+      },
+      "y_offset": {
+        "name": "Y Offset"
+      },
+      "split": {
+        "name": "Split"
+      },
+      "position": {
+        "name": "Position"
+      }
     },
     "outputs": {
-      "0": { "name": "ОБРЕЗКА" },
-      "1": { "name": "ОСТАЛЬНОЕ" }
+      "0": {
+        "name": "ОБРЕЗКА"
+      },
+      "1": {
+        "name": "ОСТАЛЬНОЕ"
+      }
     }
   },
   "AILab_ICLoRAConcat": {
     "display_name": "ICLoRA Объединение (RMBG) 🖼️",
     "inputs": {
-      "object_image": { "name": "Объектное изображение" },
-      "layout": { "name": "Макет" },
-      "pixels": { "name": "Пиксели" },
-      "object_mask": { "name": "Маска объекта" },
-      "base_image": { "name": "Базовое изображение" },
-      "base_mask": { "name": "Базовая маска" }
+      "object_image": {
+        "name": "Объектное изображение"
+      },
+      "layout": {
+        "name": "Макет"
+      },
+      "pixels": {
+        "name": "Пиксели"
+      },
+      "object_mask": {
+        "name": "Маска объекта"
+      },
+      "base_image": {
+        "name": "Базовое изображение"
+      },
+      "base_mask": {
+        "name": "Базовая маска"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "custom_size": {
+        "name": "Custom Size"
+      }
     },
     "outputs": {
-      "0": { "name": "ИЗОБРАЖЕНИЕ" },
-      "1": { "name": "МАСКА ОБЪЕКТА" },
-      "2": { "name": "БАЗОВАЯ МАСКА" },
-      "3": { "name": "ШИРИНА" },
-      "4": { "name": "ВЫСОТА" },
-      "5": { "name": "X" },
-      "6": { "name": "Y" }
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА ОБЪЕКТА"
+      },
+      "2": {
+        "name": "БАЗОВАЯ МАСКА"
+      },
+      "3": {
+        "name": "ШИРИНА"
+      },
+      "4": {
+        "name": "ВЫСОТА"
+      },
+      "5": {
+        "name": "X"
+      },
+      "6": {
+        "name": "Y"
+      }
     }
   },
   "AILab_CropObject": {
     "display_name": "Обрезка до объекта (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "mask": { "name": "Маска" },
-      "padding": { "name": "Заполнение" }
+      "image": {
+        "name": "Изображение"
+      },
+      "mask": {
+        "name": "Маска"
+      },
+      "padding": {
+        "name": "Заполнение"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "0": { "name": "ОБРЕЗКА" },
-      "1": { "name": "ОСТАЛЬНОЕ" }
+      "0": {
+        "name": "ОБРЕЗКА"
+      },
+      "1": {
+        "name": "ОСТАЛЬНОЕ"
+      }
     }
-  },  
+  },
   "AILab_ImageCompare": {
     "display_name": "Сравнение изображений (RMBG) 🖼️🖼️",
     "inputs": {
-      "image_1": { "name": "Изображение 1" },
-      "image_2": { "name": "Изображение 2" },
-      "text_1": { "name": "Текст 1" },
-      "text_2": { "name": "Текст 2" }
+      "image_1": {
+        "name": "Изображение 1"
+      },
+      "image_2": {
+        "name": "Изображение 2"
+      },
+      "text_1": {
+        "name": "Текст 1"
+      },
+      "text_2": {
+        "name": "Текст 2"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "text1": {
+        "name": "Text1"
+      },
+      "text2": {
+        "name": "Text2"
+      },
+      "text3": {
+        "name": "Text3"
+      },
+      "size_base": {
+        "name": "Size Base"
+      },
+      "text_color": {
+        "name": "Text Color"
+      },
+      "bg_color": {
+        "name": "Bg Color"
+      },
+      "image1": {
+        "name": "Image1"
+      },
+      "image2": {
+        "name": "Image2"
+      },
+      "image3": {
+        "name": "Image3"
+      }
     },
     "outputs": {
-      "0": { "name": "ИЗОБРАЖЕНИЕ" }
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      }
     }
   },
   "AILab_ColorInput": {
     "display_name": "Цвет ввода (RMBG) 🎨",
     "inputs": {
-      "color": { "name": "Цвет" }
+      "color": {
+        "name": "Цвет"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "preset": {
+        "name": "Preset"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Color"
+      }
     }
   },
   "AILab_LamaRemover": {
     "display_name": "Удалить объект (RMBG) 🖼️🎭",
     "inputs": {
-      "images": { "name": "Изображения" },
-      "masks": { "name": "Маски" },
-      "removal_strength": { "name": "Степень удаления" },
-      "edge_smoothness": { "name": "Сглаживание краев" }
+      "images": {
+        "name": "Изображения"
+      },
+      "masks": {
+        "name": "Маски"
+      },
+      "removal_strength": {
+        "name": "Степень удаления"
+      },
+      "edge_smoothness": {
+        "name": "Сглаживание краев"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображения"
+      }
     }
   },
   "AILab_ImageMaskResize": {
     "display_name": "Изменение размера изображения/маски (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "mask": { "name": "Маска" },
-      "width": { "name": "Ширина" },
-      "height": { "name": "Высота" },
-      "scale_by": { "name": "Масштаб" },
-      "upscale_method": { "name": "Метод увеличения" },
-      "resize_mode": { "name": "Режим изменения размера" },
-      "pad_color": { "name": "Цвет заполнения" },
-      "crop_position": { "name": "Позиция обрезки" },
-      "divisible_by": { "name": "Делимый на" },
-      "device": { "name": "Устройство" }
+      "image": {
+        "name": "Изображение"
+      },
+      "mask": {
+        "name": "Маска"
+      },
+      "width": {
+        "name": "Ширина"
+      },
+      "height": {
+        "name": "Высота"
+      },
+      "scale_by": {
+        "name": "Масштаб"
+      },
+      "upscale_method": {
+        "name": "Метод увеличения"
+      },
+      "resize_mode": {
+        "name": "Режим изменения размера"
+      },
+      "pad_color": {
+        "name": "Цвет заполнения"
+      },
+      "crop_position": {
+        "name": "Позиция обрезки"
+      },
+      "divisible_by": {
+        "name": "Делимый на"
+      },
+      "device": {
+        "name": "Устройство"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "0": { "name": "Изображение" },
-      "1": { "name": "Маска" },
-      "2": { "name": "Ширина" },
-      "3": { "name": "Высота" }
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      },
+      "2": {
+        "name": "Ширина"
+      },
+      "3": {
+        "name": "Высота"
+      }
     }
   },
   "AILab_ReferenceLatentMask": {
     "display_name": "Kontext Ссылка на латентную маску (RMBG) 🎭",
     "inputs": {
-      "conditioning": { "name": "Условие" },
-      "latent": { "name": "Латент" },
-      "mask": { "name": "Маска" },
-      "expand": { "name": "Расширение" },
-      "blur": { "name": "Размытие" },
-      "mask_only": { "name": "Только маска" }
+      "conditioning": {
+        "name": "Условие"
+      },
+      "latent": {
+        "name": "Латент"
+      },
+      "mask": {
+        "name": "Маска"
+      },
+      "expand": {
+        "name": "Расширение"
+      },
+      "blur": {
+        "name": "Размытие"
+      },
+      "mask_only": {
+        "name": "Только маска"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
     },
     "outputs": {
-      "0": { "name": "Условие" },
-      "1": { "name": "Латент" },
-      "2": { "name": "Маска" }
+      "0": {
+        "name": "Условие"
+      },
+      "1": {
+        "name": "Латент"
+      },
+      "2": {
+        "name": "Маска"
+      }
     }
   },
   "AILab_SDMatte": {
     "display_name": "SDMatte Matting (RMBG) 🖼️🎭",
     "inputs": {
-      "image": { "name": "Изображение" },
-      "mask": { "name": "Маска" },
-      "model_path": { "name": "Модель" },
-      "device": { "name": "Устройство" },
-      "process_res": { "name": "Обработка разрешения" },
-      "transparent_object": { "name": "Прозрачный объект" },
-      "mask_refine": { "name": "Маска улучшение" },
-      "sensitivity": { "name": "Чувствительность" },
-      "mask_blur": { "name": "Размытие маски" },
-      "mask_offset": { "name": "Смещение маски" },
-      "invert_output": { "name": "Инвертировать вывод" },
-      "background": { "name": "Фон" },
-      "background_color": { "name": "Цвет фона" }
+      "image": {
+        "name": "Изображение"
+      },
+      "mask": {
+        "name": "Маска"
+      },
+      "model_path": {
+        "name": "Модель"
+      },
+      "device": {
+        "name": "Устройство"
+      },
+      "process_res": {
+        "name": "Обработка разрешения"
+      },
+      "transparent_object": {
+        "name": "Прозрачный объект"
+      },
+      "mask_refine": {
+        "name": "Маска улучшение"
+      },
+      "sensitivity": {
+        "name": "Чувствительность"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "model": {
+        "name": "Модель"
+      }
     },
     "outputs": {
-      "0": { "name": "Изображение" },
-      "1": { "name": "Маска" }
+      "0": {
+        "name": "Изображение"
+      },
+      "1": {
+        "name": "Маска"
+      },
+      "2": {
+        "name": "Изображение маски"
+      }
+    }
+  },
+  "SAM2Segment": {
+    "display_name": "Сегментация SAM2 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Изображение"
+      },
+      "prompt": {
+        "name": "Промпт"
+      },
+      "sam2_model": {
+        "name": "Модель SAM2"
+      },
+      "dino_model": {
+        "name": "Модель GroundingDINO"
+      },
+      "device": {
+        "name": "Устройство"
+      },
+      "threshold": {
+        "name": "Порог"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "ИЗОБРАЖЕНИЕ МАСКИ"
+      }
+    }
+  },
+  "SAM3Segment": {
+    "display_name": "Сегментация SAM3 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Изображение"
+      },
+      "model_name": {
+        "name": "Имя модели"
+      },
+      "prompt": {
+        "name": "Промпт"
+      },
+      "output_mode": {
+        "name": "Режим вывода"
+      },
+      "confidence_threshold": {
+        "name": "Порог уверенности"
+      },
+      "max_segments": {
+        "name": "Макс. сегментов"
+      },
+      "segment_pick": {
+        "name": "Выбор сегмента"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "device": {
+        "name": "Устройство"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "ИЗОБРАЖЕНИЕ МАСКИ"
+      }
+    }
+  },
+  "Lucida": {
+    "display_name": "Lucida Удаление фона (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Изображение"
+      },
+      "sensitivity": {
+        "name": "Чувствительность"
+      },
+      "process_res": {
+        "name": "Разрешение обработки"
+      },
+      "mask_blur": {
+        "name": "Размытие маски"
+      },
+      "mask_offset": {
+        "name": "Смещение маски"
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод"
+      },
+      "refine_foreground": {
+        "name": "Улучшить передний план"
+      },
+      "background": {
+        "name": "Фон"
+      },
+      "background_color": {
+        "name": "Цвет фона"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "ИЗОБРАЖЕНИЕ МАСКИ"
+      }
+    }
+  },
+  "AILab_ColorToMask": {
+    "display_name": "Цвет в маску (RMBG) 🎭",
+    "inputs": {
+      "images": {
+        "name": "Изображения"
+      },
+      "invert": {
+        "name": "Инвертировать"
+      },
+      "threshold": {
+        "name": "Порог"
+      },
+      "mask_color": {
+        "name": "Цвет маски"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "МАСКА"
+      }
+    }
+  },
+  "AILab_Florence2": {
+    "display_name": "Сегментация Florence2 (RMBG)",
+    "inputs": {
+      "images": {
+        "name": "Изображения"
+      },
+      "florence2_model": {
+        "name": "Модель Florence2"
+      },
+      "text_input": {
+        "name": "Текстовый ввод"
+      },
+      "task": {
+        "name": "Задача"
+      },
+      "precision": {
+        "name": "Точность"
+      },
+      "max_new_tokens": {
+        "name": "Макс. новых токенов"
+      },
+      "num_beams": {
+        "name": "Кол-во лучей"
+      },
+      "do_sample": {
+        "name": "Сэмплирование"
+      },
+      "fill_mask": {
+        "name": "Залить маску"
+      },
+      "device": {
+        "name": "Устройство"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      },
+      "image": {
+        "name": "Изображение"
+      },
+      "model_name": {
+        "name": "Имя модели"
+      },
+      "attention": {
+        "name": "Attention"
+      },
+      "output_mask_select": {
+        "name": "Output Mask Select"
+      },
+      "keep_model_loaded": {
+        "name": "Keep Model Loaded"
+      },
+      "text_prompt": {
+        "name": "Text Prompt"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "АННОТИРОВАННОЕ ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "СПИСОК МАСОК"
+      },
+      "3": {
+        "name": "JSON"
+      }
+    }
+  },
+  "AILab_Florence2ToCoordinates": {
+    "display_name": "Florence2 в координаты (RMBG)",
+    "inputs": {
+      "json_data": {
+        "name": "Данные JSON"
+      },
+      "image_width": {
+        "name": "Ширина изображения"
+      },
+      "image_height": {
+        "name": "Высота изображения"
+      },
+      "index": {
+        "name": "Индекс"
+      },
+      "data": {
+        "name": "Data"
+      },
+      "batch": {
+        "name": "Batch"
+      },
+      "image": {
+        "name": "Изображение"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ЦЕНТРАЛЬНЫЕ КООРДИНАТЫ"
+      },
+      "1": {
+        "name": "BBOX"
+      },
+      "2": {
+        "name": "МАСКА"
+      },
+      "3": {
+        "name": "ОБЩЕЕ КОЛИЧЕСТВО"
+      }
+    }
+  },
+  "AILab_ImageMaskToList": {
+    "display_name": "Изображение и маска в список (RMBG)",
+    "inputs": {
+      "resize_mode": {
+        "name": "Режим масштабирования"
+      },
+      "image_1": {
+        "name": "Изображение 1"
+      },
+      "mask_1": {
+        "name": "Маска 1"
+      },
+      "image_2": {
+        "name": "Изображение 2"
+      },
+      "mask_2": {
+        "name": "Маска 2"
+      },
+      "image_3": {
+        "name": "Изображение 3"
+      },
+      "mask_3": {
+        "name": "Маска 3"
+      },
+      "image_4": {
+        "name": "Изображение 4"
+      },
+      "mask_4": {
+        "name": "Маска 4"
+      },
+      "image_5": {
+        "name": "Изображение 5"
+      },
+      "mask_5": {
+        "name": "Маска 5"
+      },
+      "image_6": {
+        "name": "Изображение 6"
+      },
+      "mask_6": {
+        "name": "Маска 6"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "ШИРИНА"
+      },
+      "3": {
+        "name": "HEIGHT"
+      },
+      "4": {
+        "name": "РАЗМЕР ПАКЕТА"
+      }
+    }
+  },
+  "AILab_ImageResize": {
+    "display_name": "Масштабирование изображения (RMBG) 🖼️🎭",
+    "inputs": {
+      "image": {
+        "name": "Изображение"
+      },
+      "custom_width": {
+        "name": "Пользовательская ширина"
+      },
+      "custom_height": {
+        "name": "Пользовательская высота"
+      },
+      "megapixels": {
+        "name": "Мегапиксели"
+      },
+      "scale_by": {
+        "name": "Масштабировать на"
+      },
+      "resize_mode": {
+        "name": "Режим масштабирования"
+      },
+      "resize_value": {
+        "name": "Значение размера"
+      },
+      "upscale_method": {
+        "name": "Метод апскейла"
+      },
+      "device": {
+        "name": "Устройство"
+      },
+      "divisible_by": {
+        "name": "Кратность"
+      },
+      "output_mode": {
+        "name": "Режим вывода"
+      },
+      "crop_position": {
+        "name": "Позиция обрезки"
+      },
+      "pad_color": {
+        "name": "Цвет заполнения"
+      },
+      "mask": {
+        "name": "Маска"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "ШИРИНА"
+      },
+      "3": {
+        "name": "HEIGHT"
+      }
+    }
+  },
+  "AILab_ImageToList": {
+    "display_name": "Изображения в список (RMBG)",
+    "inputs": {
+      "resize_mode": {
+        "name": "Режим масштабирования"
+      },
+      "image_1": {
+        "name": "Изображение 1"
+      },
+      "image_2": {
+        "name": "Изображение 2"
+      },
+      "image_3": {
+        "name": "Изображение 3"
+      },
+      "image_4": {
+        "name": "Изображение 4"
+      },
+      "image_5": {
+        "name": "Изображение 5"
+      },
+      "image_6": {
+        "name": "Изображение 6"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "ШИРИНА"
+      },
+      "2": {
+        "name": "HEIGHT"
+      },
+      "3": {
+        "name": "РАЗМЕР ПАКЕТА"
+      }
+    }
+  },
+  "AILab_LoadImageBatch": {
+    "display_name": "Пакетная загрузка изображений (RMBG) 🖼️",
+    "inputs": {
+      "path_or_urls": {
+        "name": "Путь или URL"
+      },
+      "upscale_method": {
+        "name": "Метод апскейла"
+      },
+      "megapixels": {
+        "name": "Мегапиксели"
+      },
+      "scale_by": {
+        "name": "Масштабировать на"
+      },
+      "resize_mode": {
+        "name": "Режим масштабирования"
+      },
+      "size": {
+        "name": "Размер"
+      },
+      "batch_size": {
+        "name": "Размер пакета"
+      },
+      "start_from": {
+        "name": "Начать с"
+      },
+      "sort_method": {
+        "name": "Метод сортировки"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "ШИРИНА"
+      },
+      "3": {
+        "name": "HEIGHT"
+      }
+    }
+  },
+  "AILab_MaskOverlay": {
+    "display_name": "Наложение маски (RMBG) 🖼️🎭",
+    "inputs": {
+      "mask_opacity": {
+        "name": "Непрозрачность маски"
+      },
+      "mask_color": {
+        "name": "Цвет маски"
+      },
+      "image": {
+        "name": "Изображение"
+      },
+      "mask": {
+        "name": "Маска"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      }
+    }
+  },
+  "AILab_MaskToList": {
+    "display_name": "Маски в список (RMBG)",
+    "inputs": {
+      "resize_mode": {
+        "name": "Режим масштабирования"
+      },
+      "mask_1": {
+        "name": "Маска 1"
+      },
+      "mask_2": {
+        "name": "Маска 2"
+      },
+      "mask_3": {
+        "name": "Маска 3"
+      },
+      "mask_4": {
+        "name": "Маска 4"
+      },
+      "mask_5": {
+        "name": "Маска 5"
+      },
+      "mask_6": {
+        "name": "Маска 6"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "МАСКА"
+      }
+    }
+  },
+  "AILab_Resolution_Selector": {
+    "display_name": "Выбор разрешения (RMBG) ⛶",
+    "inputs": {
+      "aspect_ratio": {
+        "name": "Соотношение сторон"
+      },
+      "megapixels": {
+        "name": "Мегапиксели"
+      },
+      "multiple": {
+        "name": "Кратность"
+      },
+      "batch_size": {
+        "name": "Размер пакета"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Latent"
+      },
+      "1": {
+        "name": "Ширина"
+      },
+      "2": {
+        "name": "Высота"
+      }
+    }
+  },
+  "AILab_UnbatchImages": {
+    "display_name": "Распаковка пакета изображений (RMBG) 🖼️",
+    "inputs": {
+      "images": {
+        "name": "Изображения"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Изображение 1"
+      },
+      "1": {
+        "name": "Изображение 2"
+      },
+      "2": {
+        "name": "Изображение 3"
+      },
+      "3": {
+        "name": "Изображение 4"
+      },
+      "4": {
+        "name": "Изображение 5"
+      },
+      "5": {
+        "name": "Изображение 6"
+      },
+      "6": {
+        "name": "Изображение 7"
+      },
+      "7": {
+        "name": "Изображение 8"
+      }
+    }
+  },
+  "AILab_YoloV8": {
+    "display_name": "YOLOv8 Детекция (RMBG)",
+    "inputs": {
+      "images": {
+        "name": "Изображения"
+      },
+      "yolo_model": {
+        "name": "Модель YOLO"
+      },
+      "mask_count": {
+        "name": "Кол-во масок"
+      },
+      "select_mask_index": {
+        "name": "Выбор индекса маски"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "АННОТИРОВАННОЕ ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "СПИСОК МАСОК"
+      }
+    }
+  },
+  "AILab_YoloV8Adv": {
+    "display_name": "YOLOv8 Расширенная детекция (RMBG)",
+    "inputs": {
+      "images": {
+        "name": "Изображения"
+      },
+      "yolo_model": {
+        "name": "Модель YOLO"
+      },
+      "mask_count": {
+        "name": "Кол-во масок"
+      },
+      "select_mask_index": {
+        "name": "Выбор индекса маски"
+      },
+      "conf": {
+        "name": "Порог уверенности"
+      },
+      "iou": {
+        "name": "Порог IoU"
+      },
+      "classes": {
+        "name": "Фильтр классов"
+      },
+      "device": {
+        "name": "Устройство"
+      },
+      "max_det": {
+        "name": "Макс. детекций"
+      },
+      "retina_masks": {
+        "name": "Маски Retina"
+      },
+      "agnostic_nms": {
+        "name": "Класс-агностичный NMS"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "АННОТИРОВАННОЕ ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "СПИСОК МАСОК"
+      }
     }
   }
 }
-

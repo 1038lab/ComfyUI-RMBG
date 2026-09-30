@@ -1,643 +1,643 @@
 {
   "RMBG": {
-    "display_name": "Remove Background (RMBG)",
+    "display_name": "去除背景 (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "model": {
-        "name": "Model"
+        "name": "模型"
       },
       "sensitivity": {
-        "name": "Sensitivity"
+        "name": "靈敏度"
       },
       "process_res": {
-        "name": "Processing Resolution"
+        "name": "處理解析度"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "refine_foreground": {
-        "name": "Refine Foreground"
+        "name": "精細前景優化"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "BodySegment": {
-    "display_name": "Body Part Segmentation (RMBG)",
+    "display_name": "身體部位分割 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "Hair": {
-        "name": "Hair"
+        "name": "头发"
       },
       "Glasses": {
-        "name": "Glasses"
+        "name": "眼鏡"
       },
       "Top-clothes": {
-        "name": "Top Clothes"
+        "name": "上身服饰"
       },
       "Bottom-clothes": {
-        "name": "Bottom Clothes"
+        "name": "下身服饰"
       },
       "Torso-skin": {
-        "name": "Torso Skin"
+        "name": "躯干皮肤"
       },
       "Face": {
-        "name": "Face"
+        "name": "面部"
       },
       "Left-arm": {
-        "name": "Left Arm"
+        "name": "左臂"
       },
       "Right-arm": {
-        "name": "Right Arm"
+        "name": "右臂"
       },
       "Left-leg": {
-        "name": "Left Leg"
+        "name": "左腿"
       },
       "Right-leg": {
-        "name": "Right Leg"
+        "name": "右腿"
       },
       "Left-foot": {
-        "name": "Left Foot"
+        "name": "左脚"
       },
       "Right-foot": {
-        "name": "Right Foot"
+        "name": "右脚"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "BiRefNetRMBG": {
-    "display_name": "BiRefNet Remove Background (RMBG)",
+    "display_name": "BiRefNet 去除背景 (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "model": {
-        "name": "Model"
+        "name": "模型"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "refine_foreground": {
-        "name": "Refine Foreground"
+        "name": "精細前景優化"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "sensitivity": {
-        "name": "Sensitivity"
+        "name": "靈敏度"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "ClothesSegment": {
-    "display_name": "Clothing Segmentation (RMBG)",
+    "display_name": "衣物分割 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "Hat": {
-        "name": "Hat"
+        "name": "帽子"
       },
       "Hair": {
-        "name": "Hair"
+        "name": "头发"
       },
       "Face": {
-        "name": "Face"
+        "name": "面部"
       },
       "Sunglasses": {
-        "name": "Sunglasses"
+        "name": "太阳鏡"
       },
       "Upper-clothes": {
-        "name": "Upper Clothes"
+        "name": "上衣"
       },
       "Skirt": {
-        "name": "Skirt"
+        "name": "裙子"
       },
       "Dress": {
-        "name": "Dress"
+        "name": "連衣裙"
       },
       "Belt": {
-        "name": "Belt"
+        "name": "腰带"
       },
       "Pants": {
-        "name": "Pants"
+        "name": "裤子"
       },
       "Left-arm": {
-        "name": "Left Arm"
+        "name": "左臂"
       },
       "Right-arm": {
-        "name": "Right Arm"
+        "name": "右臂"
       },
       "Left-leg": {
-        "name": "Left Leg"
+        "name": "左腿"
       },
       "Right-leg": {
-        "name": "Right Leg"
+        "name": "右腿"
       },
       "Bag": {
-        "name": "Bag"
+        "name": "背包"
       },
       "Scarf": {
-        "name": "Scarf"
+        "name": "围巾"
       },
       "Left-shoe": {
-        "name": "Left Shoe"
+        "name": "左鞋"
       },
       "Right-shoe": {
-        "name": "Right Shoe"
-      },
-      "Background": {
-        "name": "Background"
-      },
-      "process_res": {
-        "name": "Processing Resolution"
+        "name": "右鞋"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
+      },
+      "process_res": {
+        "name": "處理解析度"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
+      },
+      "Background": {
+        "name": "背景類型"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "FaceSegment": {
-    "display_name": "Face Segmentation (RMBG)",
+    "display_name": "面部分割 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "Skin": {
-        "name": "Skin"
+        "name": "皮肤"
       },
       "Nose": {
-        "name": "Nose"
+        "name": "鼻子"
       },
       "Eyeglasses": {
-        "name": "Eyeglasses"
+        "name": "眼鏡"
       },
       "Left-eye": {
-        "name": "Left Eye"
+        "name": "左眼"
       },
       "Right-eye": {
-        "name": "Right Eye"
+        "name": "右眼"
       },
       "Left-eyebrow": {
-        "name": "Left Eyebrow"
+        "name": "左眉毛"
       },
       "Right-eyebrow": {
-        "name": "Right Eyebrow"
+        "name": "右眉毛"
       },
       "Left-ear": {
-        "name": "Left Ear"
+        "name": "左耳"
       },
       "Right-ear": {
-        "name": "Right Ear"
+        "name": "右耳"
       },
       "Mouth": {
-        "name": "Mouth"
+        "name": "嘴巴"
       },
       "Upper-lip": {
-        "name": "Upper Lip"
+        "name": "上唇"
       },
       "Lower-lip": {
-        "name": "Lower Lip"
+        "name": "下唇"
       },
       "Hair": {
-        "name": "Hair"
+        "name": "头发"
       },
       "Earring": {
-        "name": "Earring"
+        "name": "耳环"
       },
       "Neck": {
-        "name": "Neck"
-      },
-      "process_res": {
-        "name": "Processing Resolution"
+        "name": "脖子"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
+      },
+      "process_res": {
+        "name": "處理解析度"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "FashionSegmentClothing": {
-    "display_name": "Fashion Segmentation (RMBG)",
+    "display_name": "时尚分割 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "accessories_options": {
-        "name": "Accessories Options"
+        "name": "配件選项"
       },
       "coat": {
-        "name": "Coat"
+        "name": "外套"
       },
       "jacket": {
-        "name": "Jacket"
+        "name": "夹克"
       },
       "cardigan": {
-        "name": "Cardigan"
+        "name": "开衫"
       },
       "vest": {
-        "name": "Vest"
+        "name": "背心"
       },
       "sweater": {
-        "name": "Sweater"
+        "name": "毛衣"
       },
       "hood": {
-        "name": "Hood"
+        "name": "帽子"
       },
       "shirt, blouse": {
-        "name": "Shirt, Blouse"
+        "name": "衬衫, 上衣"
       },
       "top, t-shirt, sweatshirt": {
-        "name": "Top, T-shirt, Sweatshirt"
+        "name": "上衣、T恤、卫衣"
       },
       "sleeve": {
-        "name": "Sleeve"
+        "name": "袖子"
       },
       "dress": {
-        "name": "Dress"
+        "name": "連衣裙"
       },
       "jumpsuit": {
-        "name": "Jumpsuit"
+        "name": "連體衣"
       },
       "cape": {
-        "name": "Cape"
+        "name": "斗篷"
       },
       "pants": {
-        "name": "Pants"
+        "name": "裤子"
       },
       "shorts": {
-        "name": "Shorts"
+        "name": "短裤"
       },
       "skirt": {
-        "name": "Skirt"
+        "name": "裙子"
       },
       "tights, stockings": {
-        "name": "Tights, Stockings"
+        "name": "紧身裤, 丝袜"
       },
       "sock": {
-        "name": "Sock"
+        "name": "袜子"
       },
       "shoe": {
-        "name": "Shoe"
-      },
-      "process_res": {
-        "name": "Processing Resolution"
+        "name": "鞋子"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
+      },
+      "process_res": {
+        "name": "處理解析度"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "FashionSegmentAccessories": {
-    "display_name": "Fashion Accessories Segmentation (RMBG)",
+    "display_name": "时尚分割配件 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "hat": {
-        "name": "Hat"
+        "name": "帽子"
       },
       "glasses": {
-        "name": "Glasses"
+        "name": "眼鏡"
       },
       "headband, head covering, hair accessory": {
-        "name": "Headband, Head Covering, Hair Accessory"
+        "name": "头带, 头饰, 发饰"
       },
       "scarf": {
-        "name": "Scarf"
+        "name": "围巾"
       },
       "tie": {
-        "name": "Tie"
+        "name": "领带"
       },
       "glove": {
-        "name": "Glove"
+        "name": "手套"
       },
       "watch": {
-        "name": "Watch"
+        "name": "手表"
       },
       "belt": {
-        "name": "Belt"
+        "name": "腰带"
       },
       "leg warmer": {
-        "name": "Leg Warmer"
+        "name": "护腿"
       },
       "bag, wallet": {
-        "name": "Bag, Wallet"
+        "name": "包, 钱包"
       },
       "umbrella": {
-        "name": "Umbrella"
+        "name": "雨伞"
       },
       "collar": {
-        "name": "Collar"
+        "name": "领子"
       },
       "lapel": {
-        "name": "Lapel"
+        "name": "领口"
       },
       "neckline": {
-        "name": "Neckline"
+        "name": "领口"
       },
       "epaulette": {
-        "name": "Epaulette"
+        "name": "肩章"
       },
       "pocket": {
-        "name": "Pocket"
+        "name": "口袋"
       },
       "buckle": {
-        "name": "Buckle"
+        "name": "扣子"
       },
       "zipper": {
-        "name": "Zipper"
+        "name": "拉链"
       },
       "applique": {
-        "name": "Applique"
+        "name": "刺绣"
       },
       "bow": {
-        "name": "Bow"
+        "name": "蝴蝶結"
       },
       "flower": {
-        "name": "Flower"
+        "name": "花"
       },
       "bead": {
-        "name": "Bead"
+        "name": "珠子"
       },
       "fringe": {
-        "name": "Fringe"
+        "name": "流苏"
       },
       "ribbon": {
-        "name": "Ribbon"
+        "name": "丝带"
       },
       "rivet": {
-        "name": "Rivet"
+        "name": "铆钉"
       },
       "ruffle": {
-        "name": "Ruffle"
+        "name": "褶皱"
       },
       "sequin": {
-        "name": "Sequin"
+        "name": "亮片"
       },
       "tassel": {
-        "name": "Tassel"
+        "name": "流苏"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Accessories Options"
+        "name": "配件選项"
       }
     }
   },
   "Segment": {
-    "display_name": "Segmentation V1 (RMBG)",
+    "display_name": "局部分割 V1 (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "prompt": {
-        "name": "Prompt"
+        "name": "提示"
       },
       "sam_model": {
-        "name": "SAM Model"
+        "name": "SAM模型"
       },
       "dino_model": {
-        "name": "DINO Model"
+        "name": "DINO模型"
       },
       "threshold": {
-        "name": "Threshold"
+        "name": "閾值"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "SegmentV2": {
-    "display_name": "Segmentation V2 (RMBG)",
+    "display_name": "局部分割 V2 (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "prompt": {
-        "name": "Prompt"
+        "name": "提示"
       },
       "sam_model": {
-        "name": "SAM Model"
+        "name": "SAM模型"
       },
       "dino_model": {
-        "name": "DINO Model"
+        "name": "DINO模型"
       },
       "threshold": {
-        "name": "Threshold"
+        "name": "閾值"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
@@ -645,216 +645,216 @@
     "display_name": "SAM2Segment (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "prompt": {
-        "name": "Prompt"
+        "name": "提示"
       },
       "sam_model": {
-        "name": "SAM Model"
+        "name": "SAM模型"
       },
       "dino_model": {
-        "name": "DINO Model"
+        "name": "DINO模型"
       },
       "threshold": {
-        "name": "Threshold"
+        "name": "閾值"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "遮罩圖像"
       }
     }
   },
   "AILab_Preview": {
-    "display_name": "Image / Mask Preview (RMBG) 🖼️🎭",
+    "display_name": "圖像/遮罩 预览 (RMBG) 🖼️🎭",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "AILab_ImagePreview": {
-    "display_name": "Image Preview (RMBG) 🖼️",
+    "display_name": "圖像预览 (RMBG) 🖼️",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Image"
+        "name": "圖像"
       }
     }
   },
   "AILab_MaskPreview": {
-    "display_name": "Mask Preview (RMBG) 🎭",
+    "display_name": "遮罩预览 (RMBG) 🎭",
     "inputs": {
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "AILab_LoadImage": {
-    "display_name": "Load Image (RMBG) 🖼️",
+    "display_name": "加載圖像 (RMBG) 🖼️",
     "inputs": {
       "image_path_or_URL": {
-        "name": "Image Path or URL"
+        "name": "圖像路径或URL"
       },
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "upscale_method": {
-        "name": "Upscale Method"
+        "name": "放大方法"
       },
       "scale_by": {
-        "name": "Scale By"
+        "name": "縮放比例"
       },
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "縮放模式"
       },
       "size": {
-        "name": "Size"
+        "name": "縮放大小"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "megapixels": {
-        "name": "Megapixels"
+        "name": "百萬像素"
       }
     },
     "outputs": {
       "2": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "3": {
-        "name": "HEIGHT"
+        "name": "高度"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "AILab_LoadImageSimple": {
-    "display_name": "Load Image Simple (RMBG) 🖼️",
+    "display_name": "加載圖像 簡單(RMBG) 🖼️",
     "inputs": {
       "image_path_or_URL": {
-        "name": "Image Path or URL"
+        "name": "圖像路径或URL"
       },
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "1": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "2": {
-        "name": "HEIGHT"
+        "name": "高度"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "3": {
-        "name": "Height"
+        "name": "高度"
       }
     }
   },
   "AILab_LoadImageAdvanced": {
-    "display_name": "Load Image Advanced (RMBG) 🖼️",
+    "display_name": "加載圖像 高級(RMBG) 🖼️",
     "inputs": {
       "image_path_or_URL": {
-        "name": "Image Path or URL"
+        "name": "圖像路径或URL"
       },
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask_channel": {
-        "name": "Mask Channel"
+        "name": "遮罩通道"
       },
       "upscale_method": {
-        "name": "Upscale Method"
+        "name": "放大方法"
       },
       "scale_by": {
-        "name": "Scale By"
+        "name": "縮放比例"
       },
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "縮放模式"
       },
       "size": {
-        "name": "Size"
+        "name": "縮放大小"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "megapixels": {
-        "name": "Megapixels"
+        "name": "百萬像素"
       }
     },
     "outputs": {
       "2": {
-        "name": "MASK IMAGE"
+        "name": "圖像"
       },
       "3": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "4": {
-        "name": "HEIGHT"
+        "name": "高度"
       },
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "5": {
         "name": "Metadata"
@@ -862,174 +862,174 @@
     }
   },
   "AILab_ImageCombiner": {
-    "display_name": "Image Combiner (RMBG) 🖼️",
+    "display_name": "圖像组合 (RMBG) 🖼️",
     "inputs": {
       "foreground": {
-        "name": "Foreground"
+        "name": "前景"
       },
       "background": {
-        "name": "Background"
+        "name": "背景"
       },
       "mode": {
-        "name": "Mode"
+        "name": "模式"
       },
       "foreground_opacity": {
-        "name": "Foreground Opacity"
+        "name": "前景透明度"
       },
       "foreground_scale": {
-        "name": "Foreground Scale"
+        "name": "前景縮放"
       },
       "position_x": {
-        "name": "Position X"
+        "name": "位置X"
       },
       "position_y": {
-        "name": "Position Y"
+        "name": "位置Y"
       },
       "foreground_mask": {
-        "name": "Foreground Mask"
+        "name": "前景遮罩"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Width"
+        "name": "寬度"
       },
       "2": {
-        "name": "Height"
+        "name": "高度"
       }
     }
   },
   "AILab_MaskCombiner": {
-    "display_name": "Mask Combiner (RMBG) 🎭",
+    "display_name": "遮罩组合 (RMBG) 🎭",
     "inputs": {
       "mask_1": {
-        "name": "Mask 1"
+        "name": "遮罩 1"
       },
       "mode": {
-        "name": "Mode"
+        "name": "模式"
       },
       "mask_2": {
-        "name": "Mask 2"
+        "name": "遮罩 2"
       },
       "mask_3": {
-        "name": "Mask 3"
+        "name": "遮罩 3"
       },
       "mask_4": {
-        "name": "Mask 4"
+        "name": "遮罩 4"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "AILab_MaskEnhancer": {
-    "display_name": "Mask Enhancer (RMBG) 🖼️",
+    "display_name": "遮罩增强 (RMBG) 🖼️",
     "inputs": {
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "sensitivity": {
-        "name": "Sensitivity"
+        "name": "靈敏度"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "smooth": {
-        "name": "Smooth"
+        "name": "平滑"
       },
       "fill_holes": {
-        "name": "Fill Holes"
+        "name": "填充空洞"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "AILab_ImageMaskConvert": {
-    "display_name": "Image / Mask Convert (RMBG) 🖼️🎭",
+    "display_name": "圖像/遮罩轉换 (RMBG) 🖼️🎭",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "mask_channel": {
-        "name": "Mask Channel"
+        "name": "遮罩通道"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     }
   },
   "AILab_MaskExtractor": {
-    "display_name": "Mask Extractor (RMBG) 🎭",
+    "display_name": "遮罩提取 (RMBG) 🎭",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "mode": {
-        "name": "Mode"
+        "name": "模式"
       },
       "background": {
-        "name": "Background"
+        "name": "背景"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       }
     },
     "outputs": {
       "0": {
-        "name": "Image"
+        "name": "圖像"
       }
     }
   },
   "AILab_ImageStitch": {
-    "display_name": "Image Stitch (RMBG) 🖼️",
+    "display_name": "圖像拼接 (RMBG) 🖼️",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "direction": {
-        "name": "Direction"
+        "name": "方向"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "image1": {
         "name": "Image1"
@@ -1041,7 +1041,7 @@
         "name": "Match Image Size"
       },
       "megapixels": {
-        "name": "Megapixels"
+        "name": "百萬像素"
       },
       "max_width": {
         "name": "Max Width"
@@ -1050,13 +1050,13 @@
         "name": "Max Height"
       },
       "upscale_method": {
-        "name": "Upscale Method"
+        "name": "插值演算法"
       },
       "spacing_width": {
         "name": "Spacing Width"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "image2": {
         "name": "Image2"
@@ -1070,42 +1070,42 @@
     },
     "outputs": {
       "0": {
-        "name": "Image"
+        "name": "圖像"
       },
       "1": {
-        "name": "Width"
+        "name": "寬度"
       },
       "2": {
-        "name": "Height"
+        "name": "高度"
       }
     }
   },
   "AILab_ImageCrop": {
-    "display_name": "Image Crop (RMBG) 🖼️",
+    "display_name": "圖像裁剪 (RMBG) 🖼️",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "anchor": {
-        "name": "Anchor"
+        "name": "锚点"
       },
       "offset_x": {
-        "name": "Offset X"
+        "name": "偏移X"
       },
       "offset_y": {
-        "name": "Offset Y"
+        "name": "偏移Y"
       },
       "split_output": {
-        "name": "Split Output"
+        "name": "分离輸出"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "width": {
-        "name": "Width"
+        "name": "寬度"
       },
       "height": {
-        "name": "Height"
+        "name": "高度"
       },
       "x_offset": {
         "name": "X Offset"
@@ -1122,53 +1122,56 @@
     },
     "outputs": {
       "0": {
-        "name": "CROP"
+        "name": "裁剪部分"
       },
       "1": {
-        "name": "REST"
+        "name": "剩余部分"
       }
     }
   },
   "AILab_ICLoRAConcat": {
-    "display_name": "IC LoRA Concat (RMBG) 🖼️",
+    "display_name": "ICLoRA 拼接 (RMBG) 🖼️",
     "inputs": {
       "object_image": {
-        "name": "Object Image"
+        "name": "目標圖像"
       },
       "layout": {
-        "name": "Layout"
+        "name": "布局"
+      },
+      "pixels": {
+        "name": "像素"
+      },
+      "object_mask": {
+        "name": "目標遮罩"
+      },
+      "base_image": {
+        "name": "基础圖像"
+      },
+      "base_mask": {
+        "name": "基础遮罩"
+      },
+      "unload_model": {
+        "name": "釋放模型顯存"
       },
       "custom_size": {
         "name": "Custom Size"
-      },
-      "object_mask": {
-        "name": "Object Mask"
-      },
-      "base_image": {
-        "name": "Base Image"
-      },
-      "base_mask": {
-        "name": "Base Mask"
-      },
-      "unload_model": {
-        "name": "Unload Model"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "OBJECT MASK"
+        "name": "目標遮罩"
       },
       "2": {
-        "name": "BASE MASK"
+        "name": "基础遮罩"
       },
       "3": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "4": {
-        "name": "HEIGHT"
+        "name": "高度"
       },
       "5": {
         "name": "X"
@@ -1179,47 +1182,47 @@
     }
   },
   "AILab_CropObject": {
-    "display_name": "Crop To Object (RMBG) 🖼️🎭",
+    "display_name": "裁剪到对象 (RMBG) 🖼️🎭",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "padding": {
-        "name": "Padding"
+        "name": "填充"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "裁剪圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "裁剪遮罩"
       }
     }
   },
   "AILab_ImageCompare": {
-    "display_name": "Image Compare (RMBG) 🖼️🖼️",
+    "display_name": "圖像比较 (RMBG) 🖼️🖼️",
     "inputs": {
       "image_1": {
-        "name": "Image 1"
+        "name": "圖像 1"
       },
       "image_2": {
-        "name": "Image 2"
+        "name": "圖像 2"
       },
       "text_1": {
-        "name": "Text 1"
+        "name": "文本 1"
       },
       "text_2": {
-        "name": "Text 2"
+        "name": "文本 2"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "text1": {
         "name": "Text1"
@@ -1251,18 +1254,18 @@
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       }
     }
   },
   "AILab_ColorInput": {
-    "display_name": "Color Input (RMBG) 🎨",
+    "display_name": "顏色輸入 (RMBG) 🎨",
     "inputs": {
       "color": {
-        "name": "Color"
+        "name": "顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "preset": {
         "name": "Preset"
@@ -1275,119 +1278,119 @@
     }
   },
   "AILab_LamaRemover": {
-    "display_name": "Lama Remover (RMBG) 🖼️🎭",
+    "display_name": "对象去除 (RMBG) 🖼️🎭",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "masks": {
-        "name": "Masks"
+        "name": "遮罩"
       },
       "removal_strength": {
-        "name": "Removal Strength"
+        "name": "去除强度"
       },
       "edge_smoothness": {
-        "name": "Edge Smoothness"
+        "name": "边缘平滑"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "Images"
+        "name": "圖像批次"
       }
     }
   },
   "AILab_ImageMaskResize": {
-    "display_name": "Image Mask Resize (RMBG) 🖼️🎭",
+    "display_name": "圖像/遮罩調整大小 (RMBG) 🖼️🎭",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "width": {
-        "name": "Width"
+        "name": "寬度"
       },
       "height": {
-        "name": "Height"
+        "name": "高度"
       },
       "scale_by": {
-        "name": "Scale By"
+        "name": "縮放比例"
       },
       "upscale_method": {
-        "name": "Upscale Method"
+        "name": "放大方法"
       },
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "調整大小模式"
       },
       "pad_color": {
-        "name": "Pad Color"
+        "name": "填充顏色"
       },
       "crop_position": {
-        "name": "Crop Position"
+        "name": "裁剪位置"
       },
       "divisible_by": {
-        "name": "Divisible By"
+        "name": "可整除"
       },
       "device": {
-        "name": "Device"
+        "name": "裝置"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "3": {
-        "name": "HEIGHT"
+        "name": "高度"
       }
     }
   },
   "AILab_ReferenceLatentMask": {
-    "display_name": "Kontext Reference Latent Mask (RMBG) 🎭",
+    "display_name": "Kontext 参考潜伏遮罩 (RMBG) 🎭",
     "inputs": {
       "conditioning": {
-        "name": "Conditioning"
+        "name": "條件"
       },
       "latent": {
-        "name": "Latent"
+        "name": "latant"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "expand": {
-        "name": "Expand"
+        "name": "擴展"
       },
       "blur": {
-        "name": "Blur"
+        "name": "模糊"
       },
       "mask_only": {
-        "name": "Mask Only"
+        "name": "仅遮罩"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "CONDITIONING"
+        "name": "條件"
       },
       "1": {
-        "name": "LATENT"
+        "name": "latant"
       },
       "2": {
-        "name": "MASK"
+        "name": "遮罩"
       }
     }
   },
@@ -1395,279 +1398,279 @@
     "display_name": "SDMatte Matting (RMBG) 🖼️🎭",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       },
       "model_path": {
-        "name": "Model"
+        "name": "模型路径"
       },
       "device": {
-        "name": "Device"
+        "name": "裝置"
       },
       "process_res": {
-        "name": "Processing Resolution"
+        "name": "處理解析度"
       },
       "transparent_object": {
-        "name": "Transparent Object"
+        "name": "透明对象"
       },
       "mask_refine": {
-        "name": "Mask Refine"
+        "name": "遮罩細化"
       },
       "sensitivity": {
-        "name": "Sensitivity"
+        "name": "靈敏度"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "background": {
-        "name": "Background"
+        "name": "背景"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "model": {
-        "name": "Model"
+        "name": "模型"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "Mask Image"
+        "name": "遮罩圖像"
       }
     }
   },
   "SAM2Segment": {
-    "display_name": "SAM2 Segmentation (RMBG)",
+    "display_name": "SAM2 目標分割 (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "prompt": {
-        "name": "Prompt"
+        "name": "提示詞"
       },
       "sam2_model": {
-        "name": "SAM2 Model"
+        "name": "SAM2 模型"
       },
       "dino_model": {
-        "name": "GroundingDINO Model"
+        "name": "GroundingDINO 模型"
       },
       "device": {
-        "name": "Device"
+        "name": "运行裝置"
       },
       "threshold": {
-        "name": "Threshold"
+        "name": "檢測閾值"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "MASK_IMAGE"
+        "name": "遮罩圖像"
       }
     }
   },
   "SAM3Segment": {
-    "display_name": "SAM3 Segmentation (RMBG)",
+    "display_name": "SAM3 目標分割 (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "model_name": {
-        "name": "Model Name"
+        "name": "模型名称"
       },
       "prompt": {
-        "name": "Prompt"
+        "name": "提示詞"
       },
       "output_mode": {
-        "name": "Output Mode"
+        "name": "輸出模式"
       },
       "confidence_threshold": {
-        "name": "Confidence Threshold"
+        "name": "置信度閾值"
       },
       "max_segments": {
-        "name": "Max Segments"
+        "name": "最大分割數"
       },
       "segment_pick": {
-        "name": "Segment Pick"
+        "name": "選擇分割项"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "device": {
-        "name": "Device"
+        "name": "运行裝置"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "MASK_IMAGE"
+        "name": "遮罩圖像"
       }
     }
   },
   "Lucida": {
-    "display_name": "Lucida (RMBG)",
+    "display_name": "Lucida 摳圖 (RMBG)",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "sensitivity": {
-        "name": "Sensitivity"
+        "name": "靈敏度"
       },
       "process_res": {
-        "name": "Processing Resolution"
+        "name": "處理解析度"
       },
       "mask_blur": {
-        "name": "Mask Blur"
+        "name": "遮罩模糊"
       },
       "mask_offset": {
-        "name": "Mask Offset"
+        "name": "遮罩偏移"
       },
       "invert_output": {
-        "name": "Invert Output"
+        "name": "反轉輸出"
       },
       "refine_foreground": {
-        "name": "Refine Foreground"
+        "name": "精細前景優化"
       },
       "background": {
-        "name": "Background"
+        "name": "背景類型"
       },
       "background_color": {
-        "name": "Background Color"
+        "name": "背景顏色"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "MASK_IMAGE"
+        "name": "遮罩圖像"
       }
     }
   },
   "AILab_ColorToMask": {
-    "display_name": "Color to Mask (RMBG) 🎭",
+    "display_name": "顏色提取遮罩 (RMBG) 🎭",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "invert": {
-        "name": "Invert"
+        "name": "反轉"
       },
       "threshold": {
-        "name": "Threshold"
+        "name": "容差閾值"
       },
       "mask_color": {
-        "name": "Mask Color"
+        "name": "目標顏色"
       }
     },
     "outputs": {
       "0": {
-        "name": "MASK"
+        "name": "遮罩"
       }
     }
   },
   "AILab_Florence2": {
-    "display_name": "Florence2 Segmentation (RMBG)",
+    "display_name": "Florence2 智能分割 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "florence2_model": {
-        "name": "Florence2 Model"
+        "name": "Florence2 模型"
       },
       "text_input": {
-        "name": "Text Input"
+        "name": "文本輸入"
       },
       "task": {
-        "name": "Task"
+        "name": "任务類型"
       },
       "precision": {
-        "name": "Precision"
+        "name": "精度"
       },
       "max_new_tokens": {
-        "name": "Max New Tokens"
+        "name": "最大生成Token數"
       },
       "num_beams": {
-        "name": "Num Beams"
+        "name": "Beam數"
       },
       "do_sample": {
-        "name": "Do Sample"
+        "name": "采样"
       },
       "fill_mask": {
-        "name": "Fill Mask"
+        "name": "填充遮罩"
       },
       "device": {
-        "name": "Device"
+        "name": "运行裝置"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       },
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "model_name": {
-        "name": "Model Name"
+        "name": "模型名称"
       },
       "attention": {
         "name": "Attention"
@@ -1684,33 +1687,33 @@
     },
     "outputs": {
       "0": {
-        "name": "ANNOTATED_IMAGE"
+        "name": "標注圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "MASK_LIST"
+        "name": "遮罩列表"
       },
       "3": {
-        "name": "JSON"
+        "name": "JSON 數据"
       }
     }
   },
   "AILab_Florence2ToCoordinates": {
-    "display_name": "Florence2 To Coordinates (RMBG)",
+    "display_name": "Florence2 坐標提取 (RMBG)",
     "inputs": {
       "json_data": {
-        "name": "JSON Data"
+        "name": "JSON 數据"
       },
       "image_width": {
-        "name": "Image Width"
+        "name": "圖像寬度"
       },
       "image_height": {
-        "name": "Image Height"
+        "name": "圖像高度"
       },
       "index": {
-        "name": "Index"
+        "name": "索引"
       },
       "data": {
         "name": "Data"
@@ -1719,430 +1722,430 @@
         "name": "Batch"
       },
       "image": {
-        "name": "Image"
+        "name": "圖像"
       }
     },
     "outputs": {
       "0": {
-        "name": "CENTER_COORDINATES"
+        "name": "中心坐標"
       },
       "1": {
-        "name": "BBOX"
+        "name": "边界框"
       },
       "2": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "3": {
-        "name": "TOTAL_COUNT"
+        "name": "总數量"
       }
     }
   },
   "AILab_ImageMaskToList": {
-    "display_name": "Image and Mask to List (RMBG)",
+    "display_name": "圖像与遮罩轉列表 (RMBG)",
     "inputs": {
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "縮放模式"
       },
       "image_1": {
-        "name": "Image 1"
+        "name": "圖像 1"
       },
       "mask_1": {
-        "name": "Mask 1"
+        "name": "遮罩 1"
       },
       "image_2": {
-        "name": "Image 2"
+        "name": "圖像 2"
       },
       "mask_2": {
-        "name": "Mask 2"
+        "name": "遮罩 2"
       },
       "image_3": {
-        "name": "Image 3"
+        "name": "圖像 3"
       },
       "mask_3": {
-        "name": "Mask 3"
+        "name": "遮罩 3"
       },
       "image_4": {
-        "name": "Image 4"
+        "name": "圖像 4"
       },
       "mask_4": {
-        "name": "Mask 4"
+        "name": "遮罩 4"
       },
       "image_5": {
-        "name": "Image 5"
+        "name": "圖像 5"
       },
       "mask_5": {
-        "name": "Mask 5"
+        "name": "遮罩 5"
       },
       "image_6": {
-        "name": "Image 6"
+        "name": "圖像 6"
       },
       "mask_6": {
-        "name": "Mask 6"
+        "name": "遮罩 6"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "3": {
-        "name": "HEIGHT"
+        "name": "高度"
       },
       "4": {
-        "name": "BATCH_SIZE"
+        "name": "批次大小"
       }
     }
   },
   "AILab_ImageResize": {
-    "display_name": "Image Resize (RMBG) 🖼️🎭",
+    "display_name": "圖像高級縮放 (RMBG) 🖼️🎭",
     "inputs": {
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "custom_width": {
-        "name": "Custom Width"
+        "name": "自定义寬度"
       },
       "custom_height": {
-        "name": "Custom Height"
+        "name": "自定义高度"
       },
       "megapixels": {
-        "name": "Megapixels"
+        "name": "百萬像素"
       },
       "scale_by": {
-        "name": "Scale By"
+        "name": "縮放倍率"
       },
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "縮放模式"
       },
       "resize_value": {
-        "name": "Resize Value"
+        "name": "縮放數值"
       },
       "upscale_method": {
-        "name": "Upscale Method"
+        "name": "插值演算法"
       },
       "device": {
-        "name": "Device"
+        "name": "运行裝置"
       },
       "divisible_by": {
-        "name": "Divisible By"
+        "name": "整除基數"
       },
       "output_mode": {
-        "name": "Output Mode"
+        "name": "輸出模式"
       },
       "crop_position": {
-        "name": "Crop Position"
+        "name": "裁剪位置"
       },
       "pad_color": {
-        "name": "Pad Color"
+        "name": "填充顏色"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "3": {
-        "name": "HEIGHT"
+        "name": "高度"
       }
     }
   },
   "AILab_ImageToList": {
-    "display_name": "Image to List (RMBG)",
+    "display_name": "圖像轉列表 (RMBG)",
     "inputs": {
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "縮放模式"
       },
       "image_1": {
-        "name": "Image 1"
+        "name": "圖像 1"
       },
       "image_2": {
-        "name": "Image 2"
+        "name": "圖像 2"
       },
       "image_3": {
-        "name": "Image 3"
+        "name": "圖像 3"
       },
       "image_4": {
-        "name": "Image 4"
+        "name": "圖像 4"
       },
       "image_5": {
-        "name": "Image 5"
+        "name": "圖像 5"
       },
       "image_6": {
-        "name": "Image 6"
+        "name": "圖像 6"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "2": {
-        "name": "HEIGHT"
+        "name": "高度"
       },
       "3": {
-        "name": "BATCH_SIZE"
+        "name": "批次大小"
       }
     }
   },
   "AILab_LoadImageBatch": {
-    "display_name": "Load Image Batch (RMBG) 🖼️",
+    "display_name": "批量加載圖像 (RMBG) 🖼️",
     "inputs": {
       "path_or_urls": {
-        "name": "Path or URLs"
+        "name": "路径或网址"
       },
       "upscale_method": {
-        "name": "Upscale Method"
+        "name": "插值演算法"
       },
       "megapixels": {
-        "name": "Megapixels"
+        "name": "百萬像素"
       },
       "scale_by": {
-        "name": "Scale By"
+        "name": "縮放倍率"
       },
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "縮放模式"
       },
       "size": {
-        "name": "Size"
+        "name": "尺寸"
       },
       "batch_size": {
-        "name": "Batch Size"
+        "name": "批次大小"
       },
       "start_from": {
-        "name": "Start From"
+        "name": "起始索引"
       },
       "sort_method": {
-        "name": "Sort Method"
+        "name": "排序方式"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "WIDTH"
+        "name": "寬度"
       },
       "3": {
-        "name": "HEIGHT"
+        "name": "高度"
       }
     }
   },
   "AILab_MaskOverlay": {
-    "display_name": "Mask Overlay (RMBG) 🖼️🎭",
+    "display_name": "遮罩覆盖疊加 (RMBG) 🖼️🎭",
     "inputs": {
       "mask_opacity": {
-        "name": "Mask Opacity"
+        "name": "遮罩不透明度"
       },
       "mask_color": {
-        "name": "Mask Color"
+        "name": "遮罩顏色"
       },
       "image": {
-        "name": "Image"
+        "name": "圖像"
       },
       "mask": {
-        "name": "Mask"
+        "name": "遮罩"
       }
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       }
     }
   },
   "AILab_MaskToList": {
-    "display_name": "Mask to List (RMBG)",
+    "display_name": "遮罩轉列表 (RMBG)",
     "inputs": {
       "resize_mode": {
-        "name": "Resize Mode"
+        "name": "縮放模式"
       },
       "mask_1": {
-        "name": "Mask 1"
+        "name": "遮罩 1"
       },
       "mask_2": {
-        "name": "Mask 2"
+        "name": "遮罩 2"
       },
       "mask_3": {
-        "name": "Mask 3"
+        "name": "遮罩 3"
       },
       "mask_4": {
-        "name": "Mask 4"
+        "name": "遮罩 4"
       },
       "mask_5": {
-        "name": "Mask 5"
+        "name": "遮罩 5"
       },
       "mask_6": {
-        "name": "Mask 6"
+        "name": "遮罩 6"
       }
     },
     "outputs": {
       "0": {
-        "name": "MASK"
+        "name": "遮罩"
       }
     }
   },
   "AILab_Resolution_Selector": {
-    "display_name": "Resolution Selector (RMBG) ⛶",
+    "display_name": "解析度選擇器 (RMBG) ⛶",
     "inputs": {
       "aspect_ratio": {
-        "name": "Aspect Ratio"
+        "name": "寬高比"
       },
       "megapixels": {
-        "name": "Megapixels"
+        "name": "百萬像素"
       },
       "multiple": {
-        "name": "Multiple"
+        "name": "倍數基數"
       },
       "batch_size": {
-        "name": "Batch Size"
+        "name": "批次大小"
       }
     },
     "outputs": {
       "0": {
-        "name": "latent"
+        "name": "Latent"
       },
       "1": {
-        "name": "width"
+        "name": "寬度"
       },
       "2": {
-        "name": "height"
+        "name": "高度"
       }
     }
   },
   "AILab_UnbatchImages": {
-    "display_name": "Unbatch Images (RMBG) 🖼️",
+    "display_name": "圖像批次解包 (RMBG) 🖼️",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像批次"
       }
     },
     "outputs": {
       "0": {
-        "name": "image_1"
+        "name": "圖像 1"
       },
       "1": {
-        "name": "image_2"
+        "name": "圖像 2"
       },
       "2": {
-        "name": "image_3"
+        "name": "圖像 3"
       },
       "3": {
-        "name": "image_4"
+        "name": "圖像 4"
       },
       "4": {
-        "name": "image_5"
+        "name": "圖像 5"
       },
       "5": {
-        "name": "image_6"
+        "name": "圖像 6"
       },
       "6": {
-        "name": "image_7"
+        "name": "圖像 7"
       },
       "7": {
-        "name": "image_8"
+        "name": "圖像 8"
       }
     }
   },
   "AILab_YoloV8": {
-    "display_name": "YOLOv8 (RMBG)",
+    "display_name": "YOLOv8 目標檢測 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "yolo_model": {
-        "name": "YOLO Model"
+        "name": "YOLO 模型"
       },
       "mask_count": {
-        "name": "Mask Count"
+        "name": "遮罩數量"
       },
       "select_mask_index": {
-        "name": "Select Mask Index"
+        "name": "選擇遮罩索引"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "ANNOTATED_IMAGE"
+        "name": "標注圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "MASK_LIST"
+        "name": "遮罩列表"
       }
     }
   },
   "AILab_YoloV8Adv": {
-    "display_name": "YOLOv8 Adv (RMBG)",
+    "display_name": "YOLOv8 高級目標檢測 (RMBG)",
     "inputs": {
       "images": {
-        "name": "Images"
+        "name": "圖像"
       },
       "yolo_model": {
-        "name": "YOLO Model"
+        "name": "YOLO 模型"
       },
       "mask_count": {
-        "name": "Mask Count"
+        "name": "遮罩數量"
       },
       "select_mask_index": {
-        "name": "Select Mask Index"
+        "name": "選擇遮罩索引"
       },
       "conf": {
-        "name": "Confidence Threshold"
+        "name": "置信度閾值"
       },
       "iou": {
-        "name": "IoU Threshold"
+        "name": "IoU 閾值"
       },
       "classes": {
-        "name": "Class Filter"
+        "name": "類别过濾"
       },
       "device": {
-        "name": "Device"
+        "name": "运行裝置"
       },
       "max_det": {
-        "name": "Max Detections"
+        "name": "最大檢測數"
       },
       "retina_masks": {
-        "name": "Retina Masks"
+        "name": "Retina 高清遮罩"
       },
       "agnostic_nms": {
-        "name": "Agnostic NMS"
+        "name": "跨類非极大值抑制"
       },
       "unload_model": {
-        "name": "Unload Model"
+        "name": "釋放模型顯存"
       }
     },
     "outputs": {
       "0": {
-        "name": "ANNOTATED_IMAGE"
+        "name": "標注圖像"
       },
       "1": {
-        "name": "MASK"
+        "name": "遮罩"
       },
       "2": {
-        "name": "MASK_LIST"
+        "name": "遮罩列表"
       }
     }
   }
