@@ -1,16 +1,21 @@
 # ComfyUI-RMBG
 
-A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte models, SAM, SAM2 and GroundingDINO, while also incorporating a new feature for real-time background replacement and enhanced edge detection for improved accuracy.
+A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte, SAM, SAM2, SAM3, Florence-2, YOLOv8, Big-Lama, and GroundingDINO, while also incorporating real-time background replacement, instant VRAM unloading, and enhanced edge detection for improved accuracy.
 
 ## News & Updates
-
+- **2026/09/30**: Update ComfyUI-RMBG to **v3.2.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v320-20260930) )
+  - Upgraded to new `SAM3 Multiplex` segmentation node with native `safetensors` support (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
+  - Added `unload_model` toggle across all nodes for instant GPU VRAM release
+  - Added native Apple Silicon (MPS) GPU acceleration for macOS
+  - Optimized ComfyUI startup time from ~15s to <0.1s
+  - Full compatibility fixes for `transformers >= 5.0.0`
 - **2026/07/21**: Update ComfyUI-RMBG to **v3.1.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v310-20260721) )
 ![V3 1 0_nodes](https://github.com/user-attachments/assets/b11bb478-1a89-4d05-bd60-a50c9ebd2bbf)
   - Added `Lucida` model to BiRefNet node — BiRefNet fine-tune for transparent objects, camouflage, text/logos, glow/VFX, and illustrations)
   - Added `sensitivity` parameter to BiRefNet node
 - **2026/01/01**: Update ComfyUI-RMBG to **v3.0.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v300-20260101) )
 ![V3 0 0_nodes](example_workflows/V3.0.0_nodes.jpg)
-- **2025/12/09**: Update ComfyUI-RMBG to **v2.9.6** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v296-20251209) )  
+- **2025/12/09**: Update ComfyUI-RMBG to **v2.9.6** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v296-20251209) )
 ![v2.9.6_Image Compare](https://github.com/user-attachments/assets/e4ee824d-207e-4f46-b2db-0110e99c84c7)
 - **2025/11/25**: Update ComfyUI-RMBG to **v2.9.5** SAM3 Segmentaion bug fixed( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v295-20251125) )  
 - **2025/11/24**: Update ComfyUI-RMBG to **v2.9.4** SAM3 Segmentaion ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v294-20251124) )
@@ -189,6 +194,11 @@ https://github.com/user-attachments/assets/7faa00d3-bbe2-42b8-95ed-2c830a1ff04f
   - Text-prompted segmentation with the latest SAM2 models (Tiny/Small/Base+/Large)
   - Automatic model download on first use, with manual download option
 
+- SAM3 Multiplex Segmentation
+  - Advanced multiplex concept segmentation with native `safetensors` model weights (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
+  - Merged or separate multi-segment output modes, confidence thresholds, and segment picking
+  - Automatic model download on first use, with manual download option
+
 ![RMBG Demo](https://github.com/user-attachments/assets/f3ffa3c4-5a21-4c0c-a078-b4ffe681c4c4)
 
 ## Installation
@@ -239,6 +249,7 @@ install requirment.txt in the ComfyUI-RMBG folder
 - Manually download the BiRefNet-HR by visiting the [link](https://huggingface.co/1038lab/BiRefNet_HR), then download the files and place them in the `/ComfyUI/models/RMBG/BiRefNet-HR` folder.
 - Manually download the SAM models by visiting the [link](https://huggingface.co/1038lab/sam), then download the files and place them in the `/ComfyUI/models/SAM` folder.
 - Manually download the SAM2 models by visiting the [link](https://huggingface.co/1038lab/sam2), then download the files (e.g., `sam2.1_hiera_tiny.safetensors`, `sam2.1_hiera_small.safetensors`, `sam2.1_hiera_base_plus.safetensors`, `sam2.1_hiera_large.safetensors`) and place them in the `/ComfyUI/models/sam2` folder.
+- Manually download the SAM3 models by visiting the [link](https://huggingface.co/1038lab/sam3), then download the files (e.g., `sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`) and place them in the `/ComfyUI/models/sam3` folder.
 - Manually download the GroundingDINO models by visiting the [link](https://huggingface.co/1038lab/GroundingDINO), then download the files and place them in the `/ComfyUI/models/grounding-dino` folder.
 - Manually download the Clothes Segment model by visiting the [link](https://huggingface.co/1038lab/segformer_clothes), then download the files and place them in the `/ComfyUI/models/RMBG/segformer_clothes` folder.
 - Manually download the Fashion Segment model by visiting the [link](https://huggingface.co/1038lab/segformer_fashion), then download the files and place them in the `/ComfyUI/models/RMBG/segformer_fashion` folder.
@@ -362,6 +373,13 @@ SAM2 is the latest segmentation model family designed for efficient, high-qualit
 - Optimized inference with strong accuracy
 - Automatic download on first use; manual placement supported in `ComfyUI/models/sam2`
 
+## SAM3 (Segment Anything Model 3)
+SAM3 Multiplex is the state-of-the-art model for fine-grained concept grounding and segmentation:
+- Native `safetensors` format support (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
+- High-precision text-prompted segmentation with multiplex capability
+- Multi-segment isolation (Merged vs. Separate masks) and confidence controls
+- Automatic download on first use; manual placement supported in `ComfyUI/models/sam3`
+
 ## GroundingDINO
 GroundingDINO is a model for text-prompted object detection and segmentation, offering:
 - High accuracy in complex environments
@@ -423,6 +441,8 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
 - BiRefNet: https://huggingface.co/ZhengPeng7
 - Lucida: https://huggingface.co/egeorcun/lucida
 - SAM: https://huggingface.co/facebook/sam-vit-base
+- SAM2: https://huggingface.co/1038lab/sam2
+- SAM3: https://huggingface.co/1038lab/sam3
 - GroundingDINO: https://github.com/IDEA-Research/GroundingDINO
 - Clothes Segment: https://huggingface.co/mattmdjaga/segformer_b2_clothes
 - SDMatte: https://github.com/vivoCameraResearch/SDMatte
@@ -443,6 +463,3 @@ If this custom node helps you or you like my work, please give me ⭐ on this re
 
 ## License
 GPL-3.0 License
-
-
-
