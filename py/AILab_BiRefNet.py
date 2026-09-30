@@ -21,9 +21,8 @@ from huggingface_hub import hf_hub_download
 import sys
 import importlib.util
 from safetensors.torch import load_file
-import cv2
 
-from AILab_utils import get_device
+from AILab_utils import get_device, clean_vram, unload_model
 device = get_device()
 
 # Add model path
@@ -214,6 +213,7 @@ def handle_model_error(message):
     raise RuntimeError(message)
 
 def refine_foreground(image_bchw, masks_b1hw):
+    import cv2
     b, c, h, w = image_bchw.shape
     if b != masks_b1hw.shape[0]:
         raise ValueError("images and masks must have the same batch size")
@@ -406,6 +406,7 @@ class BiRefNetRMBG:
                 "mask_offset": ("INT", {"default": 0, "min": -20, "max": 20, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
                 "refine_foreground": ("BOOLEAN", {"default": False, "tooltip": tooltips["refine_foreground"]}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
                 "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             }
@@ -497,6 +498,11 @@ class BiRefNetRMBG:
             return (torch.cat(processed_images, dim=0), torch.cat(processed_masks, dim=0), mask_image_output)
         except Exception as e:
             handle_model_error(f"Error in image processing: {str(e)}")
+        finally:
+            if params.get("unload_model", False):
+                unload_model(self.model)
+            else:
+                clean_vram()
 
 # Node Mapping
 NODE_CLASS_MAPPINGS = {

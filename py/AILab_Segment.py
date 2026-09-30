@@ -28,6 +28,7 @@ from torch.hub import download_url_to_file
 import folder_paths
 import comfy.model_management
 from segment_anything import sam_model_registry, SamPredictor
+from AILab_utils import get_device, patch_transformers_bert, clean_vram, unload_model, process_mask, apply_background_color, image2mask, pil2tensor, tensor2pil
 
 SAM_MODELS = {
     "sam_vit_h (2.56GB)": {
@@ -95,55 +96,6 @@ def split_image_mask(image):
         mask = torch.zeros((image.height, image.width), dtype=torch.float32, device="cpu")[None,]
     return (image_rgb, mask)
 
-def process_mask(mask_image: Image.Image, invert_output: bool = False, 
-                mask_blur: int = 0, mask_offset: int = 0) -> Image.Image:
-    if invert_output:
-        mask_np = np.array(mask_image)
-        mask_image = Image.fromarray(255 - mask_np)
-
-    if mask_blur > 0:
-        mask_image = mask_image.filter(ImageFilter.GaussianBlur(radius=mask_blur))
-
-    if mask_offset != 0:
-        filter_type = ImageFilter.MaxFilter if mask_offset > 0 else ImageFilter.MinFilter
-        size = abs(mask_offset) * 2 + 1
-        for _ in range(abs(mask_offset)):
-            mask_image = mask_image.filter(filter_type(size))
-    
-    return mask_image
-
-def pil2tensor(image: Image.Image) -> torch.Tensor:
-    return torch.from_numpy(np.array(image).astype(np.float32) / 255.0)[None,]
-
-def tensor2pil(image: torch.Tensor) -> Image.Image:
-    return Image.fromarray(np.clip(255. * image.cpu().numpy(), 0, 255).astype(np.uint8))
-
-def image2mask(image: Image.Image) -> torch.Tensor:
-    if isinstance(image, Image.Image):
-        if image.mode != 'L':
-            image = image.convert('L')
-        return torch.from_numpy(np.array(image).astype(np.float32) / 255.0)
-    return image.squeeze()
-
-def apply_background_color(image: Image.Image, mask_image: Image.Image, 
-                         background: str = "Alpha",
-                         background_color: str = "#222222") -> Image.Image:
-    rgba_image = image.copy().convert('RGBA')
-    rgba_image.putalpha(mask_image.convert('L'))
-    
-    if background == "Color":
-        def hex_to_rgba(hex_color):
-            hex_color = hex_color.lstrip('#')
-            r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
-            return (r, g, b, 255)
-            
-        rgba = hex_to_rgba(background_color)
-        bg_image = Image.new('RGBA', image.size, rgba)
-        composite_image = Image.alpha_composite(bg_image, rgba_image)
-        return composite_image.convert('RGB')
-    
-    return rgba_image
-
 class Segment:
     @classmethod
     def INPUT_TYPES(cls):
@@ -168,6 +120,7 @@ class Segment:
                 "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1, "tooltip": tooltips["mask_blur"]}),
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
                 "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             }
@@ -192,55 +145,61 @@ class Segment:
         self._dino_model_cache = {}
 
     def segment(self, image, prompt, sam_model, dino_model, threshold=0.35,
-                mask_blur=0, mask_offset=0, background="Alpha", 
-                background_color="#222222", invert_output=False):
-        print(f'Processing create segment for: "{prompt}"...')
-        
-        image = Image.fromarray(np.clip(255. * image[0].cpu().numpy(), 0, 255).astype(np.uint8)).convert('RGBA')
-        dino_model = self.load_groundingdino(dino_model)
-        sam_model = self.load_sam(sam_model)
-        boxes = self.predict_boxes(dino_model, image, prompt, threshold)
-        
-        if boxes is None or boxes.shape[0] == 0:
-            print(f'No objects found for: "{prompt}"')
-            width, height = image.size
-            empty_mask = torch.zeros((1, height, width), dtype=torch.uint8, device="cpu")
-            # Create empty RGB mask for visualization
-            empty_mask_rgb = empty_mask.reshape((-1, 1, height, width)).movedim(1, -1).expand(-1, -1, -1, 3)
-            return (pil2tensor(image), empty_mask, empty_mask_rgb)
-        
-        masks = self.generate_masks(sam_model, image, boxes)
-        if masks is None:
-            print(f'Failed to generate mask for: "{prompt}"')
-            width, height = image.size
-            empty_mask = torch.zeros((1, height, width), dtype=torch.uint8, device="cpu")
-            # Create empty RGB mask for visualization
-            empty_mask_rgb = empty_mask.reshape((-1, 1, height, width)).movedim(1, -1).expand(-1, -1, -1, 3)
-            return (pil2tensor(image), empty_mask, empty_mask_rgb)
-
-        mask_image = Image.fromarray((masks[1][0].numpy() * 255).astype(np.uint8))
-        mask_image = process_mask(mask_image, invert_output, mask_blur, mask_offset)
-        
-        result_image = apply_background_color(image, mask_image, background, background_color)
-        
-        if background == "Color":
-            result_image = result_image.convert("RGB")
-        else:
-            result_image = result_image.convert("RGBA")
+                mask_blur=0, mask_offset=0, invert_output=False, unload_model=False,
+                background="Alpha", background_color="#222222"):
+        try:
+            print(f'Processing create segment for: "{prompt}"...')
             
-        mask_tensor = image2mask(mask_image).unsqueeze(0)
+            image = Image.fromarray(np.clip(255. * image[0].cpu().numpy(), 0, 255).astype(np.uint8)).convert('RGBA')
+            dino_model = self.load_groundingdino(dino_model)
+            sam_model = self.load_sam(sam_model)
+            boxes = self.predict_boxes(dino_model, image, prompt, threshold)
+            
+            if boxes is None or boxes.shape[0] == 0:
+                print(f'No objects found for: "{prompt}"')
+                width, height = image.size
+                empty_mask = torch.zeros((1, height, width), dtype=torch.uint8, device="cpu")
+                # Create empty RGB mask for visualization
+                empty_mask_rgb = empty_mask.reshape((-1, 1, height, width)).movedim(1, -1).expand(-1, -1, -1, 3)
+                return (pil2tensor(image), empty_mask, empty_mask_rgb)
+            
+            masks = self.generate_masks(sam_model, image, boxes)
+            if masks is None:
+                print(f'Failed to generate mask for: "{prompt}"')
+                width, height = image.size
+                empty_mask = torch.zeros((1, height, width), dtype=torch.uint8, device="cpu")
+                # Create empty RGB mask for visualization
+                empty_mask_rgb = empty_mask.reshape((-1, 1, height, width)).movedim(1, -1).expand(-1, -1, -1, 3)
+                return (pil2tensor(image), empty_mask, empty_mask_rgb)
 
-        print(f'Successfully created segment for: "{prompt}"')
-        
-        # Create mask image for visualization (similar to other nodes)
-        mask_images = []
-        # Convert mask to RGB image format for visualization
-        mask_image_vis = mask_tensor.reshape((-1, 1, mask_image.height, mask_image.width)).movedim(1, -1).expand(-1, -1, -1, 3)
-        mask_images.append(mask_image_vis)
-        
-        mask_image_output = torch.cat(mask_images, dim=0)
-        
-        return (pil2tensor(result_image), mask_tensor, mask_image_output)
+            mask_image = Image.fromarray((masks[1][0].numpy() * 255).astype(np.uint8))
+            mask_image = process_mask(mask_image, invert_output, mask_blur, mask_offset)
+            
+            result_image = apply_background_color(image, mask_image, background, background_color)
+            
+            if background == "Color":
+                result_image = result_image.convert("RGB")
+            else:
+                result_image = result_image.convert("RGBA")
+                
+            mask_tensor = image2mask(mask_image).unsqueeze(0)
+
+            print(f'Successfully created segment for: "{prompt}"')
+            
+            # Create mask image for visualization (similar to other nodes)
+            mask_images = []
+            # Convert mask to RGB image format for visualization
+            mask_image_vis = mask_tensor.reshape((-1, 1, mask_image.height, mask_image.width)).movedim(1, -1).expand(-1, -1, -1, 3)
+            mask_images.append(mask_image_vis)
+            
+            mask_image_output = torch.cat(mask_images, dim=0)
+            
+            return (pil2tensor(result_image), mask_tensor, mask_image_output)
+        finally:
+            if unload_model:
+                self._sam_model_cache.clear()
+                self._dino_model_cache.clear()
+            clean_vram()
 
     def load_sam(self, model_name):
         if model_name in self._sam_model_cache:
@@ -275,6 +234,7 @@ class Segment:
                     "grounding-dino"
                 )
             )
+            patch_transformers_bert()
             dino = self.build_model(dino_model_args)
             checkpoint = torch.load(
                 self.get_local_filepath(

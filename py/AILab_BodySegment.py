@@ -16,36 +16,11 @@ import torch.nn as nn
 import numpy as np
 from typing import Tuple, Union
 from PIL import Image, ImageFilter
-import onnxruntime
 import folder_paths
 from huggingface_hub import hf_hub_download
 import shutil
 from torchvision import transforms
-
-def pil2tensor(image: Image.Image) -> torch.Tensor:
-    return torch.from_numpy(np.array(image).astype(np.float32) / 255.0)[None,]
-
-def tensor2pil(image: torch.Tensor) -> Image.Image:
-    return Image.fromarray(np.clip(255. * image.cpu().numpy(), 0, 255).astype(np.uint8))
-
-def image2mask(image: Image.Image) -> torch.Tensor:
-    if isinstance(image, Image.Image):
-        image = pil2tensor(image)
-    return image.squeeze()[..., 0]
-
-def mask2image(mask: torch.Tensor) -> Image.Image:
-    if len(mask.shape) == 2:
-        mask = mask.unsqueeze(0)
-    return tensor2pil(mask)
-
-def RGB2RGBA(image: Image.Image, mask: Union[Image.Image, torch.Tensor]) -> Image.Image:
-    if isinstance(mask, torch.Tensor):
-        mask = mask2image(mask)
-    if mask.size != image.size:
-        mask = mask.resize(image.size, Image.Resampling.LANCZOS)
-    return Image.merge('RGBA', (*image.convert('RGB').split(), mask.convert('L')))
-
-from AILab_utils import get_device
+from AILab_utils import get_device, clean_vram, unload_model, pil2tensor, tensor2pil, RGB2RGBA, mask2image, image2mask
 device = get_device()
 
 folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
@@ -83,6 +58,7 @@ class BodySegment:
                 "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1, "tooltip": tooltips["mask_blur"]}),
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
                 "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             },
@@ -124,7 +100,7 @@ class BodySegment:
         except Exception as e:
             return False, f"Error downloading model file: {str(e)}"
 
-    def segment_body(self, images, mask_blur=0, mask_offset=0, background="Alpha", background_color="#222222", invert_output=False, **class_selections):
+    def segment_body(self, images, mask_blur=0, mask_offset=0, invert_output=False, unload_model=False, background="Alpha", background_color="#222222", **class_selections):
         try:
             # Check and download model if needed
             cache_status, message = self.check_model_cache()
@@ -136,6 +112,7 @@ class BodySegment:
             
             # Load model if needed
             if self.model is None:
+                import onnxruntime
                 self.model = onnxruntime.InferenceSession(
                     os.path.join(self.cache_dir, self.model_file)
                 )
@@ -241,7 +218,9 @@ class BodySegment:
             self.clear_model()
             raise RuntimeError(f"Error in Body Segmentation processing: {str(e)}")
         finally:
-            self.clear_model()
+            if unload_model:
+                self.clear_model()
+            clean_vram()
 
 NODE_CLASS_MAPPINGS = {
     "BodySegment": BodySegment

@@ -12,85 +12,41 @@ import folder_paths
 import comfy.model_management
 
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
+from AILab_utils import clean_vram, process_mask, apply_background_color, get_or_download_model_file
 
+# ── paths ──────────────────────────────────────────────────────────────
 CURRENT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = CURRENT_DIR.parent
 SAM3_LOCAL_DIR = REPO_ROOT / "models" / "sam3"
-if str(SAM3_LOCAL_DIR) not in sys.path:
-    sys.path.insert(0, str(SAM3_LOCAL_DIR))
 MODELS_ROOT = REPO_ROOT / "models"
-if str(MODELS_ROOT) not in sys.path:
+
+if "sam3" not in sys.modules:
+    sys.path.insert(0, str(SAM3_LOCAL_DIR))
     sys.path.insert(0, str(MODELS_ROOT))
 
 SAM3_BPE_PATH = SAM3_LOCAL_DIR / "assets" / "bpe_simple_vocab_16e6.txt.gz"
 if not os.path.isfile(SAM3_BPE_PATH):
     raise RuntimeError("SAM3 assets missing; ensure sam3/assets/bpe_simple_vocab_16e6.txt.gz exists.")
 
-_DEFAULT_PT_ENTRY = {
-    "model_url": "https://huggingface.co/1038lab/sam3/resolve/main/sam3.pt",
-    "filename": "sam3.pt",
+# ── safetensors import ─────────────────────────────────────────────────
+try:
+    from safetensors.torch import load_file as safetensors_load_file
+except ImportError:
+    safetensors_load_file = None
+
+# ── model registry ─────────────────────────────────────────────────────
+SAM3_SAFETENSOR_MODELS = {
+    "sam3.1_multiplex_fp16": {
+        "model_url": "https://huggingface.co/1038lab/sam3/resolve/main/sam3.1_multiplex_fp16.safetensors",
+        "filename": "sam3.1_multiplex_fp16.safetensors",
+        "dtype": "float16",
+    },
+    "sam3": {
+        "model_url": "https://huggingface.co/1038lab/sam3/resolve/main/sam3.safetensors",
+        "filename": "sam3.safetensors",
+        "dtype": "float32",
+    },
 }
-
-SAM3_MODELS = {
-    "sam3": _DEFAULT_PT_ENTRY.copy(),
-}
-
-
-def get_sam3_pt_models():
-    entry = SAM3_MODELS.get("sam3")
-    if entry and entry.get("filename", "").endswith(".pt"):
-        return {"sam3": entry}
-    for key, value in SAM3_MODELS.items():
-        if value.get("filename", "").endswith(".pt"):
-            return {"sam3": value}
-        if "sam3" in key and value:
-            candidate = value.copy()
-            candidate["model_url"] = _DEFAULT_PT_ENTRY["model_url"]
-            candidate["filename"] = _DEFAULT_PT_ENTRY["filename"]
-            return {"sam3": candidate}
-    return {"sam3": _DEFAULT_PT_ENTRY.copy()}
-
-
-def process_mask(mask_image, invert_output=False, mask_blur=0, mask_offset=0):
-    if invert_output:
-        mask_np = np.array(mask_image)
-        mask_image = Image.fromarray(255 - mask_np)
-    if mask_blur > 0:
-        mask_image = mask_image.filter(ImageFilter.GaussianBlur(radius=mask_blur))
-    if mask_offset != 0:
-        filt = ImageFilter.MaxFilter if mask_offset > 0 else ImageFilter.MinFilter
-        size = abs(mask_offset) * 2 + 1
-        for _ in range(abs(mask_offset)):
-            mask_image = mask_image.filter(filt(size))
-    return mask_image
-
-
-def apply_background_color(image, mask_image, background="Alpha", background_color="#222222"):
-    rgba_image = image.copy().convert("RGBA")
-    rgba_image.putalpha(mask_image.convert("L"))
-    if background == "Color":
-        hex_color = background_color.lstrip("#")
-        r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
-        bg_image = Image.new("RGBA", image.size, (r, g, b, 255))
-        composite = Image.alpha_composite(bg_image, rgba_image)
-        return composite.convert("RGB")
-    return rgba_image
-
-
-def get_or_download_model_file(filename, url):
-    local_path = None
-    if hasattr(folder_paths, "get_full_path"):
-        local_path = folder_paths.get_full_path("sam3", filename)
-    if local_path and os.path.isfile(local_path):
-        return local_path
-    base_models_dir = getattr(folder_paths, "models_dir", os.path.join(CURRENT_DIR, "models"))
-    models_dir = os.path.join(base_models_dir, "sam3")
-    os.makedirs(models_dir, exist_ok=True)
-    local_path = os.path.join(models_dir, filename)
-    if not os.path.exists(local_path):
-        print(f"Downloading {filename} from {url} ...")
-        download_url_to_file(url, local_path)
-    return local_path
 
 
 def _resolve_device(user_choice):
@@ -104,6 +60,43 @@ def _resolve_device(user_choice):
     return auto_device
 
 
+# ── safetensors-aware checkpoint loader ────────────────────────────────
+def _load_safetensors_checkpoint(model, checkpoint_path):
+    """Load safetensors checkpoint with smart key-mapping."""
+    if safetensors_load_file is None:
+        raise ImportError(
+            "safetensors is required for SAM3 Multiplex. "
+            "Install with: pip install safetensors"
+        )
+    state_dict = safetensors_load_file(checkpoint_path, device="cpu")
+
+    # Sniff key structure: if keys have 'detector.' prefix, strip it
+    has_detector_prefix = any(k.startswith("detector.") for k in state_dict)
+    if has_detector_prefix:
+        sam3_image_ckpt = {
+            k.replace("detector.", ""): v
+            for k, v in state_dict.items()
+            if "detector" in k
+        }
+        if model.inst_interactive_predictor is not None:
+            sam3_image_ckpt.update({
+                k.replace("tracker.", "inst_interactive_predictor.model."): v
+                for k, v in state_dict.items()
+                if "tracker" in k
+            })
+    else:
+        # Flat keys — load as-is
+        sam3_image_ckpt = state_dict
+
+    missing_keys, unexpected_keys = model.load_state_dict(sam3_image_ckpt, strict=False)
+    if missing_keys:
+        print(f"[SAM3 Multiplex] loaded {checkpoint_path}")
+        print(f"  missing keys ({len(missing_keys)}): {missing_keys[:10]}{'...' if len(missing_keys) > 10 else ''}")
+    if unexpected_keys:
+        print(f"  unexpected keys ({len(unexpected_keys)}): {unexpected_keys[:10]}{'...' if len(unexpected_keys) > 10 else ''}")
+
+
+# ── model builder import ───────────────────────────────────────────────
 from sam3.model_builder import build_sam3_image_model  # noqa: E402
 from sam3.model.sam3_image_processor import Sam3Processor  # noqa: E402
 
@@ -111,9 +104,11 @@ from sam3.model.sam3_image_processor import Sam3Processor  # noqa: E402
 class SAM3Segment:
     @classmethod
     def INPUT_TYPES(cls):
+        model_names = list(SAM3_SAFETENSOR_MODELS.keys())
         return {
             "required": {
                 "image": ("IMAGE",),
+                "model_name": (model_names, {"default": model_names[0]}),
                 "prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "Describe the concept"}),
                 "output_mode": (["Merged", "Separate"], {"default": "Merged"}),
                 "confidence_threshold": ("FLOAT", {"default": 0.5, "min": 0.05, "max": 0.95, "step": 0.01}),
@@ -139,24 +134,36 @@ class SAM3Segment:
     def __init__(self):
         self.processor_cache = {}
 
-    def _load_processor(self, device_choice):
+    def _load_processor(self, model_name, device_choice):
         torch_device = _resolve_device(device_choice)
         device_str = "cuda" if torch_device.type == "cuda" else "cpu"
-        cache_key = ("sam3", device_str)
+        cache_key = (model_name, device_str)
         if cache_key not in self.processor_cache:
-            model_info = SAM3_MODELS["sam3"]
-            ckpt_path = get_or_download_model_file(model_info["filename"], model_info["model_url"])
+            model_info = SAM3_SAFETENSOR_MODELS[model_name]
+            ckpt_path = get_or_download_model_file(model_info["filename"], model_info["model_url"], "sam3")
+
+            # Build the model architecture (without loading weights)
             model = build_sam3_image_model(
                 bpe_path=SAM3_BPE_PATH,
-                device=device_str,
+                device="cpu",  # load on CPU first, move later
                 eval_mode=True,
-                checkpoint_path=ckpt_path,
+                checkpoint_path=None,  # we load manually below
                 load_from_HF=False,
                 enable_segmentation=True,
                 enable_inst_interactivity=False,
             )
+
+            # Load safetensors checkpoint
+            _load_safetensors_checkpoint(model, ckpt_path)
+
+            # Move to target device (keep FP32 — autocast handles precision at inference)
+            if device_str == "cuda":
+                model = model.cuda()
+            model.eval()
+
             processor = Sam3Processor(model, device=device_str)
             self.processor_cache[cache_key] = processor
+            print(f"[SAM3 Multiplex] Loaded {model_name} on {device_str} ({model_info['dtype']})")
         return self.processor_cache[cache_key], torch_device
 
     def _empty_result(self, img_pil, background, background_color):
@@ -230,18 +237,8 @@ class SAM3Segment:
     def _run_single_merged(self, processor, img_tensor, prompt, confidence, max_segments, segment_pick, mask_blur, mask_offset, invert, unload_model, background, background_color):
         img_pil = tensor2pil(img_tensor)
         imgs, masks, _ = self._run_single_per_instance(
-            processor,
-            img_tensor,
-            prompt,
-            confidence,
-            max_segments,
-            segment_pick,
-            mask_blur,
-            mask_offset,
-            invert,
-            unload_model,
-            background,
-            background_color,
+            processor, img_tensor, prompt, confidence, max_segments, segment_pick,
+            mask_blur, mask_offset, invert, unload_model, background, background_color,
         )
         if masks.shape[0] == 0:
             return self._empty_result(img_pil, background, background_color)
@@ -255,48 +252,35 @@ class SAM3Segment:
         mask_rgb = mask_tensor.reshape((1, mask_image.height, mask_image.width, 1)).expand(-1, -1, -1, 3)
         return result_image, mask_tensor, mask_rgb
 
-    def segment(self, image, prompt, device, confidence_threshold=0.5, max_segments=0, segment_pick=0, mask_blur=0, mask_offset=0, invert_output=False, unload_model=False, background="Alpha", background_color="#222222", output_mode="Merged"):
+    def segment(self, image, model_name, prompt, device, confidence_threshold=0.5, max_segments=0, segment_pick=0, mask_blur=0, mask_offset=0, invert_output=False, unload_model=False, background="Alpha", background_color="#222222", output_mode="Merged"):
         if image.ndim == 3:
             image = image.unsqueeze(0)
-        processor, torch_device = self._load_processor(device)
+        processor, torch_device = self._load_processor(model_name, device)
         autocast_device = comfy.model_management.get_autocast_device(torch_device)
         autocast_enabled = torch_device.type == "cuda" and not comfy.model_management.is_device_mps(torch_device)
-        ctx = torch.autocast(autocast_device, dtype=torch.bfloat16) if autocast_enabled else nullcontext()
+
+        # Use bfloat16 for original sam3, float16 for multiplex fp16
+        model_info = SAM3_SAFETENSOR_MODELS[model_name]
+        autocast_dtype = torch.float16 if model_info["dtype"] == "float16" else torch.bfloat16
+        ctx = torch.autocast(autocast_device, dtype=autocast_dtype) if autocast_enabled else nullcontext()
+
         result_images, result_masks, result_mask_images = [], [], []
         with ctx:
             for tensor_img in image:
                 if output_mode == "Separate":
                     imgs_batch, masks_batch, mask_imgs_batch = self._run_single_per_instance(
-                        processor,
-                        tensor_img,
-                        prompt,
-                        confidence_threshold,
-                        max_segments,
-                        segment_pick,
-                        mask_blur,
-                        mask_offset,
-                        invert_output,
-                        unload_model,
-                        background,
-                        background_color,
+                        processor, tensor_img, prompt, confidence_threshold,
+                        max_segments, segment_pick, mask_blur, mask_offset,
+                        invert_output, unload_model, background, background_color,
                     )
                     result_images.append(imgs_batch)
                     result_masks.append(masks_batch)
                     result_mask_images.append(mask_imgs_batch)
                 else:
                     img_pil, mask_tensor, mask_rgb = self._run_single_merged(
-                        processor,
-                        tensor_img,
-                        prompt,
-                        confidence_threshold,
-                        max_segments,
-                        segment_pick,
-                        mask_blur,
-                        mask_offset,
-                        invert_output,
-                        unload_model,
-                        background,
-                        background_color,
+                        processor, tensor_img, prompt, confidence_threshold,
+                        max_segments, segment_pick, mask_blur, mask_offset,
+                        invert_output, unload_model, background, background_color,
                     )
                     result_images.append(pil2tensor(img_pil))
                     result_masks.append(mask_tensor)
@@ -304,30 +288,25 @@ class SAM3Segment:
 
         if unload_model:
             device_str = "cuda" if torch_device.type == "cuda" else "cpu"
-            cache_key = ("sam3", device_str)
+            cache_key = (model_name, device_str)
             if cache_key in self.processor_cache:
                 del self.processor_cache[cache_key]
-            if torch_device.type == "cuda":
-                torch.cuda.empty_cache()
+            clean_vram()
 
-        # return torch.cat(result_images, dim=0), torch.cat(result_masks, dim=0), torch.cat(result_mask_images, dim=0)
-        # Handle empty results
         final_images = torch.cat(result_images, dim=0)
         final_masks = torch.cat(result_masks, dim=0)
         final_mask_images = torch.cat(result_mask_images, dim=0)
-        
+
         # If no segments found in Separate mode, return at least one empty result
         if final_images.shape[0] == 0:
-            # Use the first input image to get dimensions
             img_pil = tensor2pil(image[0])
             empty_img, empty_mask, empty_mask_img = self._empty_result(img_pil, background, background_color)
             final_images = pil2tensor(empty_img)
             final_masks = empty_mask
             final_mask_images = empty_mask_img
-        
+
         return final_images, final_masks, final_mask_images
 
 
 NODE_CLASS_MAPPINGS = {"SAM3Segment": SAM3Segment}
 NODE_DISPLAY_NAME_MAPPINGS = {"SAM3Segment": "SAM3 Segmentation (RMBG)"}
-

@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw
 
 import folder_paths
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
+from AILab_utils import clean_vram
 
 ULTRALYTICS_DIR = os.path.join(folder_paths.models_dir, "ultralytics")
 YOLO_LEGACY_DIR = os.path.join(folder_paths.models_dir, "yolo")
@@ -55,6 +56,7 @@ class AILab_YoloV8Adv:
                 "max_det": ("INT", {"default": 300, "min": 1, "max": 1000, "step": 1, "tooltip": "Maximum detections per image."}),
                 "retina_masks": ("BOOLEAN", {"default": True, "tooltip": "Use high-resolution masks (Ultralytics retina_masks flag)."}),
                 "agnostic_nms": ("BOOLEAN", {"default": False, "tooltip": "Enable class-agnostic NMS."}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
             },
         }
 
@@ -155,80 +157,86 @@ class AILab_YoloV8Adv:
         retina_masks=True,
         agnostic_nms=False,
         select_mask_index: str = "none",
+        unload_model: bool = False,
     ):
-        model_path = self._resolve_model_path(yolo_model)
-        model = self._get_model(model_path)
-        device_target = self._resolve_device(device)
-        class_filter = self._parse_classes(classes)
+        try:
+            model_path = self._resolve_model_path(yolo_model)
+            model = self._get_model(model_path)
+            device_target = self._resolve_device(device)
+            class_filter = self._parse_classes(classes)
 
-        merged_masks: List[torch.Tensor] = []
-        annotated_images: List[torch.Tensor] = []
-        mask_list: List[torch.Tensor] = []
+            merged_masks: List[torch.Tensor] = []
+            annotated_images: List[torch.Tensor] = []
+            mask_list: List[torch.Tensor] = []
 
-        count_limit = 0 if mask_count == "all" else max(0, int(mask_count))
-        chosen_index: Optional[int] = None
-        if select_mask_index != "none":
-            chosen_index = int(select_mask_index) - 1
+            count_limit = 0 if mask_count == "all" else max(0, int(mask_count))
+            chosen_index: Optional[int] = None
+            if select_mask_index != "none":
+                chosen_index = int(select_mask_index) - 1
 
-        for idx in range(images.shape[0]):
-            image_pil = tensor2pil(images[idx])
+            for idx in range(images.shape[0]):
+                image_pil = tensor2pil(images[idx])
 
-            results = model(
-                image_pil,
-                conf=conf,
-                iou=iou,
-                classes=class_filter,
-                device=device_target,
-                max_det=max_det,
-                retina_masks=retina_masks,
-                agnostic_nms=agnostic_nms,
-            )
+                results = model(
+                    image_pil,
+                    conf=conf,
+                    iou=iou,
+                    classes=class_filter,
+                    device=device_target,
+                    max_det=max_det,
+                    retina_masks=retina_masks,
+                    agnostic_nms=agnostic_nms,
+                )
 
-            if not results:
-                continue
+                if not results:
+                    continue
 
-            result = results[0]
-            annotated_images.append(self._result_to_tensor(result))
+                result = results[0]
+                annotated_images.append(self._result_to_tensor(result))
 
-            frame_masks = self._collect_masks(result, image_pil.size)
+                frame_masks = self._collect_masks(result, image_pil.size)
 
-            selected_masks: List[torch.Tensor]
-            if chosen_index is None:
-                if count_limit <= 0 or count_limit >= len(frame_masks):
-                    selected_masks = frame_masks
+                selected_masks: List[torch.Tensor]
+                if chosen_index is None:
+                    if count_limit <= 0 or count_limit >= len(frame_masks):
+                        selected_masks = frame_masks
+                    else:
+                        selected_masks = frame_masks[:count_limit]
                 else:
-                    selected_masks = frame_masks[:count_limit]
-            else:
-                if chosen_index >= len(frame_masks):
-                    selected_masks = []
+                    if chosen_index >= len(frame_masks):
+                        selected_masks = []
+                    else:
+                        span = count_limit if count_limit > 0 else 1
+                        selected_masks = frame_masks[chosen_index : chosen_index + span]
+
+                if selected_masks:
+                    merged_masks.append(self._merge_masks(selected_masks))
+                    mask_list.extend(selected_masks)
                 else:
-                    span = count_limit if count_limit > 0 else 1
-                    selected_masks = frame_masks[chosen_index : chosen_index + span]
+                    fallback = torch.zeros_like(frame_masks[0])
+                    merged_masks.append(fallback)
+                    mask_list.append(fallback)
 
-            if selected_masks:
-                merged_masks.append(self._merge_masks(selected_masks))
-                mask_list.extend(selected_masks)
-            else:
-                fallback = torch.zeros_like(frame_masks[0])
-                merged_masks.append(fallback)
-                mask_list.append(fallback)
+            if not merged_masks:
+                width, height = tensor2pil(images[0]).size
+                merged_masks = [torch.zeros((height, width), dtype=torch.float32)]
 
-        if not merged_masks:
-            width, height = tensor2pil(images[0]).size
-            merged_masks = [torch.zeros((height, width), dtype=torch.float32)]
+            if not mask_list:
+                width, height = merged_masks[0].shape[1], merged_masks[0].shape[0]
+                mask_list = [torch.zeros((height, width), dtype=torch.float32)]
 
-        if not mask_list:
-            width, height = merged_masks[0].shape[1], merged_masks[0].shape[0]
-            mask_list = [torch.zeros((height, width), dtype=torch.float32)]
+            if not annotated_images:
+                annotated_images = [images]
 
-        if not annotated_images:
-            annotated_images = [images]
+            merged_tensor = torch.stack(merged_masks, dim=0)
+            annotated_tensor = torch.cat(annotated_images, dim=0)
+            mask_tensor = torch.stack(mask_list, dim=0)
 
-        merged_tensor = torch.stack(merged_masks, dim=0)
-        annotated_tensor = torch.cat(annotated_images, dim=0)
-        mask_tensor = torch.stack(mask_list, dim=0)
-
-        return annotated_tensor, merged_tensor, mask_tensor
+            return annotated_tensor, merged_tensor, mask_tensor
+        finally:
+            if unload_model:
+                self._MODEL_CACHE.clear()
+            clean_vram()
 
 
 class AILab_YoloV8(AILab_YoloV8Adv):
@@ -249,10 +257,11 @@ class AILab_YoloV8(AILab_YoloV8Adv):
             },
             "optional": {
                 "select_mask_index": (MASK_INDEX_CHOICES, {"default": "none", "tooltip": "1-based index of the first mask to keep. Use 'none' to start from the first detection."}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
             },
         }
 
-    def yolo_detect_simple(self, images, yolo_model, mask_count="all", select_mask_index="none"):
+    def yolo_detect_simple(self, images, yolo_model, mask_count="all", select_mask_index="none", unload_model=False):
         return super().yolo_detect(
             images=images,
             yolo_model=yolo_model,
@@ -265,6 +274,7 @@ class AILab_YoloV8(AILab_YoloV8Adv):
             retina_masks=True,
             agnostic_nms=False,
             select_mask_index=select_mask_index,
+            unload_model=unload_model,
         )
 
 

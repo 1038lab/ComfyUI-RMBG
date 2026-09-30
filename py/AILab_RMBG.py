@@ -27,11 +27,9 @@ from huggingface_hub import hf_hub_download
 import shutil
 import sys
 import importlib.util
-from transformers import AutoModelForImageSegmentation
-import cv2
 import types
 
-from AILab_utils import get_device
+from AILab_utils import get_device, unload_model, tensor2pil, pil2tensor
 device = get_device()
 
 folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
@@ -78,12 +76,6 @@ AVAILABLE_MODELS = {
 }
 
 # Utility functions
-def tensor2pil(image):
-    return Image.fromarray(np.clip(255. * image.cpu().numpy().squeeze(), 0, 255).astype(np.uint8))
-
-def pil2tensor(image):
-    return torch.from_numpy(np.array(image).astype(np.float32) / 255.0).unsqueeze(0)
-
 def handle_model_error(message):
     print(f"[RMBG ERROR] {message}")
     raise RuntimeError(message)
@@ -193,6 +185,7 @@ class RMBGModel(BaseModelLoader):
 
                     module_name = f"custom_birefnet_model_{hash(birefnet_path)}"
                     module = types.ModuleType(module_name)
+                    module.__file__ = birefnet_path
                     sys.modules[module_name] = module
                     exec(birefnet_content, module.__dict__)
 
@@ -226,6 +219,7 @@ class RMBGModel(BaseModelLoader):
                 except Exception as modern_e:
                     print(f"[RMBG INFO] Using standard transformers loading (fallback mode)...")
                     try:
+                        from transformers import AutoModelForImageSegmentation
                         self.model = AutoModelForImageSegmentation.from_pretrained(
                             cache_dir,
                             trust_remote_code=True,
@@ -293,7 +287,6 @@ class RMBGModel(BaseModelLoader):
                     results = extract_results(self.model(input_batch))
 
                     masks = []
-
                     for result, (orig_w, orig_h) in zip(results, original_sizes):
                         result = result.squeeze()
                         result = result * (1 + (1 - params["sensitivity"]))
@@ -504,6 +497,7 @@ class BEN2Model(BaseModelLoader):
             handle_model_error(f"Error in BEN2 processing: {str(e)}")
 
 def refine_foreground(image_bchw, masks_b1hw):
+    import cv2
     b, c, h, w = image_bchw.shape
     if b != masks_b1hw.shape[0]:
         raise ValueError("images and masks must have the same batch size")
@@ -558,10 +552,11 @@ class RMBG:
             "process_res": "Set the processing resolution (higher values require more VRAM and may increase processing time).",
             "mask_blur": "Specify the amount of blur to apply to the mask edges (0 for no blur, higher values for more blur).",
             "mask_offset": "Adjust the mask boundary (positive values expand the mask, negative values shrink it).",
-            "background": "Choose output type: Alpha (transparent) or Color (custom background color).",
-            "background_color": "Pick background color (supports alpha, use color picker).",
             "invert_output": "Enable to invert both the image and mask output (useful for certain effects).",
-            "refine_foreground": "Use Fast Foreground Colour Estimation to optimize transparent background"
+            "refine_foreground": "Use Fast Foreground Colour Estimation to optimize transparent background",
+            "unload_model": "Unload model from VRAM after execution to free up memory.",
+            "background": "Choose output type: Alpha (transparent) or Color (custom background color).",
+            "background_color": "Pick background color (supports alpha, use color picker)."
         }
         
         return {
@@ -576,6 +571,7 @@ class RMBG:
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
                 "refine_foreground": ("BOOLEAN", {"default": False, "tooltip": tooltips["refine_foreground"]}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": tooltips["unload_model"]}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
                 "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             }
@@ -697,6 +693,9 @@ class RMBG:
             empty_mask = torch.zeros((image.shape[0], image.shape[2], image.shape[3]))
             empty_mask_image = empty_mask.reshape((-1, 1, empty_mask.shape[-2], empty_mask.shape[-1])).movedim(1, -1).expand(-1, -1, -1, 3)
             return (image, empty_mask, empty_mask_image)
+        finally:
+            if params.get("unload_model", False):
+                unload_model(model_instance, "model")
 
 NODE_CLASS_MAPPINGS = {
     "RMBG": RMBG

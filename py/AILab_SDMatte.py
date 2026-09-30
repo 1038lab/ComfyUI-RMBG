@@ -52,13 +52,10 @@ except ImportError:
     SAFETENSORS_AVAILABLE = False
     print("Warning: safetensors not available. Will use torch.load for model loading.")
 
-try:
-    import diffusers
-    import transformers
-    DIFFUSERS_AVAILABLE = True
-except ImportError:
-    DIFFUSERS_AVAILABLE = False
-    print("Warning: diffusers/transformers not available. SDMatte functionality will be limited.")
+# Lazy: diffusers/transformers availability is checked on first use to avoid ~3.7s import at startup
+DIFFUSERS_AVAILABLE = None  # Tri-state: None = not yet checked
+
+from AILab_utils import get_device, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color, pil2tensor, tensor2pil
 
 current_dir = Path(__file__).resolve().parent
 repo_root = current_dir.parent
@@ -79,21 +76,6 @@ SDMATTE_MODELS = {
 }
 
 REQUIRED_COMPONENTS = ["scheduler", "text_encoder", "tokenizer", "unet", "vae"]
-
-def get_or_download_model_file(filename, url, dirname):
-    local_path = folder_paths.get_full_path(dirname, filename)
-    if local_path:
-        return local_path
-    folder = os.path.join(folder_paths.models_dir, dirname)
-    os.makedirs(folder, exist_ok=True)
-    local_path = os.path.join(folder, filename)
-    if not os.path.exists(local_path):
-        print(f"Downloading {filename} from {url} ...")
-        try:
-            download_url_to_file(url, local_path)
-        except Exception as e:
-            raise RuntimeError(f"Failed to download {filename} from {url}: {e}")
-    return local_path
 
 def ensure_model_components(model_name):
     model_info = SDMATTE_MODELS[model_name]
@@ -137,43 +119,6 @@ def ensure_model_components(model_name):
                         print(f"  Warning: Failed to download {file}: {e}")
 
     return components_dir
-
-def process_mask(mask_image: Image.Image, invert_output: bool = False,
-                mask_blur: int = 0, mask_offset: int = 0) -> Image.Image:
-    if invert_output:
-        mask_np = np.array(mask_image)
-        mask_image = Image.fromarray(255 - mask_np)
-    if mask_blur > 0:
-        mask_image = mask_image.filter(ImageFilter.GaussianBlur(radius=mask_blur))
-    if mask_offset != 0:
-        filter_type = ImageFilter.MaxFilter if mask_offset > 0 else ImageFilter.MinFilter
-        size = abs(mask_offset) * 2 + 1
-        for _ in range(abs(mask_offset)):
-            mask_image = mask_image.filter(filter_type(size))
-    return mask_image
-
-def apply_background_color(image: Image.Image, mask_image: Image.Image,
-                         background: str = "Alpha",
-                         background_color: str = "#222222") -> Image.Image:
-    rgba_image = image.copy().convert('RGBA')
-    rgba_image.putalpha(mask_image.convert('L'))
-
-    if background == "Color":
-        def hex_to_rgba(hex_color):
-            hex_color = hex_color.lstrip('#')
-            r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
-            return (r, g, b, 255)
-        rgba = hex_to_rgba(background_color)
-        bg_image = Image.new('RGBA', image.size, rgba)
-        composite_image = Image.alpha_composite(bg_image, rgba_image)
-        return composite_image.convert('RGB')
-    return rgba_image
-
-def pil2tensor(image):
-    return torch.from_numpy(np.array(image).astype(np.float32) / 255.0).unsqueeze(0)
-
-def tensor2pil(image):
-    return Image.fromarray(np.clip(255. * image.cpu().numpy().squeeze(), 0, 255).astype(np.uint8))
 
 SDMatteCore = None
 
@@ -224,6 +169,7 @@ class AILab_SDMatte:
                 "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1, "tooltip": tooltips["mask_blur"]}),
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
                 "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             }
@@ -251,6 +197,14 @@ class AILab_SDMatte:
                 torch.cuda.empty_cache()
         
         if cache_key not in self.model_cache:
+            global DIFFUSERS_AVAILABLE
+            if DIFFUSERS_AVAILABLE is None:
+                try:
+                    import diffusers  # noqa: F401
+                    import transformers  # noqa: F401
+                    DIFFUSERS_AVAILABLE = True
+                except ImportError:
+                    DIFFUSERS_AVAILABLE = False
             if not DIFFUSERS_AVAILABLE:
                 raise ImportError("diffusers and transformers are required for SDMatte functionality")
         
@@ -335,11 +289,15 @@ class AILab_SDMatte:
     def matting_inference(self, image, model, process_res, device="Auto",
                    mask=None, transparent_object=True, mask_refine=True,
                    sensitivity=0.8, mask_blur=0, mask_offset=0,
-                   invert_output=False, background="Alpha", background_color="#222222"):
-        sdmatte_model = self.load_sdmatte_model(model, device)
-        device_obj = comfy.model_management.get_torch_device()
+                   invert_output=False, unload_model=False, background="Alpha", background_color="#222222"):
         if device == "CPU":
             device_obj = torch.device('cpu')
+        elif device == "GPU":
+            device_obj = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        else:
+            device_obj = get_device()
+
+        sdmatte_model = self.load_sdmatte_model(model, device)
         
         batch_size = image.shape[0]
         
@@ -347,68 +305,79 @@ class AILab_SDMatte:
         result_images = []
         result_mask_images = []
         
-        for b in range(batch_size):
-            img_pil = tensor2pil(image[b])
-            B, H, W = 1, img_pil.height, img_pil.width
-            orig_h, orig_w = H, W
-        
-            img_bchw = image[b:b+1].permute(0, 3, 1, 2).contiguous().to(device_obj)
-            img_in = _resize_norm_image_bchw(img_bchw, (int(process_res), int(process_res)))
-        
-            if mask is not None:
-                mask_b1hw = mask[b:b+1].unsqueeze(1).contiguous().to(device_obj)
-                mask_for_refine = mask[b:b+1]
-            else:
-                if image.shape[-1] == 4:
+        try:
+            for b in range(batch_size):
+                img_pil = tensor2pil(image[b])
+                B, H, W = 1, img_pil.height, img_pil.width
+                orig_h, orig_w = H, W
+            
+                img_bchw = image[b:b+1].permute(0, 3, 1, 2).contiguous().to(device_obj)
+                img_in = _resize_norm_image_bchw(img_bchw, (int(process_res), int(process_res)))
+            
+                if mask is not None:
+                    if mask.ndim == 2:
+                        mask_single = mask.unsqueeze(0).unsqueeze(0)
+                    elif mask.ndim == 3:
+                        idx = min(b, mask.shape[0] - 1)
+                        mask_single = mask[idx:idx+1].unsqueeze(1)
+                    elif mask.ndim == 4:
+                        idx = min(b, mask.shape[0] - 1)
+                        mask_single = mask[idx:idx+1]
+                    else:
+                        mask_single = mask.view(1, 1, H, W)
+                    mask_b1hw = mask_single.contiguous().to(device_obj)
+                    mask_for_refine = mask_b1hw.squeeze(1).cpu()
+                elif image.shape[-1] == 4:
                     alpha = image[b, :, :, 3]
                     mask_b1hw = alpha.unsqueeze(0).unsqueeze(0).contiguous().to(device_obj)
-                    mask_for_refine = alpha.unsqueeze(0)
+                    mask_for_refine = alpha.unsqueeze(0).cpu()
                 else:
-                    raise ValueError("Mask required: provide a mask or use an image with alpha.")
+                    print("[SDMatte INFO] No input mask provided; using full foreground mask as fallback. For best results, connect a MASK from RMBG/BiRefNet/SAM node.")
+                    mask_b1hw = torch.ones((1, 1, H, W), dtype=torch.float32, device=device_obj)
+                    mask_for_refine = torch.ones((1, H, W), dtype=torch.float32)
+                
+                tri = _resize_mask_b1hw(mask_b1hw, (int(process_res), int(process_res))) * 2 - 1
+                data = {"image": img_in,
+                        "is_trans": torch.tensor([1 if transparent_object else 0], device=device_obj),
+                        "caption": [""],
+                        "trimap": tri,
+                        "trimap_coords": torch.tensor([[0,0,1,1]], dtype=tri.dtype, device=device_obj)}
             
-            tri = _resize_mask_b1hw(mask_b1hw, (int(process_res), int(process_res))) * 2 - 1
-            data = {"image": img_in,
-                    "is_trans": torch.tensor([1 if transparent_object else 0], device=device_obj),
-                    "caption": [""],
-                    "trimap": tri,
-                    "trimap_coords": torch.tensor([[0,0,1,1]], dtype=tri.dtype, device=device_obj)}
-        
-            with torch.inference_mode():
-                if device_obj.type == 'cuda':
-                    with torch.autocast(device_type='cuda', dtype=torch.float16):
+                with torch.inference_mode():
+                    if device_obj.type == 'cuda':
+                        with torch.autocast(device_type='cuda', dtype=torch.float16):
+                            pred_alpha = sdmatte_model(data)
+                    else:
                         pred_alpha = sdmatte_model(data)
+            
+                out = transforms.Resize((orig_h, orig_w), interpolation=InterpolationMode.BILINEAR, antialias=True)(pred_alpha)
+                out = out.squeeze(1).clamp(0, 1).detach().cpu()
+            
+                if mask_refine:
+                    out = self._refine_mask(out, mask_for_refine, sensitivity)
+            
+                mask_pil = Image.fromarray((out[0].numpy() * 255).astype(np.uint8), mode="L")
+            
+                mask_image = process_mask(mask_pil, invert_output, mask_blur, mask_offset)
+            
+                result_image = apply_background_color(img_pil, mask_image, background, background_color)
+                if background == "Color":
+                    result_image = result_image.convert("RGB")
                 else:
-                    pred_alpha = sdmatte_model(data)
-        
-            out = transforms.Resize((orig_h, orig_w), interpolation=InterpolationMode.BILINEAR, antialias=True)(pred_alpha)
-            out = out.squeeze(1).clamp(0, 1).detach().cpu()
-        
-            if mask_refine:
-                out = self._refine_mask(out, mask_for_refine, sensitivity)
-        
-            mask_pil = Image.fromarray((out[0].numpy() * 255).astype(np.uint8), mode="L")
-        
-            mask_image = process_mask(mask_pil, invert_output, mask_blur, mask_offset)
-        
-            result_image = apply_background_color(img_pil, mask_image, background, background_color)
-            if background == "Color":
-                result_image = result_image.convert("RGB")
-            else:
-                result_image = result_image.convert("RGBA")
-        
-            mask_tensor = torch.from_numpy(np.array(mask_image).astype(np.float32) / 255.0).unsqueeze(0)
-            mask_image_vis = mask_tensor.reshape((-1, 1, mask_image.height, mask_image.width)).movedim(1, -1).expand(-1, -1, -1, 3)
-        
-            result_masks.append(mask_tensor)
-            result_images.append(pil2tensor(result_image))
-            result_mask_images.append(mask_image_vis)
-        
-        if device_obj.type == 'cuda':
-            torch.cuda.empty_cache()
-        import gc
-        gc.collect()
-        
-        return (torch.cat(result_images, dim=0), torch.cat(result_masks, dim=0), torch.cat(result_mask_images, dim=0))
+                    result_image = result_image.convert("RGBA")
+            
+                mask_tensor = torch.from_numpy(np.array(mask_image).astype(np.float32) / 255.0).unsqueeze(0)
+                mask_image_vis = mask_tensor.reshape((-1, 1, mask_image.height, mask_image.width)).movedim(1, -1).expand(-1, -1, -1, 3)
+            
+                result_masks.append(mask_tensor)
+                result_images.append(pil2tensor(result_image))
+                result_mask_images.append(mask_image_vis)
+            
+            return (torch.cat(result_images, dim=0), torch.cat(result_masks, dim=0), torch.cat(result_mask_images, dim=0))
+        finally:
+            if unload_model:
+                self.model_cache.clear()
+            clean_vram()
 
     def _refine_mask(self, mask, trimap, constraint):
         trimap_cpu = trimap.cpu()

@@ -13,17 +13,10 @@ import comfy.model_management
 
 from hydra import initialize_config_dir
 from hydra.core.global_hydra import GlobalHydra
+from AILab_utils import patch_transformers_bert, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color
 
-try:
-    from groundingdino.util.slconfig import SLConfig
-    from groundingdino.models import build_model
-    from groundingdino.util.utils import clean_state_dict
-    from groundingdino.util import box_ops
-    from groundingdino.datasets.transforms import Compose, RandomResize, ToTensor, Normalize
-    GROUNDINGDINO_AVAILABLE = True
-except ImportError:
-    GROUNDINGDINO_AVAILABLE = False
-    print("Warning: GroundingDINO not available. Text prompts will use fallback method.")
+# GroundingDINO imports are deferred to first use (segment_v2) to avoid ~12.5s import at startup.
+GROUNDINGDINO_AVAILABLE = None  # Tri-state: None = not yet checked, True/False = checked
 
 current_dir = Path(__file__).resolve().parent
 repo_root = current_dir.parent
@@ -105,50 +98,6 @@ DINO_MODELS = {
     }
 }
 
-def get_or_download_model_file(filename, url, dirname):
-    local_path = folder_paths.get_full_path(dirname, filename)
-    if local_path:
-        return local_path
-    folder = os.path.join(folder_paths.models_dir, dirname)
-    os.makedirs(folder, exist_ok=True)
-    local_path = os.path.join(folder, filename)
-    if not os.path.exists(local_path):
-        print(f"Downloading {filename} from {url} ...")
-        download_url_to_file(url, local_path)
-    return local_path
-
-def process_mask(mask_image: Image.Image, invert_output: bool = False, 
-                mask_blur: int = 0, mask_offset: int = 0) -> Image.Image:
-    if invert_output:
-        mask_np = np.array(mask_image)
-        mask_image = Image.fromarray(255 - mask_np)
-    if mask_blur > 0:
-        mask_image = mask_image.filter(ImageFilter.GaussianBlur(radius=mask_blur))
-    if mask_offset != 0:
-        filter_type = ImageFilter.MaxFilter if mask_offset > 0 else ImageFilter.MinFilter
-        size = abs(mask_offset) * 2 + 1
-        for _ in range(abs(mask_offset)):
-            mask_image = mask_image.filter(filter_type(size))
-    return mask_image
-
-def apply_background_color(image: Image.Image, mask_image: Image.Image, 
-                         background: str = "Alpha",
-                         background_color: str = "#222222") -> Image.Image:
-    rgba_image = image.copy().convert('RGBA')
-    rgba_image.putalpha(mask_image.convert('L'))
-    
-    if background == "Color":
-        def hex_to_rgba(hex_color):
-            hex_color = hex_color.lstrip('#')
-            r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
-            return (r, g, b, 255)
-        rgba = hex_to_rgba(background_color)
-        bg_image = Image.new('RGBA', image.size, rgba)
-        composite_image = Image.alpha_composite(bg_image, rgba_image)
-        return composite_image.convert('RGB')
-    return rgba_image
-
-
 class SAM2Segment:
     @classmethod
     def INPUT_TYPES(cls):
@@ -177,6 +126,7 @@ class SAM2Segment:
                 "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1, "tooltip": tooltips["mask_blur"]}),
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
                 "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             }
@@ -249,8 +199,25 @@ class SAM2Segment:
         return self.sam2_model_cache[cache_key]
 
     def segment_v2(self, image, prompt, sam2_model, dino_model, device, threshold=0.35,
-                   mask_blur=0, mask_offset=0, background="Alpha", 
-                   background_color="#222222", invert_output=False):
+                   mask_blur=0, mask_offset=0, invert_output=False, unload_model=False,
+                   background="Alpha", background_color="#222222"):
+        # Lazy import groundingdino (~12.5s) -- only when the node is actually executed
+        global GROUNDINGDINO_AVAILABLE
+        if GROUNDINGDINO_AVAILABLE is None:
+            try:
+                from groundingdino.util.slconfig import SLConfig  # noqa: F401
+                GROUNDINGDINO_AVAILABLE = True
+            except ImportError:
+                GROUNDINGDINO_AVAILABLE = False
+                print("Warning: GroundingDINO not available. Text prompts will use fallback method.")
+        if not GROUNDINGDINO_AVAILABLE:
+            raise RuntimeError("GroundingDINO is required for SAM2Segment but is not installed.")
+        from groundingdino.util.slconfig import SLConfig
+        from groundingdino.models import build_model
+        from groundingdino.util.utils import clean_state_dict
+        from groundingdino.util import box_ops
+        from groundingdino.datasets.transforms import Compose, RandomResize, ToTensor, Normalize
+
         device_obj = comfy.model_management.get_torch_device()
 
         # Process batch images
@@ -274,6 +241,7 @@ class SAM2Segment:
             # Load and cache GroundingDINO model
             dino_key = (config_path, weights_path, device_obj)
             if dino_key not in self.dino_model_cache:
+                patch_transformers_bert()
                 args = SLConfig.fromfile(config_path)
                 model = build_model(args)
                 checkpoint = load_file(weights_path)
@@ -385,17 +353,23 @@ class SAM2Segment:
             result_masks.append(mask_tensor)
             result_mask_images.append(mask_image_vis)
 
-        # If no images were successfully processed, return empty results
-        if len(result_images) == 0:
-            width, height = tensor2pil(image[0]).size
-            empty_mask = torch.zeros((batch_size, 1, height, width), dtype=torch.float32, device="cpu")
-            empty_mask_rgb = empty_mask.reshape((-1, 1, height, width)).movedim(1, -1).expand(-1, -1, -1, 3)
-            return (image, empty_mask, empty_mask_rgb)
-            
-        # Combine all batch results
-        return (torch.cat(result_images, dim=0), 
-                torch.cat(result_masks, dim=0), 
-                torch.cat(result_mask_images, dim=0))
+        try:
+            # If no images were successfully processed, return empty results
+            if len(result_images) == 0:
+                width, height = tensor2pil(image[0]).size
+                empty_mask = torch.zeros((batch_size, 1, height, width), dtype=torch.float32, device="cpu")
+                empty_mask_rgb = empty_mask.reshape((-1, 1, height, width)).movedim(1, -1).expand(-1, -1, -1, 3)
+                return (image, empty_mask, empty_mask_rgb)
+                
+            # Combine all batch results
+            return (torch.cat(result_images, dim=0), 
+                    torch.cat(result_masks, dim=0), 
+                    torch.cat(result_mask_images, dim=0))
+        finally:
+            if unload_model:
+                self.dino_model_cache.clear()
+                self.sam2_model_cache.clear()
+            clean_vram()
 
 NODE_CLASS_MAPPINGS = {
     "SAM2Segment": SAM2Segment,

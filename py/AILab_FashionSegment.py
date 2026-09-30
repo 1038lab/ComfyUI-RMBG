@@ -14,31 +14,11 @@ import torch.nn as nn
 import numpy as np
 from typing import Tuple, Union
 from PIL import Image, ImageFilter
-from transformers import SegformerImageProcessor, AutoModelForSemanticSegmentation
 import folder_paths
 from huggingface_hub import hf_hub_download
 import shutil
 from torchvision import transforms
-
-def pil2tensor(image: Image.Image) -> torch.Tensor:
-    return torch.from_numpy(np.array(image).astype(np.float32) / 255.0)[None,]
-
-def tensor2pil(image: torch.Tensor) -> Image.Image:
-    return Image.fromarray(np.clip(255. * image.cpu().numpy(), 0, 255).astype(np.uint8))
-
-def RGB2RGBA(image: Image.Image, mask: Union[Image.Image, torch.Tensor]) -> Image.Image:
-    if isinstance(mask, torch.Tensor):
-        mask = mask2image(mask)
-    if mask.size != image.size:
-        mask = mask.resize(image.size, Image.Resampling.LANCZOS)
-    return Image.merge('RGBA', (*image.convert('RGB').split(), mask.convert('L')))
-
-def mask2image(mask: torch.Tensor) -> Image.Image:
-    if len(mask.shape) == 2:
-        mask = mask.unsqueeze(0)
-    return tensor2pil(mask)
-
-from AILab_utils import get_device
+from AILab_utils import get_device, clean_vram, unload_model, pil2tensor, tensor2pil, RGB2RGBA, mask2image
 device = get_device()
 
 folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
@@ -176,6 +156,7 @@ class FashionSegmentClothing:
                 "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1, "tooltip": tooltips["mask_blur"]}),
                 "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": tooltips["mask_offset"]}),
                 "invert_output": ("BOOLEAN", {"default": False, "tooltip": tooltips["invert_output"]}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
                 "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": tooltips["background"]}),
                 "background_color": ("COLORCODE", {"default": "#222222", "tooltip": tooltips["background_color"]}),
             },
@@ -238,7 +219,7 @@ class FashionSegmentClothing:
             return False, f"Error downloading model files: {str(e)}"
 
     def segment_fashion(self, images, accessories_options=None, process_res=512, mask_blur=0, mask_offset=0, 
-                       background="Alpha", background_color="#222222", invert_output=False, **class_selections):
+                       invert_output=False, unload_model=False, background="Alpha", background_color="#222222", **class_selections):
         if accessories_options is None:
             accessories_options = []
         try:
@@ -252,6 +233,7 @@ class FashionSegmentClothing:
             
             # Load model if needed
             if self.processor is None:
+                from transformers import SegformerImageProcessor, AutoModelForSemanticSegmentation
                 self.processor = SegformerImageProcessor.from_pretrained(self.cache_dir)
                 self.model = AutoModelForSemanticSegmentation.from_pretrained(self.cache_dir)
                 self.model.eval()
@@ -362,8 +344,9 @@ class FashionSegmentClothing:
             self.clear_model()
             raise RuntimeError(f"Error in fashion segmentation: {str(e)}")
         finally:
-            if self.model is not None and not self.model.training:
+            if unload_model:
                 self.clear_model()
+            clean_vram()
 
     def __del__(self):
         self.clear_model()

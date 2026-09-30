@@ -20,12 +20,7 @@ from torchvision import transforms
 from huggingface_hub import hf_hub_download
 import shutil
 import gc
-
-def tensor2pil(image):
-    return Image.fromarray(np.clip(255. * image.cpu().numpy().squeeze(), 0, 255).astype(np.uint8))
-
-def pil2tensor(image):
-    return torch.from_numpy(np.array(image).astype(np.float32) / 255.0).unsqueeze(0)
+from AILab_utils import clean_vram, unload_model, tensor2pil, pil2tensor
 
 def pil2comfy(image):
     img_tensor = torch.from_numpy(np.array(image).astype(np.float32) / 255.0)
@@ -68,6 +63,9 @@ class AILab_LamaRemover:
                 "removal_strength": ("INT", {"default": 230, "min": 0, "max": 255, "step": 1, "display": "slider", "tooltip": tooltips["removal_strength"]}),
                 "edge_smoothness": ("INT", {"default": 8, "min": 0, "max": 20, "step": 1, "display": "slider", "tooltip": tooltips["edge_smoothness"]}),
             },
+            "optional": {
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload model from VRAM after execution"}),
+            },
         }
     
     CATEGORY = "🧪AILab/🧽RMBG"
@@ -100,9 +98,8 @@ class AILab_LamaRemover:
         self.model.to(self.device)
     
     def download_model(self):
-        print("Downloading Big-Lama model...")
         os.makedirs(self.cache_dir, exist_ok=True)
-        
+        print("Downloading Big-Lama model...")
         try:
             downloaded_path = hf_hub_download(
                 repo_id="1038lab/Lama",
@@ -110,22 +107,20 @@ class AILab_LamaRemover:
                 local_dir=self.cache_dir,
                 local_dir_use_symlinks=False
             )
-            
             if os.path.dirname(downloaded_path) != self.cache_dir:
-                shutil.move(downloaded_path, self.model_path)
-            
-            print("Big-Lama model downloaded successfully")
+                target_path = os.path.join(self.cache_dir, "big-lama.pt")
+                shutil.move(downloaded_path, target_path)
+            print("Model downloaded successfully")
         except Exception as e:
             raise RuntimeError(f"Error downloading Big-Lama model: {str(e)}")
 
     def process_with_model(self, img_tensor, mask_tensor):
-        with torch.inference_mode():
-            img_tensor = img_tensor.to(self.device)
-            mask_tensor = mask_tensor.to(self.device)
-            
+        img_tensor = img_tensor.to(self.device)
+        mask_tensor = mask_tensor.to(self.device)
+        
+        with torch.no_grad():
             result = self.model(img_tensor, mask_tensor)
-            result_cpu = result[0].cpu()
-            
+            result_cpu = result.cpu()
             del img_tensor
             del mask_tensor
             if torch.cuda.is_available():
@@ -133,7 +128,7 @@ class AILab_LamaRemover:
                 
             return result_cpu
 
-    def remove_object(self, images, masks, removal_strength, edge_smoothness):
+    def remove_object(self, images, masks, removal_strength, edge_smoothness, unload_model=False):
         try:
             self.load_model()
             results = []
@@ -179,8 +174,9 @@ class AILab_LamaRemover:
             print(traceback.format_exc())
             raise RuntimeError(f"Error in object removal: {str(e)}")
         finally:
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
+            if unload_model:
+                self.model = None
+            clean_vram()
 
 NODE_CLASS_MAPPINGS = {
     "AILab_LamaRemover": AILab_LamaRemover,
