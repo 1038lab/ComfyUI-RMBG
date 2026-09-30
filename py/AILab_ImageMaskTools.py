@@ -51,16 +51,15 @@ import folder_paths
 import numpy as np
 import hashlib
 import torch
-import cv2
 import re
+import math
 from nodes import MAX_RESOLUTION
 from comfy.utils import common_upscale
 from PIL import Image, ImageFilter, ImageOps, ImageSequence, ImageChops, ImageDraw, ImageFont
 import torchvision.transforms.functional as T
 import torch.nn.functional as F
-from comfy import model_management
+import comfy.model_management
 from comfy_extras.nodes_mask import ImageCompositeMasked
-from scipy import ndimage
 from AILab_utils import (
     tensor2pil,
     pil2tensor,
@@ -74,6 +73,7 @@ from AILab_utils import (
     ensure_mask_shape,
     color_format,
     COLOR_PRESETS,
+    ASPECT_RATIOS,
 )
 
 # Base class for preview
@@ -409,6 +409,7 @@ class AILab_MaskEnhancer:
 
     def fill_mask_region(self, mask_pil):
         """Fill holes in the mask"""
+        import cv2
         mask_np = np.array(mask_pil)
         contours, _ = cv2.findContours(mask_np, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         filled_mask = np.zeros_like(mask_np)
@@ -425,6 +426,7 @@ class AILab_MaskEnhancer:
             m = torch.clamp(m, 0, 1)
             
             if smooth > 0:
+                from scipy import ndimage
                 mask_np = m.cpu().numpy()
                 binary_mask = (mask_np > 0.5).astype(np.float32)
                 blurred_mask = ndimage.gaussian_filter(binary_mask, sigma=smooth)
@@ -547,7 +549,7 @@ class AILab_BaseImageLoader:
         input_dir = folder_paths.get_input_directory()
         os.makedirs(input_dir, exist_ok=True)
         return [f for f in os.listdir(input_dir) if os.path.isdir(os.path.join(input_dir, f))]
-         
+
     def download_image(self, url):
         try:
             import requests
@@ -1656,6 +1658,7 @@ class AILab_ImageStitch:
             ).movedim(1, -1)
         final_height, final_width = result.shape[1:3]
         return (result, final_width, final_height)
+   
 
 # Image Crop node
 class AILab_ImageCrop:
@@ -2835,6 +2838,54 @@ class AILab_UnbatchImages:
                 outputs.append(outputs[-1])
         
         return tuple(outputs)
+    
+class AILab_Resolution_Selector:
+    """Calculate width and height from aspect ratio and megapixel target,
+    and optionally output an empty latent image ready for sampling."""
+
+    RETURN_TYPES = ("LATENT", "INT", "INT")
+    RETURN_NAMES = ("latent", "width", "height")
+    OUTPUT_TOOLTIPS = (
+        "Empty latent image at the calculated resolution.",
+        "Calculated width in pixels (rounded to the selected multiple).",
+        "Calculated height in pixels (rounded to the selected multiple).",
+    )
+    FUNCTION = "select_resolution"
+    CATEGORY = "🧪AILab/🖼️IMAGE"
+    DESCRIPTION = (
+        "Calculate width and height from aspect ratio and megapixel target. "
+        "Also outputs an empty latent image so you can skip the Empty Latent Image node."
+    )
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "aspect_ratio": (list(ASPECT_RATIOS.keys()), {"default": "1:1 (Square)", "tooltip": "The aspect ratio for the output dimensions."}),
+                "megapixels": ("FLOAT", {"default": 1.0, "min": 0.01, "max": 16.0, "step": 0.01, "tooltip": "Target total megapixels. 1.0 MP ≈ 1024×1024 for square."}),
+                "multiple": ("INT", {"default": 8, "min": 8, "max": 128, "step": 4, "tooltip": "Round the result to the nearest multiple of this value."}),
+                "batch_size": ("INT", {"default": 1, "min": 1, "max": 4096, "step": 1, "tooltip": "Number of latent images in the batch."}),
+            },
+        }
+
+    def select_resolution(self, aspect_ratio, megapixels, multiple, batch_size):
+        w_ratio, h_ratio = ASPECT_RATIOS[aspect_ratio]
+
+        total_pixels = megapixels * 1024 * 1024
+        scale = math.sqrt(total_pixels / (w_ratio * h_ratio))
+
+        width = max(multiple, round(w_ratio * scale / multiple) * multiple)
+        height = max(multiple, round(h_ratio * scale / multiple) * multiple)
+
+        # Generate empty latent (same logic as ComfyUI EmptyLatentImage)
+        latent = torch.zeros(
+            [batch_size, 4, height // 8, width // 8],
+            device=comfy.model_management.intermediate_device(),
+            dtype=comfy.model_management.intermediate_dtype(),
+        )
+
+        return ({"samples": latent, "downscale_ratio_spacial": 8}, width, height)
+
 
 # Node class mappings
 NODE_CLASS_MAPPINGS = {
@@ -2862,6 +2913,7 @@ NODE_CLASS_MAPPINGS = {
     "AILab_ImageToList": AILab_ImageToList,
     "AILab_MaskToList": AILab_MaskToList,
     "AILab_ImageMaskToList": AILab_ImageMaskToList,
+    "AILab_Resolution_Selector": AILab_Resolution_Selector,
 }
 
 # Node display name mappings
@@ -2890,4 +2942,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "AILab_ImageToList": "Image to List (RMBG)",
     "AILab_MaskToList": "Mask to List (RMBG)",
     "AILab_ImageMaskToList": "Image and Mask to List (RMBG)",
+    "AILab_Resolution_Selector": "Resolution Selector (RMBG) ⛶",
 }
