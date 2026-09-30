@@ -52,6 +52,7 @@ const NODE_COLORS = {
     "AILab_MaskToList": "utility",
     "AILab_ImageMaskToList": "utility",
     "AILab_ColorToMask": "utility",
+    "AILab_Resolution_Selector": "utility",
 };
 
 function setNodeColors(node, theme) {
