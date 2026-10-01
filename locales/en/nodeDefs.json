@@ -41,10 +41,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -114,10 +114,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -160,10 +160,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -254,10 +254,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -339,10 +339,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -436,10 +436,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -585,10 +585,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -634,10 +634,10 @@
         "name": "MASK IMAGE"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -702,7 +702,7 @@
         "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -718,7 +718,7 @@
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       }
     }
   },
@@ -734,7 +734,7 @@
     },
     "outputs": {
       "0": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -774,10 +774,10 @@
         "name": "HEIGHT"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -795,14 +795,14 @@
       }
     },
     "outputs": {
-      "0": {
-        "name": "IMAGE"
-      },
       "1": {
-        "name": "MASK"
-      },
-      "02": {
         "name": "WIDTH"
+      },
+      "2": {
+        "name": "HEIGHT"
+      },
+      "0": {
+        "name": "Image"
       },
       "3": {
         "name": "Height"
@@ -851,7 +851,7 @@
         "name": "HEIGHT"
       },
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
         "name": "Mask"
@@ -894,13 +894,13 @@
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "WIDTH"
+        "name": "Width"
       },
       "2": {
-        "name": "HEIGHT"
+        "name": "Height"
       }
     }
   },
@@ -928,7 +928,7 @@
     },
     "outputs": {
       "0": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -962,7 +962,7 @@
     },
     "outputs": {
       "0": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -984,10 +984,10 @@
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "MASK"
+        "name": "Mask"
       }
     }
   },
@@ -1015,7 +1015,7 @@
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       }
     }
   },
@@ -1070,13 +1070,13 @@
     },
     "outputs": {
       "0": {
-        "name": "IMAGE"
+        "name": "Image"
       },
       "1": {
-        "name": "WIDTH"
+        "name": "Width"
       },
       "2": {
-        "name": "HEIGHT"
+        "name": "Height"
       }
     }
   },
@@ -1270,7 +1270,7 @@
     },
     "outputs": {
       "0": {
-        "name": "COLOR"
+        "name": "Color"
       }
     }
   },
@@ -1295,7 +1295,7 @@
     },
     "outputs": {
       "0": {
-        "name": "IMAGES"
+        "name": "Images"
       }
     }
   },
@@ -1448,7 +1448,7 @@
         "name": "MASK"
       },
       "2": {
-        "name": "MASK IMAGE"
+        "name": "Mask Image"
       }
     }
   },
