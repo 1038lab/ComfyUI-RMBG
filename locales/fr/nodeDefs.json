@@ -795,17 +795,17 @@
       }
     },
     "outputs": {
-      "1": {
+      "2": {
         "name": "LARGEUR"
       },
-      "2": {
+      "3": {
         "name": "HAUTEUR"
       },
       "0": {
         "name": "Image"
       },
-      "3": {
-        "name": "Hauteur"
+      "1": {
+        "name": "Masque"
       }
     }
   },
