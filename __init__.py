@@ -50,7 +50,7 @@ def load_nodes():
                     if hasattr(module, "Paths") and hasattr(module.Paths, "LLM_DIR"):
                         os.makedirs(module.Paths.LLM_DIR, exist_ok=True)
             except Exception as e:
-                print(f"[{__repo_name__}] Error loading {module_name}: {e}")
+                print(f"[{__repo_name__}] Error loading {file.stem}: {e}")
 
 # Load all nodes
 load_nodes()
