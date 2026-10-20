@@ -1,64 +1,15 @@
 {
   "id": "24f0d3f4-7207-455e-ae7f-3bd3ce2771bd",
   "revision": 0,
-  "last_node_id": 25,
-  "last_link_id": 32,
+  "last_node_id": 27,
+  "last_link_id": 40,
   "nodes": [
-    {
-      "id": 21,
-      "type": "AILab_Preview",
-      "pos": [
-        771.307386825688,
-        -660.2734157913325
-      ],
-      "size": [
-        952.968412178257,
-        371.1372162152344
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": 27
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": 28
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": null
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Preview"
-      },
-      "widgets_values": [],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
     {
       "id": 13,
       "type": "AILab_MaskPreview",
       "pos": [
-        771.3073868256879,
-        -232.29431299283743
+        768.470519266722,
+        136.49464601213123
       ],
       "size": [
         952.968412178257,
@@ -71,7 +22,7 @@
         {
           "name": "mask",
           "type": "MASK",
-          "link": 26
+          "link": 40
         }
       ],
       "outputs": [
@@ -84,9 +35,15 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_MaskPreview"
+        "Node name for S&R": "AILab_MaskPreview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [],
+      "widgets_values_named": {},
       "color": "#2e3e57",
       "bgcolor": "#4b5b73"
     },
@@ -94,28 +51,28 @@
       "id": 22,
       "type": "AILab_Preview",
       "pos": [
-        771.307386825688,
-        77.6079037610424
+        764.68812538082,
+        -294.9635934189064
       ],
       "size": [
         952.968412178257,
         382.4647323538029
       ],
       "flags": {},
-      "order": 5,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "shape": 7,
           "type": "IMAGE",
-          "link": 31
+          "link": 38
         },
         {
           "name": "mask",
           "shape": 7,
           "type": "MASK",
-          "link": 32
+          "link": 39
         }
       ],
       "outputs": [
@@ -133,176 +90,24 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_Preview"
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [],
+      "widgets_values_named": {},
       "color": "#2e3e57",
       "bgcolor": "#4b5b73"
-    },
-    {
-      "id": 23,
-      "type": "AILab_MaskPreview",
-      "pos": [
-        771.307386825688,
-        511.9748528687251
-      ],
-      "size": [
-        952.968412178257,
-        297.0168186534602
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 30
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_MaskPreview"
-      },
-      "widgets_values": [],
-      "color": "#2e3e57",
-      "bgcolor": "#4b5b73"
-    },
-    {
-      "id": 25,
-      "type": "AILab_YoloV8Adv",
-      "pos": [
-        402.6933800921686,
-        71.91210239127162
-      ],
-      "size": [
-        340,
-        314
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 29
-        }
-      ],
-      "outputs": [
-        {
-          "name": "ANNOTATED_IMAGE",
-          "type": "IMAGE",
-          "links": [
-            31
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [
-            32
-          ]
-        },
-        {
-          "name": "MASK_LIST",
-          "type": "MASK",
-          "links": [
-            30
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_YoloV8Adv"
-      },
-      "widgets_values": [
-        "bbox\\face_yolov8m.pt",
-        "all",
-        "none",
-        0.25,
-        0.45,
-        "",
-        "auto",
-        300,
-        true,
-        false
-      ],
-      "color": "#222e40",
-      "bgcolor": "#364254"
-    },
-    {
-      "id": 24,
-      "type": "AILab_YoloV8",
-      "pos": [
-        402.6933800921686,
-        -660.2734157913325
-      ],
-      "size": [
-        340,
-        146
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 25
-        }
-      ],
-      "outputs": [
-        {
-          "name": "ANNOTATED_IMAGE",
-          "type": "IMAGE",
-          "links": [
-            27
-          ]
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [
-            28
-          ]
-        },
-        {
-          "name": "MASK_LIST",
-          "type": "MASK",
-          "links": [
-            26
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-rmbg",
-        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_YoloV8"
-      },
-      "widgets_values": [
-        "bbox\\face_yolov8m.pt",
-        "3",
-        "1"
-      ],
-      "color": "#222e40",
-      "bgcolor": "#364254"
     },
     {
       "id": 20,
       "type": "AILab_LoadImage",
       "pos": [
-        -213.87327493951494,
-        -232.29431299283743
+        -244.76641347708224,
+        -432.5278446490126
       ],
       "size": [
         586.4611082986776,
@@ -317,8 +122,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            25,
-            29
+            33
           ]
         },
         {
@@ -340,7 +144,12 @@
       "properties": {
         "cnr_id": "comfyui-rmbg",
         "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
-        "Node name for S&R": "AILab_LoadImage"
+        "Node name for S&R": "AILab_LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
       },
       "widgets_values": [
         "",
@@ -352,73 +161,202 @@
         0,
         "image"
       ],
+      "widgets_values_named": {
+        "image_path_or_URL": "",
+        "image": "istockphoto-1368965646-612x612.jpg",
+        "upscale_method": "lanczos",
+        "megapixels": 0,
+        "scale_by": 1,
+        "resize_mode": "longest_side",
+        "size": 0,
+        "upload": "image"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 26,
+      "type": "AILab_Yolo",
+      "pos": [
+        371.2494592397942,
+        -310.3783742422396
+      ],
+      "size": [
+        340,
+        534
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            37
+          ]
+        },
+        {
+          "name": "ANNOTATED_IMAGE",
+          "type": "IMAGE",
+          "links": [
+            38
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            39
+          ]
+        },
+        {
+          "name": "MASK_LIST",
+          "type": "MASK",
+          "links": [
+            40
+          ]
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_Yolo"
+      },
+      "widgets_values": [
+        "yolo26m-seg (Medium / 54.8MB)",
+        "all",
+        "none",
+        0.25,
+        0.45,
+        "",
+        "Mask & Box",
+        "Alpha",
+        "#222222",
+        0,
+        0,
+        false,
+        "auto",
+        300,
+        true,
+        false,
+        false
+      ],
+      "widgets_values_named": {
+        "model": "yolo26m-seg (Medium / 54.8MB)",
+        "mask_count": "all",
+        "select_mask_index": "none",
+        "conf": 0.25,
+        "iou": 0.45,
+        "classes": "",
+        "annotation_mode": "Mask & Box",
+        "background": "Alpha",
+        "background_color": "#222222",
+        "mask_blur": 0,
+        "mask_offset": 0,
+        "invert_output": false,
+        "device": "auto",
+        "max_det": 300,
+        "retina_masks": true,
+        "agnostic_nms": false,
+        "unload_model": false
+      },
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 27,
+      "type": "AILab_ImagePreview",
+      "pos": [
+        764.2410137213345,
+        -816.264638288582
+      ],
+      "size": [
+        649.2621247565917,
+        454.73150807941795
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 37
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_ImagePreview"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {},
       "color": "#2e3e57",
       "bgcolor": "#4b5b73"
     }
   ],
   "links": [
     [
-      25,
+      33,
       20,
       0,
-      24,
+      26,
       0,
       "IMAGE"
     ],
     [
+      37,
       26,
-      24,
+      0,
+      27,
+      0,
+      "IMAGE"
+    ],
+    [
+      38,
+      26,
+      1,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      39,
+      26,
       2,
+      22,
+      1,
+      "MASK"
+    ],
+    [
+      40,
+      26,
+      3,
       13,
       0,
-      "MASK"
-    ],
-    [
-      27,
-      24,
-      0,
-      21,
-      0,
-      "IMAGE"
-    ],
-    [
-      28,
-      24,
-      1,
-      21,
-      1,
-      "MASK"
-    ],
-    [
-      29,
-      20,
-      0,
-      25,
-      0,
-      "IMAGE"
-    ],
-    [
-      30,
-      25,
-      2,
-      23,
-      0,
-      "MASK"
-    ],
-    [
-      31,
-      25,
-      0,
-      22,
-      0,
-      "IMAGE"
-    ],
-    [
-      32,
-      25,
-      1,
-      22,
-      1,
       "MASK"
     ]
   ],
@@ -426,18 +364,21 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.699183592488379,
+      "scale": 0.6356214477167083,
       "offset": [
-        338.7066798641084,
-        1245.140691861602
+        1124.4158472368006,
+        1046.1894972832777
       ]
     },
     "workflowRendererVersion": "LG",
-    "frontendVersion": "1.38.3",
+    "frontendVersion": "1.55.18",
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
-    "VHS_KeepIntermediate": true
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "links_added_by_ue": []
   },
-  "version": 0.4
+  "version": 0.4,
+  "seed_widgets": {}
 }

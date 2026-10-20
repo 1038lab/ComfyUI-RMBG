@@ -1,0 +1,511 @@
+{
+  "id": "24f0d3f4-7207-455e-ae7f-3bd3ce2771bd",
+  "revision": 0,
+  "last_node_id": 35,
+  "last_link_id": 53,
+  "nodes": [
+    {
+      "id": 20,
+      "type": "AILab_LoadImage",
+      "pos": [
+        -260.54578145771404,
+        -757.0795570869003
+      ],
+      "size": [
+        548.7027502684136,
+        927.7433877072522
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            44,
+            52
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        "117757924.jpg",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "widgets_values_named": {
+        "image_path_or_URL": "",
+        "image": "117757924.jpg",
+        "upscale_method": "lanczos",
+        "megapixels": 0,
+        "scale_by": 1,
+        "resize_mode": "longest_side",
+        "size": 0,
+        "upload": "image"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 29,
+      "type": "PreviewAny",
+      "pos": [
+        686.8222195876639,
+        -244.05842926168197
+      ],
+      "size": [
+        219.9289210251177,
+        296.65467817166154
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 47
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.9.2",
+        "Node name for S&R": "PreviewAny",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 31,
+      "type": "AILab_Florence2",
+      "pos": [
+        326.88899297610936,
+        -699.8699766137076
+      ],
+      "size": [
+        340,
+        340
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 44
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            53
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "DATA",
+          "type": "JSON",
+          "links": [
+            48
+          ]
+        },
+        {
+          "name": "BBOXES",
+          "type": "BBOX",
+          "links": [
+            47,
+            49
+          ]
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_Florence2"
+      },
+      "widgets_values": [
+        "person",
+        "microsoft/Florence-2-base",
+        "Phrase Grounding (boxes)",
+        "fp16",
+        "sdpa",
+        false,
+        "",
+        1024,
+        false
+      ],
+      "widgets_values_named": {
+        "prompt": "person",
+        "model": "microsoft/Florence-2-base",
+        "mode": "Phrase Grounding (boxes)",
+        "precision": "fp16",
+        "attention": "sdpa",
+        "fill_mask": false,
+        "output_mask_select": "",
+        "max_new_tokens": 1024,
+        "unload_model": false
+      },
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 32,
+      "type": "PreviewAny",
+      "pos": [
+        343.5056788736417,
+        -253.28991784135903
+      ],
+      "size": [
+        254.28297089020157,
+        313.52453077583345
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 48
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.9.2",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 33,
+      "type": "AILab_FinegrainBoxSegment",
+      "pos": [
+        972.4708907583895,
+        -750.8538471768352
+      ],
+      "size": [
+        340,
+        268
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 52
+        },
+        {
+          "name": "bboxes",
+          "shape": 7,
+          "type": "BBOX",
+          "link": 49
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            50
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            51
+          ]
+        },
+        {
+          "name": "MASK_IMAGE",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_FinegrainBoxSegment"
+      },
+      "widgets_values": [
+        "",
+        0.15,
+        0,
+        0,
+        false,
+        false,
+        "Alpha",
+        "#222222"
+      ],
+      "widgets_values_named": {
+        "box_coordinates": "",
+        "margin": 0.15,
+        "mask_blur": 0,
+        "mask_offset": 0,
+        "invert_output": false,
+        "unload_model": false,
+        "background": "Alpha",
+        "background_color": "#222222"
+      },
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 34,
+      "type": "AILab_Preview",
+      "pos": [
+        1385.3282564655808,
+        -751.133987815566
+      ],
+      "size": [
+        1191.2939887621383,
+        834.344421444609
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 50
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 51
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "112fd6141d07663d5e4a35d66d269542b58f4438",
+        "Node name for S&R": "AILab_Preview"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {},
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 35,
+      "type": "AILab_ImagePreview",
+      "pos": [
+        967.7222242846113,
+        -421.0175105087073
+      ],
+      "size": [
+        382.7445882945451,
+        530.7085749848329
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 53
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_ImagePreview"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {},
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    }
+  ],
+  "links": [
+    [
+      44,
+      20,
+      0,
+      31,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      31,
+      3,
+      29,
+      0,
+      "BBOX"
+    ],
+    [
+      48,
+      31,
+      2,
+      32,
+      0,
+      "JSON"
+    ],
+    [
+      49,
+      31,
+      3,
+      33,
+      1,
+      "BBOX"
+    ],
+    [
+      50,
+      33,
+      0,
+      34,
+      0,
+      "IMAGE"
+    ],
+    [
+      51,
+      33,
+      1,
+      34,
+      1,
+      "MASK"
+    ],
+    [
+      52,
+      20,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      53,
+      31,
+      0,
+      35,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.525306981584058,
+      "offset": [
+        453.0451516602858,
+        1394.5261903764795
+      ]
+    },
+    "workflowRendererVersion": "LG",
+    "frontendVersion": "1.55.18",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true,
+    "ue_links": [],
+    "links_added_by_ue": []
+  },
+  "version": 0.4,
+  "seed_widgets": {}
+}

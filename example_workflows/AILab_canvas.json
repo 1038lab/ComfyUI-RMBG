@@ -1,0 +1,660 @@
+{
+  "id": "298c8665-d0a8-422b-9c93-635bd49afa23",
+  "revision": 0,
+  "last_node_id": 26,
+  "last_link_id": 26,
+  "nodes": [
+    {
+      "id": 14,
+      "type": "AILab_Canvas",
+      "pos": [
+        3234.3260460521146,
+        736.5079203002078
+      ],
+      "size": [
+        1364,
+        964
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "Background",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 12
+        },
+        {
+          "name": "layer_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 24
+        },
+        {
+          "name": "layer_2",
+          "type": "IMAGE",
+          "link": 25
+        },
+        {
+          "name": "layer_3",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_Canvas"
+      },
+      "widgets_values": [
+        1344,
+        672,
+        "Alpha",
+        "#222222",
+        false,
+        "{\"canvas_width\":1344,\"canvas_height\":672,\"locked\":false,\"layers\":[{\"id\":\"layer_1\",\"x\":1150.236153885147,\"y\":389.4593858612029,\"scaleX\":0.4697,\"scaleY\":0.4697,\"angle\":0,\"flipX\":false,\"flipY\":false,\"opacity\":1,\"zIndex\":1},{\"id\":\"layer_2\",\"x\":309.8387114795354,\"y\":288.71292716081877,\"scaleX\":0.5993,\"scaleY\":0.5993,\"angle\":0,\"flipX\":false,\"flipY\":false,\"opacity\":1,\"zIndex\":2}]}",
+        ""
+      ],
+      "widgets_values_named": {
+        "canvas_width": 1344,
+        "canvas_height": 672,
+        "background": "Alpha",
+        "background_color": "#222222",
+        "fit_background_size": false,
+        "canvas_state": "{\"canvas_width\":1344,\"canvas_height\":672,\"locked\":false,\"layers\":[{\"id\":\"layer_1\",\"x\":1150.236153885147,\"y\":389.4593858612029,\"scaleX\":0.4697,\"scaleY\":0.4697,\"angle\":0,\"flipX\":false,\"flipY\":false,\"opacity\":1,\"zIndex\":1},{\"id\":\"layer_2\",\"x\":309.8387114795354,\"y\":288.71292716081877,\"scaleX\":0.5993,\"scaleY\":0.5993,\"angle\":0,\"flipX\":false,\"flipY\":false,\"opacity\":1,\"zIndex\":2}]}",
+        "AILab_Canvas_UI": ""
+      },
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 15,
+      "type": "AILab_LoadImage",
+      "pos": [
+        1459.8472802891572,
+        738.9942273009261
+      ],
+      "size": [
+        675.3755108121275,
+        618.4444173177064
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            12
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "a-breathtaking-vista-of-rolling-sand-dunes-at-sunset-showcasing-vibrant-hues-of-pink-and-blue-photo.jpg",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "widgets_values_named": {
+        "image_path_or_URL": "",
+        "image": "a-breathtaking-vista-of-rolling-sand-dunes-at-sunset-showcasing-vibrant-hues-of-pink-and-blue-photo.jpg",
+        "upscale_method": "lanczos",
+        "megapixels": 0,
+        "scale_by": 1,
+        "resize_mode": "longest_side",
+        "size": 0,
+        "upload": "image"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 16,
+      "type": "AILab_LoadImage",
+      "pos": [
+        2199.249184147147,
+        888.0976062423044
+      ],
+      "size": [
+        300,
+        498
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            19
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image.jpg",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "widgets_values_named": {
+        "image_path_or_URL": "",
+        "image": "image.jpg",
+        "upscale_method": "lanczos",
+        "megapixels": 0,
+        "scale_by": 1,
+        "resize_mode": "longest_side",
+        "size": 0,
+        "upload": "image"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 19,
+      "type": "AILab_Preview",
+      "pos": [
+        4631.232000979326,
+        733.1311187869601
+      ],
+      "size": [
+        1095.6240584040715,
+        1123.2948689004015
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_Preview"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {},
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 20,
+      "type": "AILab_LoadImage",
+      "pos": [
+        2194.7895959956813,
+        1455.5933382684418
+      ],
+      "size": [
+        300,
+        498
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            20
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "BonanzaGen-image-734d9d30-2364-4cc8-a6d8-226cf3e5a354-2.webp",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "widgets_values_named": {
+        "image_path_or_URL": "",
+        "image": "BonanzaGen-image-734d9d30-2364-4cc8-a6d8-226cf3e5a354-2.webp",
+        "upscale_method": "lanczos",
+        "megapixels": 0,
+        "scale_by": 1,
+        "resize_mode": "longest_side",
+        "size": 0,
+        "upload": "image"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 21,
+      "type": "RMBG",
+      "pos": [
+        2777.5889745371246,
+        976.3110369719008
+      ],
+      "size": [
+        340,
+        316
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            23
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        },
+        {
+          "name": "MASK_IMAGE",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "RMBG"
+      },
+      "widgets_values": [
+        "RMBG-2.0",
+        1,
+        1024,
+        0,
+        0,
+        false,
+        false,
+        false,
+        "Alpha",
+        "#222222"
+      ],
+      "widgets_values_named": {
+        "model": "RMBG-2.0",
+        "sensitivity": 1,
+        "process_res": 1024,
+        "mask_blur": 0,
+        "mask_offset": 0,
+        "invert_output": false,
+        "refine_foreground": false,
+        "unload_model": false,
+        "background": "Alpha",
+        "background_color": "#222222"
+      },
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 22,
+      "type": "AILab_UnbatchImages",
+      "pos": [
+        2818.119498753858,
+        758.3328283531062
+      ],
+      "size": [
+        300,
+        166
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 23
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "links": [
+            24
+          ]
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "links": [
+            25
+          ]
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "image_4",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "image_5",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "image_6",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "image_7",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "image_8",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_UnbatchImages"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 25,
+      "type": "BatchImagesNode",
+      "pos": [
+        2588.0637845031133,
+        977.5764295113192
+      ],
+      "size": [
+        140,
+        66
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images.image0",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "images.image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "name": "images.image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {}
+        },
+        "cnr_id": "comfy-core",
+        "ver": "0.42.1",
+        "Node name for S&R": "BatchImagesNode"
+      }
+    }
+  ],
+  "links": [
+    [
+      12,
+      15,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      14,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      16,
+      14,
+      1,
+      19,
+      1,
+      "MASK"
+    ],
+    [
+      19,
+      16,
+      0,
+      25,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      20,
+      0,
+      25,
+      1,
+      "IMAGE"
+    ],
+    [
+      23,
+      21,
+      0,
+      22,
+      0,
+      "IMAGE"
+    ],
+    [
+      24,
+      22,
+      0,
+      14,
+      1,
+      "IMAGE"
+    ],
+    [
+      25,
+      22,
+      1,
+      14,
+      2,
+      "IMAGE"
+    ],
+    [
+      26,
+      25,
+      0,
+      21,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "ds": {
+      "scale": 0.45000000000000895,
+      "offset": [
+        -1239.4939486557535,
+        260.78317717495
+      ]
+    },
+    "frontendVersion": "1.55.18",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4,
+  "seed_widgets": {}
+}
