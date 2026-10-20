@@ -3,7 +3,7 @@
 ## V3.3.0 (2026/10/20)
 ### New Nodes
 - **Canvas (RMBG)**: An interactive multi-layer image compositing studio built directly into the ComfyUI node canvas:
-  ![Canvas_nodes](https://github.com/user-attachments/assets/3edd69e0-ed9f-4c74-aa85-5aa84bff0ec1)
+  ![Canvas_nodes](example_workflows/AILab_canvas.jpg)
   
   - **Interactive Stage**: Move, rotate, flip (horizontal/vertical), adjust opacity, and scale layers with 4-corner aspect-locked transform gizmos directly on the visual stage.
   - **Dynamic Layer Management**: Clean slot architecture that dynamically expands layer inputs (`layer_1` through `layer_5`) as connections are made, featuring enlarged live preview cards and hover-to-remove actions.
@@ -11,7 +11,7 @@
   - **Alpha Transparency & Full RGBA Pipeline**: True 4-channel RGBA compositing and output when `Background: Alpha` is selected, preserving transparent pixels for downstream preview and save nodes without black background clipping.
   - **Merged Foreground Mask**: Automatically composites and outputs an exact single-channel `MASK` covering all active foreground layers for downstream inpainting and matting workflows.
 - **VRMBG Video Background Removal (`AILab_VRMBG`)**:
-  ![VRMBG_nodes](https://github.com/user-attachments/assets/c1377e46-3533-423d-9289-0f1647314c48)
+  ![VRMBG_nodes](example_workflows/VRMBG.jpg)
   - **Flicker-Free Temporal Matting**: First dedicated video matting node designed specifically for sequential video batches and animation frames.
   - **Autoregressive State Tracking**: Conditioned on prior frame foreground features to maintain temporal continuity and eliminate boundary flickering across frames.
   - **Chunked Video Processing**: Features a `reset_state` toggle allowing creators to feed long videos in consecutive batches without losing temporal continuity.
@@ -21,7 +21,7 @@
   - **Micro-Hair & Semi-Transparent Subjects**: Drastically improves extraction quality on wispy hair, fur, transparent glassware, lace, and motion-blurred edges with zero manual trimap required.
   - **Sub-Pixel Foreground Refinement**: Built-in `refine_foreground` ensures clean, halo-free subject boundaries.
 - **Finegrain Box Segmenter (`AILab_FinegrainBoxSegment`)**:
-  ![Finegrain Box Segmenter and Floorence-2_nodes](https://github.com/user-attachments/assets/556fb73c-1521-4b4c-bfb6-739bed5c8d90)
+  ![Finegrain Box Segmenter and Floorence-2_nodes](example_workflows/Florence2_Finegrain_box.jpg)
 
   - **1024px High-Definition Bounding Box Matting**: Integrates the Swin-B MVANet architecture to perform high-resolution object cutouts using bounding boxes.
   - **Florence-2 & YOLO Workflow Integration**: Directly connects with `BBOX` outputs from Florence-2 and YOLO nodes for an end-to-end detection-to-matting pipeline.
@@ -51,6 +51,7 @@
   - **Removed Matplotlib Dependency**: Replaced the heavy external plotting library with native image rendering, cutting unnecessary dependencies, reducing install footprint, and preventing memory leaks.
   - **Workflow Quality-of-Life**: Moved `prompt` to the top for intuitive workflow chaining, simplified parameter names, and added an `unload_model` toggle to release GPU memory on demand.
 - **YOLO Segmentation (RMBG) Node Overhaul**:
+  ![YOLO_nodes](example_workflows/YOLO_Node.jpg)
   - **Upgraded to YOLO26-seg & YOLO11-seg**: Integrated the state-of-the-art YOLO26 and YOLO11 instance segmentation model families (`yolo26n-seg` through `yolo26x-seg`, plus `yolo11*-seg`), hosted on our Hugging Face repository (`1038lab/YOLO`) with seamless auto-downloading.
   - **Native Cutout Output (RGBA)**: Outputs direct transparent cutouts (`Alpha` RGBA) or custom background colors (`Color` RGB) right from the primary `IMAGE` output port, eliminating the need to chain downstream `Mask Applier` nodes.
   - **Configurable Annotation Display**: Added `annotation_mode` (`Mask & Box`, `Box Only`, `Mask Only`, `None`) on `ANNOTATED_IMAGE` to flexibly control detection overlays without obstructing workflows.
