@@ -1,10 +1,19 @@
 # ComfyUI-RMBG
 
-A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte, SAM, SAM2, SAM3, Florence-2, YOLOv8, Big-Lama, and GroundingDINO, while also incorporating real-time background replacement, instant VRAM unloading, and enhanced edge detection for improved accuracy.
+A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, VRMBG-3.0, FeyNoBg, Finegrain Box Segmenter, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte, SAM, SAM2, SAM3, Florence-2, YOLOv8/YOLO11, Big-Lama, and GroundingDINO, while also incorporating real-time background replacement, instant VRAM unloading, and enhanced edge detection for improved accuracy.
 
 ## News & Updates
+- **2026/10/20**: Update ComfyUI-RMBG to **v3.3.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v330-20261020) )
+  ![V3 3 0_nodes](https://github.com/user-attachments/assets/97138882-e084-43cf-a6d2-8745981109f3)
+  - Added Canvas (RMBG) interactive multi-layer compositing studio with aspect-locked transform gizmos and dynamic layer slots.
+  - Added VRMBG (Video Background Removal) node for flicker-free sequential video matting.
+  - Added FeyNoBg (Ultra-Fine Matting) node with deepened Swin-L architecture for fine hairs and semi-transparent subjects.
+  - Added Finegrain Box Segmenter node for 1024px box-promptable matting compatible with Florence-2 and YOLO bounding boxes.
+  - Overhauled YOLO Segmentation with YOLO26-seg & YOLO11-seg, native RGBA cutout, and collapsible advanced options drawer.
+  - Rebuilt Florence-2 on a native local PyTorch architecture (100% offline, zero remote code vulnerabilities, removed matplotlib).
+  - Native FP16 acceleration for RMBG-2.0 and BiRefNet with automatic intermediate VRAM clearing.
 - **2026/09/30**: Update ComfyUI-RMBG to **v3.2.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v320-20260930) )
-  ![v2.9.4_sam3](https://github.com/user-attachments/assets/9b165789-a291-4df0-a147-67cca8011262)
+  ![v3 2 0_sam3](https://github.com/user-attachments/assets/9b165789-a291-4df0-a147-67cca8011262)
   - Upgraded to new `SAM3 Multiplex` segmentation node with native `safetensors` support (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
   - Added `unload_model` toggle across all nodes for instant GPU VRAM release
   - Added New `Resolution Selector` & `Image Compare` nodes
@@ -243,8 +252,11 @@ install requirment.txt in the ComfyUI-RMBG folder
   ```
 
 ### 4. Manually download the models:
-- The model will be automatically downloaded to `ComfyUI/models/RMBG/` when first time using the custom node.
+- Most models can be automatically downloaded to `ComfyUI/models/RMBG/` on first use. VRMBG-3.0 requires manual download due to official BRIA license terms.
 - Manually download the RMBG-2.0 model by visiting this [link](https://huggingface.co/1038lab/RMBG-2.0), then download the files and place them in the `/ComfyUI/models/RMBG/RMBG-2.0` folder.
+- Manually download the VRMBG-3.0 model by visiting official [briaai/VRMBG-3.0](https://huggingface.co/briaai/VRMBG-3.0), then download the files (`config.json`, `model.safetensors`, `model.py`, `vrmbg3_config.py`) and place them in the `/ComfyUI/models/RMBG/VRMBG-3.0` folder.
+- Manually download the FeyNoBg model by visiting this [link](https://huggingface.co/1038lab/FeyNobg), then download the files (`config.json`, `FeyNobg.safetensors`, `preprocessor_config.json`) and place them in the `/ComfyUI/models/RMBG/FeyNoBg` folder.
+- Manually download the Finegrain Box Segmenter model by visiting this [link](https://huggingface.co/1038lab/finegrain-box-segmenter), then download the files (`finegrain-box-segmenter.safetensors`) and place them in the `/ComfyUI/models/RMBG/finegrain-box-segmenter` folder.
 - Manually download the INSPYRENET models by visiting the [link](https://huggingface.co/1038lab/inspyrenet), then download the files and place them in the `/ComfyUI/models/RMBG/INSPYRENET` folder.
 - Manually download the BEN model by visiting the [link](https://huggingface.co/1038lab/BEN), then download the files and place them in the `/ComfyUI/models/RMBG/BEN` folder.
 - Manually download the BEN2 model by visiting the [link](https://huggingface.co/1038lab/BEN2), then download the files and place them in the `/ComfyUI/models/RMBG/BEN2` folder.
@@ -337,6 +349,25 @@ BEN2 is a more advanced version of BEN, offering:
 - Better handling of complex scenes
 - Support for more image types
 - Suitable for batch processing
+
+## VRMBG-3.0
+VRMBG-3.0 is a dedicated temporal video and image sequence background matting model by BRIA AI:
+- Temporal consistency: Autoregressive state tracking conditioned on prior frame foreground features to eliminate boundary jitter.
+- Chunked video processing: Supports batch-by-batch execution on long sequences without memory fragmentation.
+- Native 1024x1024 resolution inference.
+- Manual model placement: Requires manual download of files from [briaai/VRMBG-3.0](https://huggingface.co/briaai/VRMBG-3.0) into `ComfyUI/models/RMBG/VRMBG-3.0/`.
+
+## FeyNoBg
+FeyNoBg is an ultra-fine dichotomous matting model featuring a deepened Swin-L backbone (263M parameters):
+- Boundary reconstruction: Excels at complex dichotomous image segmentation.
+- Wispy & transparent subjects: Exceptional accuracy on wispy hair strands, animal fur, transparent glassware, lace, and motion-blurred edges with zero trimap required.
+- Sub-pixel foreground edge refinement: Built-in boundary optimizer ensuring crisp, halo-free results.
+
+## Finegrain Box Segmenter
+Finegrain Box Segmenter provides 1024px high-definition prompt-guided object matting:
+- Swin-B MVANet architecture: High-resolution salient object matting optimized for 1024px images.
+- Florence-2 & YOLO integration: Seamlessly connects to detection `BBOX` outputs for automated, targeted segmentation.
+- Robust boundary definition: Preserves fine details, hard edges, and object textures.
 
 ## BIREFNET MODELS
 BIREFNET is a powerful model for image segmentation, offering:
@@ -437,6 +468,9 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
 
 ## Credits
 - RMBG-2.0: https://huggingface.co/briaai/RMBG-2.0
+- VRMBG-3.0: https://huggingface.co/briaai/VRMBG-3.0
+- FeyNoBg: https://huggingface.co/1038lab/FeyNobg
+- Finegrain Box Segmenter: https://huggingface.co/1038lab/finegrain-box-segmenter
 - INSPYRENET: https://github.com/plemeri/InSPyReNet
 - BEN: https://huggingface.co/PramaLLC/BEN
 - BEN2: https://huggingface.co/PramaLLC/BEN2
@@ -464,4 +498,4 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
 If this custom node helps you or you like my work, please give me ⭐ on this repo! It's a great encouragement for my efforts!
 
 ## License
-GPL-3.0 License
+GPL-3.0 License<img width="1527" height="1121" alt="2026-10-20-00-12-39" src="https://github.com/user-attachments/assets/7c6da7e5-d324-48e8-b655-5c567360fff6" />
