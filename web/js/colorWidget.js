@@ -3,7 +3,7 @@
  *
  * This integration script is licensed under the GNU General Public License v3.0 (GPL-3.0).
  * If you incorporate or modify this code, please credit AILab as the original source:
- * https://github.com/1038lab
+ * https://github.com/1038lab/ComfyUI-RMBG
  */
 
 import { app } from "/scripts/app.js";
@@ -59,12 +59,12 @@ function hsvToRGB(h, s, v) {
     const x = c * (1 - Math.abs((h / 60) % 2 - 1));
     const m = v - c;
     let r, g, b;
-    if (h < 60)       { r = c; g = x; b = 0; }
+    if (h < 60) { r = c; g = x; b = 0; }
     else if (h < 120) { r = x; g = c; b = 0; }
     else if (h < 180) { r = 0; g = c; b = x; }
     else if (h < 240) { r = 0; g = x; b = c; }
     else if (h < 300) { r = x; g = 0; b = c; }
-    else              { r = c; g = 0; b = x; }
+    else { r = c; g = 0; b = x; }
     return {
         r: Math.round((r + m) * 255),
         g: Math.round((g + m) * 255),
@@ -111,6 +111,8 @@ function openColorPicker(initialColor, clientX, clientY, onApply) {
     panel.className = 'ailab-cp-panel';
     Object.assign(panel.style, {
         position: 'fixed', zIndex: '99999',
+        width: `${SV_SIZE + PAD * 2}px`,
+        boxSizing: 'border-box',
         background: '#1e1e1e', border: '1px solid #444',
         borderRadius: '8px', padding: `${PAD}px`,
         boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
@@ -136,36 +138,79 @@ function openColorPicker(initialColor, clientX, clientY, onApply) {
         marginBottom: `${GAP}px`,
     });
 
-    // Bottom row: preview swatch + hex input + OK button
+    // Bottom row: preview swatch + eyedropper + hex input + OK button
     const row = document.createElement('div');
     Object.assign(row.style, {
-        display: 'flex', alignItems: 'center', gap: `${GAP}px`,
+        display: 'flex', alignItems: 'center', gap: '6px',
+        width: '100%', boxSizing: 'border-box',
     });
 
     const preview = document.createElement('div');
     Object.assign(preview.style, {
-        width: '28px', height: '28px', borderRadius: '4px',
-        border: '1px solid #555', flexShrink: '0',
+        width: '26px', height: '26px', borderRadius: '4px',
+        border: '1px solid #555', flexShrink: '0', boxSizing: 'border-box',
     });
+
+    let dropBtn = null;
+    if (window.EyeDropper) {
+        dropBtn = document.createElement('button');
+        dropBtn.type = 'button';
+        dropBtn.title = 'Pick color from screen';
+        Object.assign(dropBtn.style, {
+            width: '26px', height: '26px', borderRadius: '4px',
+            border: '1px solid #555', background: '#333', color: '#ccc',
+            flexShrink: '0', cursor: 'pointer', padding: '0',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxSizing: 'border-box',
+            transition: 'background 0.15s, border-color 0.15s, color 0.15s',
+        });
+        dropBtn.innerHTML = `<svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" style="display:block;pointer-events:none;"><path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.708L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708zM2 12.707l7-7L10.293 7l-7 7H2z"/></svg>`;
+        dropBtn.addEventListener('mouseenter', () => {
+            dropBtn.style.background = '#444';
+            dropBtn.style.borderColor = '#777';
+            dropBtn.style.color = '#fff';
+        });
+        dropBtn.addEventListener('mouseleave', () => {
+            dropBtn.style.background = '#333';
+            dropBtn.style.borderColor = '#555';
+            dropBtn.style.color = '#ccc';
+        });
+        dropBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            try {
+                const eyeDropper = new window.EyeDropper();
+                const result = await eyeDropper.open();
+                if (result && result.sRGBHex) {
+                    hsv = hexToHSV(result.sRGBHex);
+                    updateAll();
+                }
+            } catch (err) {}
+        });
+    }
 
     const hexInput = document.createElement('input');
     hexInput.type = 'text';
     Object.assign(hexInput.style, {
-        flex: '1', background: '#333', border: '1px solid #555',
-        borderRadius: '4px', color: '#eee', padding: '4px 8px',
-        fontFamily: 'monospace', fontSize: '13px', outline: 'none',
-        width: '80px', minWidth: '0',
+        flex: '1', width: '0', minWidth: '0',
+        height: '26px', boxSizing: 'border-box',
+        background: '#333', border: '1px solid #555',
+        borderRadius: '4px', color: '#eee', padding: '0 4px',
+        fontFamily: 'monospace', fontSize: '11px', outline: 'none',
+        textAlign: 'center',
     });
 
     const okBtn = document.createElement('button');
     okBtn.textContent = 'OK';
     Object.assign(okBtn.style, {
+        height: '26px', boxSizing: 'border-box',
         background: '#4a9eff', color: '#fff', border: 'none',
-        borderRadius: '4px', padding: '5px 14px', cursor: 'pointer',
-        fontSize: '12px', fontWeight: 'bold',
+        borderRadius: '4px', padding: '0 10px', cursor: 'pointer',
+        fontSize: '11px', fontWeight: 'bold', flexShrink: '0',
     });
 
-    row.append(preview, hexInput, okBtn);
+    row.append(preview);
+    if (dropBtn) row.append(dropBtn);
+    row.append(hexInput, okBtn);
     panel.append(svCanvas, hueCanvas, row);
 
     // ── Position panel below click point, clamped to viewport ──
