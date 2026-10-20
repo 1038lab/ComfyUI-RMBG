@@ -4,7 +4,7 @@ import os
 import importlib.util
 
 __repo_name__ = "ComfyUI-RMBG"
-__version__ = "3.2.0"
+__version__ = "3.3.0"
 
 # Locate current and node directories
 current_dir = Path(__file__).parent
@@ -22,35 +22,26 @@ WEB_DIRECTORY = "./web"
 
 def load_nodes():
     """Automatically discover and load node definitions"""
-    for base in (current_dir, nodes_dir):
-        if not base.exists():
+    if not nodes_dir.exists():
+        return
+    for file in sorted(nodes_dir.glob("*.py")):
+        if file.stem == "__init__":
             continue
-        for file in base.rglob("*.py"):
-            if file.stem == "__init__":
-                continue
-            models_dir = current_dir / "models"
-            try:
-                if file.is_relative_to(models_dir):
-                    continue
-            except Exception:
-                if str(models_dir) in str(file):
-                    continue
+        try:
+            spec = importlib.util.spec_from_file_location(file.stem, file)
+            if spec and spec.loader:
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
 
-            try:
-                spec = importlib.util.spec_from_file_location(file.stem, file)
-                if spec and spec.loader:
-                    module = importlib.util.module_from_spec(spec)
-                    spec.loader.exec_module(module)
+                if hasattr(module, "NODE_CLASS_MAPPINGS"):
+                    NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
+                if hasattr(module, "NODE_DISPLAY_NAME_MAPPINGS"):
+                    NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
 
-                    if hasattr(module, "NODE_CLASS_MAPPINGS"):
-                        NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
-                    if hasattr(module, "NODE_DISPLAY_NAME_MAPPINGS"):
-                        NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
-
-                    if hasattr(module, "Paths") and hasattr(module.Paths, "LLM_DIR"):
-                        os.makedirs(module.Paths.LLM_DIR, exist_ok=True)
-            except Exception as e:
-                print(f"[{__repo_name__}] Error loading {module_name}: {e}")
+                if hasattr(module, "Paths") and hasattr(module.Paths, "LLM_DIR"):
+                    os.makedirs(module.Paths.LLM_DIR, exist_ok=True)
+        except Exception as e:
+            print(f"[{__repo_name__}] Error loading {file.stem}: {e}")
 
 # Load all nodes
 load_nodes()
