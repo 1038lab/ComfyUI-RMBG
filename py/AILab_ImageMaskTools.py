@@ -2297,9 +2297,6 @@ class AILab_ImageResize:
             elif custom_width > 0 and custom_height > 0:
                 target_width = custom_width
                 target_height = custom_height
-        elif scale_by != 1.0:
-            target_width = int(orig_width * scale_by)
-            target_height = int(orig_height * scale_by)
         
         final_width, final_height = target_width, target_height
 

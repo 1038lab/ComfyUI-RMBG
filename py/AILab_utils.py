@@ -323,6 +323,7 @@ ASPECT_RATIOS = {
     "4:5 (Portrait)":             (4, 5),
     "3:4 (Portrait Standard)":    (3, 4),
     "2:3 (Portrait Photo)":       (2, 3),
+    "1:2 (Portrait Univisium)":   (1, 2),
     "10:16 (Portrait)":           (10, 16),
     "9:16 (Portrait Widescreen)": (9, 16),
     "9:21 (Portrait Ultrawide)":  (9, 21),
@@ -347,3 +348,17 @@ def color_format(color: str) -> str:
         color = color[:6]
 
     return f"#{color}"
+
+
+def is_transformers_supported(min_version=(5, 0, 0)) -> bool:
+    try:
+        import transformers
+        parts = []
+        for p in transformers.__version__.split(".")[:3]:
+            digits = "".join(c for c in p if c.isdigit())
+            parts.append(int(digits) if digits else 0)
+        while len(parts) < 3:
+            parts.append(0)
+        return tuple(parts[:3]) >= min_version
+    except Exception:
+        return False

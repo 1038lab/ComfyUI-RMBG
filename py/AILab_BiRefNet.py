@@ -321,6 +321,10 @@ class BiRefNetModel:
                 with open(model_path, 'r', encoding='utf-8') as f:
                     model_content = f.read()
                 model_content = model_content.replace("from .BiRefNet_config", "from BiRefNet_config")
+                model_content = model_content.replace(
+                    "attn = attn.view(B_ // nW, nW, self.num_heads, N, N) + mask.unsqueeze(1).unsqueeze(0)",
+                    "attn = attn.view(B_ // nW, nW, self.num_heads, N, N) + mask.to(attn.dtype).unsqueeze(1).unsqueeze(0)"
+                )
                 with open(model_path, 'w', encoding='utf-8') as f:
                     f.write(model_content)
                 
@@ -367,7 +371,7 @@ class BiRefNetModel:
             
             with torch.no_grad():
                 preds = self.model(input_tensor)
-                pred = preds[-1].sigmoid().cpu()
+                pred = preds[-1].float().sigmoid().cpu()
             
             pred = pred[0].squeeze()
             pred_pil = transforms.ToPILImage()(pred)

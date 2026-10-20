@@ -126,8 +126,8 @@ class SAM3Segment:
             },
         }
 
-    RETURN_TYPES = ("IMAGE", "MASK", "IMAGE")
-    RETURN_NAMES = ("IMAGE", "MASK", "MASK_IMAGE")
+    RETURN_TYPES = ("IMAGE", "MASK", "IMAGE", "BBOX")
+    RETURN_NAMES = ("IMAGE", "MASK", "MASK_IMAGE", "BBOXES")
     FUNCTION = "segment"
     CATEGORY = "🧪AILab/🧽RMBG"
 
@@ -173,14 +173,14 @@ class SAM3Segment:
         result_image = result_image.convert("RGBA") if background == "Alpha" else result_image.convert("RGB")
         empty_mask = torch.zeros((1, h, w), dtype=torch.float32)
         mask_rgb = empty_mask.reshape((-1, 1, h, w)).movedim(1, -1).expand(-1, -1, -1, 3)
-        return result_image, empty_mask, mask_rgb
+        return result_image, empty_mask, mask_rgb, []
 
     def _empty_batch(self, img_pil):
         w, h = img_pil.size
         empty_imgs = torch.zeros((0, h, w, 3), dtype=torch.float32)
         empty_masks = torch.zeros((0, h, w), dtype=torch.float32)
         empty_mask_images = torch.zeros((0, h, w, 3), dtype=torch.float32)
-        return empty_imgs, empty_masks, empty_mask_images
+        return empty_imgs, empty_masks, empty_mask_images, []
 
     def _run_single_per_instance(self, processor, img_tensor, prompt, confidence, max_segments, segment_pick, mask_blur, mask_offset, invert, unload_model, background, background_color):
         img_pil = tensor2pil(img_tensor)
@@ -191,6 +191,7 @@ class SAM3Segment:
         state = processor.set_text_prompt(text, state)
         masks = state.get("masks")
         logits = state.get("masks_logits")
+        boxes = state.get("boxes")
         if masks is None or masks.numel() == 0:
             return self._empty_batch(img_pil)
         masks = masks.float()
@@ -208,13 +209,24 @@ class SAM3Segment:
             topk = torch.topk(scores, k=max_segments)
             masks = masks[topk.indices]
             scores = scores[topk.indices]
+            if boxes is not None and boxes.shape[0] > 0:
+                boxes = boxes[topk.indices]
         sorted_idx = torch.argsort(scores, descending=True)
         masks = masks[sorted_idx]
+        if boxes is not None and boxes.shape[0] > 0:
+            boxes = boxes[sorted_idx]
         if segment_pick > 0:
             idx = segment_pick - 1
             if idx >= masks.shape[0]:
                 return self._empty_batch(img_pil)
             masks = masks[idx : idx + 1]
+            if boxes is not None and boxes.shape[0] > 0:
+                boxes = boxes[idx : idx + 1]
+
+        bboxes_list = []
+        if boxes is not None and boxes.shape[0] > 0:
+            for b in boxes:
+                bboxes_list.append([round(float(v), 2) for v in b.tolist()[:4]])
 
         mask_imgs, mask_tensors, mask_rgb_list = [], [], []
         for single_mask in masks:
@@ -232,11 +244,12 @@ class SAM3Segment:
             torch.cat(mask_imgs, dim=0),
             torch.cat(mask_tensors, dim=0),
             torch.cat(mask_rgb_list, dim=0),
+            bboxes_list,
         )
 
     def _run_single_merged(self, processor, img_tensor, prompt, confidence, max_segments, segment_pick, mask_blur, mask_offset, invert, unload_model, background, background_color):
         img_pil = tensor2pil(img_tensor)
-        imgs, masks, _ = self._run_single_per_instance(
+        imgs, masks, _, bboxes_list = self._run_single_per_instance(
             processor, img_tensor, prompt, confidence, max_segments, segment_pick,
             mask_blur, mask_offset, invert, unload_model, background, background_color,
         )
@@ -250,7 +263,7 @@ class SAM3Segment:
         result_image = result_image.convert("RGBA") if background == "Alpha" else result_image.convert("RGB")
         mask_tensor = torch.from_numpy(np.array(mask_image).astype(np.float32) / 255.0).unsqueeze(0)
         mask_rgb = mask_tensor.reshape((1, mask_image.height, mask_image.width, 1)).expand(-1, -1, -1, 3)
-        return result_image, mask_tensor, mask_rgb
+        return result_image, mask_tensor, mask_rgb, bboxes_list
 
     def segment(self, image, model_name, prompt, device, confidence_threshold=0.5, max_segments=0, segment_pick=0, mask_blur=0, mask_offset=0, invert_output=False, unload_model=False, background="Alpha", background_color="#222222", output_mode="Merged"):
         if image.ndim == 3:
@@ -265,47 +278,51 @@ class SAM3Segment:
         ctx = torch.autocast(autocast_device, dtype=autocast_dtype) if autocast_enabled else nullcontext()
 
         result_images, result_masks, result_mask_images = [], [], []
-        with ctx:
-            for tensor_img in image:
-                if output_mode == "Separate":
-                    imgs_batch, masks_batch, mask_imgs_batch = self._run_single_per_instance(
-                        processor, tensor_img, prompt, confidence_threshold,
-                        max_segments, segment_pick, mask_blur, mask_offset,
-                        invert_output, unload_model, background, background_color,
-                    )
-                    result_images.append(imgs_batch)
-                    result_masks.append(masks_batch)
-                    result_mask_images.append(mask_imgs_batch)
-                else:
-                    img_pil, mask_tensor, mask_rgb = self._run_single_merged(
-                        processor, tensor_img, prompt, confidence_threshold,
-                        max_segments, segment_pick, mask_blur, mask_offset,
-                        invert_output, unload_model, background, background_color,
-                    )
-                    result_images.append(pil2tensor(img_pil))
-                    result_masks.append(mask_tensor)
-                    result_mask_images.append(mask_rgb)
+        result_bboxes = []
+        try:
+            with ctx:
+                for tensor_img in image:
+                    if output_mode == "Separate":
+                        imgs_batch, masks_batch, mask_imgs_batch, bboxes_batch = self._run_single_per_instance(
+                            processor, tensor_img, prompt, confidence_threshold,
+                            max_segments, segment_pick, mask_blur, mask_offset,
+                            invert_output, unload_model, background, background_color,
+                        )
+                        result_images.append(imgs_batch)
+                        result_masks.append(masks_batch)
+                        result_mask_images.append(mask_imgs_batch)
+                        result_bboxes.extend(bboxes_batch)
+                    else:
+                        img_pil, mask_tensor, mask_rgb, bboxes_batch = self._run_single_merged(
+                            processor, tensor_img, prompt, confidence_threshold,
+                            max_segments, segment_pick, mask_blur, mask_offset,
+                            invert_output, unload_model, background, background_color,
+                        )
+                        result_images.append(pil2tensor(img_pil))
+                        result_masks.append(mask_tensor)
+                        result_mask_images.append(mask_rgb)
+                        result_bboxes.extend(bboxes_batch)
 
-        if unload_model:
-            device_str = "cuda" if torch_device.type == "cuda" else "cpu"
-            cache_key = (model_name, device_str)
-            if cache_key in self.processor_cache:
-                del self.processor_cache[cache_key]
+            final_images = torch.cat(result_images, dim=0)
+            final_masks = torch.cat(result_masks, dim=0)
+            final_mask_images = torch.cat(result_mask_images, dim=0)
+
+            # If no segments found in Separate mode, return at least one empty result
+            if final_images.shape[0] == 0:
+                img_pil = tensor2pil(image[0])
+                empty_img, empty_mask, empty_mask_img, _ = self._empty_result(img_pil, background, background_color)
+                final_images = pil2tensor(empty_img)
+                final_masks = empty_mask
+                final_mask_images = empty_mask_img
+
+            return final_images, final_masks, final_mask_images, result_bboxes
+        finally:
+            if unload_model:
+                device_str = "cuda" if torch_device.type == "cuda" else "cpu"
+                cache_key = (model_name, device_str)
+                if cache_key in self.processor_cache:
+                    del self.processor_cache[cache_key]
             clean_vram()
-
-        final_images = torch.cat(result_images, dim=0)
-        final_masks = torch.cat(result_masks, dim=0)
-        final_mask_images = torch.cat(result_mask_images, dim=0)
-
-        # If no segments found in Separate mode, return at least one empty result
-        if final_images.shape[0] == 0:
-            img_pil = tensor2pil(image[0])
-            empty_img, empty_mask, empty_mask_img = self._empty_result(img_pil, background, background_color)
-            final_images = pil2tensor(empty_img)
-            final_masks = empty_mask
-            final_mask_images = empty_mask_img
-
-        return final_images, final_masks, final_mask_images
 
 
 NODE_CLASS_MAPPINGS = {"SAM3Segment": SAM3Segment}
