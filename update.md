@@ -60,6 +60,10 @@
 
 ### Bug Fixes & Stability
 - **Image Resize Scaling Factor**: Fixed an issue in `Image Resize` where scaling via `scale_by` squared the factor instead of applying it once (e.g. 512px with 1.2x became 736px instead of 614px). ([#211](https://github.com/1038lab/ComfyUI-RMBG/issues/211))
+- **Florence-2 Transformers 5.x Compatibility**: Fixed `'Florence2LanguageConfig' object has no attribute 'forced_bos_token_id'` error under `transformers >= 5.x` by rebuilding Florence-2 on a native local PyTorch architecture. ([#216](https://github.com/1038lab/ComfyUI-RMBG/issues/216))
+- **Node Discovery Exception Handling**: Fixed a `NameError` in `load_nodes()` error handler where undefined `module_name` crashed the entire custom node pack if an optional import failed. ([#217](https://github.com/1038lab/ComfyUI-RMBG/issues/217), [#218](https://github.com/1038lab/ComfyUI-RMBG/pull/218), [#220](https://github.com/1038lab/ComfyUI-RMBG/issues/220))
+- **SAM3 BBOX Output**: Added native `BBOXES` output support on `SAM3Segment` for direct connection to detection-to-matting workflows. ([#219](https://github.com/1038lab/ComfyUI-RMBG/issues/219))
+- **Timm Layers Deprecation**: Updated `timm.models.layers` imports to `timm.layers` across Florence-2 and SAM3 backbones to resolve deprecation warnings. ([#210](https://github.com/1038lab/ComfyUI-RMBG/issues/210))
 
 ## V3.2.0 (2026/09/30)
 ### New Features & Model Upgrades
@@ -702,23 +706,3 @@ https://github.com/user-attachments/assets/259220d3-c148-4030-93d6-c17dd5bccee1
 - Model cache is checked before each operation
 - Memory is automatically cleaned when switching models
 - Video processing supports various formats and maintains quality
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
