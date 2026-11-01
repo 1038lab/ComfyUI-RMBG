@@ -2,6 +2,42 @@
 
 A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, VRMBG-3.0, FeyNoBg, Finegrain Box Segmenter, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte, SAM, SAM2, SAM3, Florence-2, YOLOv8/YOLO11, Big-Lama, and GroundingDINO, while also incorporating real-time background replacement, instant VRAM unloading, and enhanced edge detection for improved accuracy.
 
+## Local model files
+
+Every model-loading node requires an absolute path to a weight **file** on the
+machine running ComfyUI. Models are no longer downloaded automatically or searched
+for in standard model folders. Paths can contain spaces; weight files can have
+custom names, with the format expected by the selected architecture.
+
+| Nodes | Required path inputs |
+| --- | --- |
+| RMBG, BiRefNet, Body/Face/Clothes/Fashion, LaMa, FeyNoBg, Finegrain, Florence-2, VRMBG, SDMatte, SAM3, all YOLO nodes | `model_path` |
+| Segment / SegmentV2 | `sam_model_path`, `dino_model_path`, `bert_model_path` |
+| SAM2Segment | `sam2_model_path`, `dino_model_path`, `bert_model_path` |
+
+For example, set `model_path` to `/srv/models/background/my-weights.safetensors`.
+On Windows, use an absolute Windows path such as `D:\models\my-weights.safetensors`.
+An empty value, a directory or a missing file produces an error. Select the matching
+model architecture/variant as before. YOLO's old model dropdown is replaced by
+`model_path`; its architecture is read from the `.pt` checkpoint. INSPYRENET accepts
+the Torch checkpoint format supported by `transparent-background` (`.pth`/`.pt`).
+GroundingDINO's separate BERT encoder input expects the `bert-base-uncased`
+`model.safetensors` checkpoint.
+
+Small configs, tokenizer files and model code are bundled under
+[models/resources](models/resources/README.md), independently of weight locations.
+Changing paths resets instance caches and VRMBG's temporal state. User model files
+are never modified or deleted on load failure.
+
+**VRMBG-3.0 setup:** its three gated resource files could not be downloaded without
+approved Hugging Face access. Install them using the instructions in
+[models/resources/README.md](models/resources/README.md) before running that node.
+
+**Existing workflows:** fill in the new path fields. The supplied examples contain
+empty path widgets intentionally. Older saved nodes may need to be recreated if
+ComfyUI restores their old widget order. Node identifiers and output types are
+unchanged. Historical screenshots show the previous widgets.
+
 ## News & Updates
 - **2026/10/20**: Update ComfyUI-RMBG to **v3.3.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v330-20261020) )
   ![V3 3 0_nodes](https://github.com/user-attachments/assets/97138882-e084-43cf-a6d2-8745981109f3)
@@ -203,12 +239,12 @@ https://github.com/user-attachments/assets/7faa00d3-bbe2-42b8-95ed-2c830a1ff04f
 
 - SAM2 Segmentation
   - Text-prompted segmentation with the latest SAM2 models (Tiny/Small/Base+/Large)
-  - Automatic model download on first use, with manual download option
+  - Explicit local weight file input; configs are bundled with the nodes
 
 - SAM3 Multiplex Segmentation
   - Advanced multiplex concept segmentation with native `safetensors` model weights (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
   - Merged or separate multi-segment output modes, confidence thresholds, and segment picking
-  - Automatic model download on first use, with manual download option
+  - Explicit local weight file input; configs are bundled with the nodes
 
 ![RMBG Demo](https://github.com/user-attachments/assets/f3ffa3c4-5a21-4c0c-a078-b4ffe681c4c4)
 
@@ -251,24 +287,32 @@ install requirment.txt in the ComfyUI-RMBG folder
   ./ComfyUI/python_embeded/python -m pip install -r requirements.txt
   ```
 
-### 4. Manually download the models:
-- Most models can be automatically downloaded to `ComfyUI/models/RMBG/` on first use. VRMBG-3.0 requires manual download due to official BRIA license terms.
-- Manually download the RMBG-2.0 model by visiting this [link](https://huggingface.co/1038lab/RMBG-2.0), then download the files and place them in the `/ComfyUI/models/RMBG/RMBG-2.0` folder.
-- Manually download the VRMBG-3.0 model by visiting official [briaai/VRMBG-3.0](https://huggingface.co/briaai/VRMBG-3.0), then download the files (`config.json`, `model.safetensors`, `model.py`, `vrmbg3_config.py`) and place them in the `/ComfyUI/models/RMBG/VRMBG-3.0` folder.
-- Manually download the FeyNoBg model by visiting this [link](https://huggingface.co/1038lab/FeyNobg), then download the files (`config.json`, `FeyNobg.safetensors`, `preprocessor_config.json`) and place them in the `/ComfyUI/models/RMBG/FeyNoBg` folder.
-- Manually download the Finegrain Box Segmenter model by visiting this [link](https://huggingface.co/1038lab/finegrain-box-segmenter), then download the files (`finegrain-box-segmenter.safetensors`) and place them in the `/ComfyUI/models/RMBG/finegrain-box-segmenter` folder.
-- Manually download the INSPYRENET models by visiting the [link](https://huggingface.co/1038lab/inspyrenet), then download the files and place them in the `/ComfyUI/models/RMBG/INSPYRENET` folder.
-- Manually download the BEN model by visiting the [link](https://huggingface.co/1038lab/BEN), then download the files and place them in the `/ComfyUI/models/RMBG/BEN` folder.
-- Manually download the BEN2 model by visiting the [link](https://huggingface.co/1038lab/BEN2), then download the files and place them in the `/ComfyUI/models/RMBG/BEN2` folder.
-- Manually download the BiRefNet-HR by visiting the [link](https://huggingface.co/1038lab/BiRefNet_HR), then download the files and place them in the `/ComfyUI/models/RMBG/BiRefNet-HR` folder.
-- Manually download the SAM models by visiting the [link](https://huggingface.co/1038lab/sam), then download the files and place them in the `/ComfyUI/models/SAM` folder.
-- Manually download the SAM2 models by visiting the [link](https://huggingface.co/1038lab/sam2), then download the files (e.g., `sam2.1_hiera_tiny.safetensors`, `sam2.1_hiera_small.safetensors`, `sam2.1_hiera_base_plus.safetensors`, `sam2.1_hiera_large.safetensors`) and place them in the `/ComfyUI/models/sam2` folder.
-- Manually download the SAM3 models by visiting the [link](https://huggingface.co/1038lab/sam3), then download the files (e.g., `sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`) and place them in the `/ComfyUI/models/sam3` folder.
-- Manually download the GroundingDINO models by visiting the [link](https://huggingface.co/1038lab/GroundingDINO), then download the files and place them in the `/ComfyUI/models/grounding-dino` folder.
-- Manually download the Clothes Segment model by visiting the [link](https://huggingface.co/1038lab/segformer_clothes), then download the files and place them in the `/ComfyUI/models/RMBG/segformer_clothes` folder.
-- Manually download the Fashion Segment model by visiting the [link](https://huggingface.co/1038lab/segformer_fashion), then download the files and place them in the `/ComfyUI/models/RMBG/segformer_fashion` folder.
-- Manually download BiRefNet models by visiting the [link](https://huggingface.co/1038lab/BiRefNet), then download the files and place them in the `/ComfyUI/models/RMBG/BiRefNet` folder.
-- Manually download SDMatte safetensors models by visiting the [link](https://huggingface.co/1038lab/SDMatte), then download the files and place them in the `/ComfyUI/models/RMBG/SDMatte` folder.
+### 4. Download model weights
+
+Download the desired checkpoint, store it anywhere accessible to the ComfyUI
+server, and enter its absolute file path in the node. Download sources:
+
+- [1038lab/RMBG-2.0](https://huggingface.co/1038lab/RMBG-2.0)
+- [briaai/VRMBG-3.0](https://huggingface.co/briaai/VRMBG-3.0)
+- [1038lab/FeyNobg](https://huggingface.co/1038lab/FeyNobg)
+- [1038lab/finegrain-box-segmenter](https://huggingface.co/1038lab/finegrain-box-segmenter)
+- [1038lab/inspyrenet](https://huggingface.co/1038lab/inspyrenet)
+- [1038lab/BEN](https://huggingface.co/1038lab/BEN)
+- [1038lab/BEN2](https://huggingface.co/1038lab/BEN2)
+- [1038lab/BiRefNet_HR](https://huggingface.co/1038lab/BiRefNet_HR)
+- [1038lab/sam](https://huggingface.co/1038lab/sam)
+- [1038lab/sam2](https://huggingface.co/1038lab/sam2)
+- [1038lab/sam3](https://huggingface.co/1038lab/sam3)
+- [1038lab/GroundingDINO](https://huggingface.co/1038lab/GroundingDINO)
+- [1038lab/segformer_clothes](https://huggingface.co/1038lab/segformer_clothes)
+- [1038lab/segformer_fashion](https://huggingface.co/1038lab/segformer_fashion)
+- [1038lab/BiRefNet](https://huggingface.co/1038lab/BiRefNet)
+- [1038lab/SDMatte](https://huggingface.co/1038lab/SDMatte)
+- [google-bert/bert-base-uncased](https://huggingface.co/google-bert/bert-base-uncased) (BERT safetensors for GroundingDINO)
+- [Florence-2](https://huggingface.co/microsoft/Florence-2-base) (select the matching variant in the node)
+
+Only weights are external; see the local model files section for bundled resources
+and the additional VRMBG setup requirement.
 
 ## Usage  
 ### RMBG Node
@@ -355,7 +399,7 @@ VRMBG-3.0 is a dedicated temporal video and image sequence background matting mo
 - Temporal consistency: Autoregressive state tracking conditioned on prior frame foreground features to eliminate boundary jitter.
 - Chunked video processing: Supports batch-by-batch execution on long sequences without memory fragmentation.
 - Native 1024x1024 resolution inference.
-- Manual model placement: Requires manual download of files from [briaai/VRMBG-3.0](https://huggingface.co/briaai/VRMBG-3.0) into `ComfyUI/models/RMBG/VRMBG-3.0/`.
+- Supply the VRMBG weight file through `model_path`; install its gated resources separately as described above.
 
 ## FeyNoBg
 FeyNoBg is an ultra-fine dichotomous matting model featuring a deepened Swin-L backbone (263M parameters):
@@ -404,14 +448,14 @@ SAM is a powerful model for object detection and segmentation, offering:
 SAM2 is the latest segmentation model family designed for efficient, high-quality text-prompted segmentation:
 - Multiple sizes: Tiny, Small, Base+, Large
 - Optimized inference with strong accuracy
-- Automatic download on first use; manual placement supported in `ComfyUI/models/sam2`
+- Explicit `sam2_model_path`, `dino_model_path` and `bert_model_path` inputs
 
 ## SAM3 (Segment Anything Model 3)
 SAM3 Multiplex is the state-of-the-art model for fine-grained concept grounding and segmentation:
 - Native `safetensors` format support (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
 - High-precision text-prompted segmentation with multiplex capability
 - Multi-segment isolation (Merged vs. Separate masks) and confidence controls
-- Automatic download on first use; manual placement supported in `ComfyUI/models/sam3`
+- Explicit local `model_path` input
 
 ## GroundingDINO
 GroundingDINO is a model for text-prompted object detection and segmentation, offering:
@@ -453,16 +497,18 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
   - iopath>=0.1.9
 
 ### SDMatte models (manual download)
-- Auto-download on first run to `models/RMBG/SDMatte/`
-- If network restricted, place weights manually:
-  - `models/RMBG/SDMatte/SDMatte.safetensors` (standard) or `SDMatte_plus.safetensors` (plus)
-  - Components (config files) are auto-downloaded; if needed, mirror the structure from the Hugging Face repo to `models/RMBG/SDMatte/` (`scheduler/`, `text_encoder/`, `tokenizer/`, `unet/`, `vae/`)
+
+Download `SDMatte.safetensors` or `SDMatte_plus.safetensors` and enter its full path
+in `model_path`. Select the matching variant. Scheduler, encoder, tokenizer, UNet
+and VAE configs are bundled under `models/resources/1038lab/SDMatte`.
 
 ## Troubleshooting (short)
-- 401 error when initializing GroundingDINO / missing `models/sam2`:
-  - Delete `%USERPROFILE%\.cache\huggingface\token` (and `%USERPROFILE%\.huggingface\token` if present)
-  - Ensure no `HF_TOKEN`/`HUGGINGFACE_TOKEN` env vars are set
-  - Re-run; public repos download anonymously (no login required)
+
+- Missing model path: fill in every required file path on the ComfyUI server.
+- Missing bundled resource: restore `models/resources`; VRMBG requires approved
+  access and explicit resource installation as described in its resource README.
+- Model load failure: check that the checkpoint format and architecture match.
+  A failed load never deletes the checkpoint.
 - Preview shows "Required input is missing: images":
   - Ensure image outputs are connected and upstream nodes ran successfully
 

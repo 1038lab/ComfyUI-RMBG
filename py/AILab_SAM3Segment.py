@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs
 import os
 import sys
 from pathlib import Path
@@ -6,13 +7,11 @@ from contextlib import nullcontext
 import numpy as np
 import torch
 from PIL import Image, ImageFilter
-from torch.hub import download_url_to_file
 
-import folder_paths
 import comfy.model_management
 
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
-from AILab_utils import clean_vram, process_mask, apply_background_color, get_or_download_model_file
+from AILab_utils import clean_vram, process_mask, apply_background_color
 
 # ── paths ──────────────────────────────────────────────────────────────
 CURRENT_DIR = Path(__file__).resolve().parent
@@ -101,6 +100,7 @@ from sam3.model_builder import build_sam3_image_model  # noqa: E402
 from sam3.model.sam3_image_processor import Sam3Processor  # noqa: E402
 
 
+@local_model_inputs('model_path')
 class SAM3Segment:
     @classmethod
     def INPUT_TYPES(cls):
@@ -140,7 +140,7 @@ class SAM3Segment:
         cache_key = (model_name, device_str)
         if cache_key not in self.processor_cache:
             model_info = SAM3_SAFETENSOR_MODELS[model_name]
-            ckpt_path = get_or_download_model_file(model_info["filename"], model_info["model_url"], "sam3")
+            ckpt_path = self.model_path
 
             # Build the model architecture (without loading weights)
             model = build_sam3_image_model(

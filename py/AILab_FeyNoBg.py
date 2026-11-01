@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs, resource_dir
 import os
 import torch
 import numpy as np
@@ -5,14 +6,10 @@ from PIL import Image, ImageFilter
 import cv2
 import json
 import safetensors.torch
-import folder_paths
-import comfy.model_management as mm
-from huggingface_hub import hf_hub_download
 
 from AILab_utils import get_device, clean_vram, unload_model as release_model, tensor2pil, pil2tensor
 
 device = get_device()
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
 MODEL_REPO = "1038lab/FeyNobg"
 MODEL_CACHE_NAME = "FeyNoBg"
@@ -57,6 +54,7 @@ def _refine_foreground_edges(image_bchw, masks_b1hw):
     return torch.from_numpy(np.stack(refined_fg))
 
 
+@local_model_inputs('model_path')
 class AILab_FeyNoBg:
     @classmethod
     def INPUT_TYPES(cls):
@@ -95,21 +93,10 @@ class AILab_FeyNoBg:
         except ImportError as e:
             raise RuntimeError("The 'nobg' library is required for FeyNoBg. Please run: pip install nobg") from e
 
-        local_cache_dir = os.path.join(folder_paths.models_dir, "RMBG", MODEL_CACHE_NAME)
-        os.makedirs(local_cache_dir, exist_ok=True)
-
-        for filename in REQUIRED_FILES:
-            filepath = os.path.join(local_cache_dir, filename)
-            if not os.path.exists(filepath):
-                hf_hub_download(
-                    repo_id=MODEL_REPO,
-                    filename=filename,
-                    local_dir=local_cache_dir,
-                    local_dir_use_symlinks=False
-                )
+        local_cache_dir = resource_dir(MODEL_REPO)
 
         config_path = os.path.join(local_cache_dir, "config.json")
-        weights_path = os.path.join(local_cache_dir, "FeyNobg.safetensors")
+        weights_path = self.model_path
 
         with open(config_path, "r", encoding="utf-8") as f:
             config_data = json.load(f)
@@ -120,7 +107,7 @@ class AILab_FeyNoBg:
         self.model.load_state_dict(state_dict)
         self.model.eval()
 
-        self.processor = BiRefNetImageProcessor.from_pretrained(local_cache_dir)
+        self.processor = BiRefNetImageProcessor.from_pretrained(local_cache_dir, local_files_only=True)
 
         if torch.cuda.is_available() and str(self.target_device).startswith("cuda"):
             self.model = self.model.half().to(self.target_device)

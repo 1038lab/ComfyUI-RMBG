@@ -1,0 +1,13 @@
+{
+  "repo": "1038lab/BEN2",
+  "revision": "7e1bfdf0b53c9d93d82ed2bccf240ba33b3aed38",
+  "license": null,
+  "files": [
+    {
+      "file": "BEN2.py",
+      "url": "https://huggingface.co/1038lab/BEN2/resolve/7e1bfdf0b53c9d93d82ed2bccf240ba33b3aed38/BEN2.py",
+      "sha256": "16e6132faefc112ea97072b93df40c847a33aad7c04a2e578b417e9ebb6094a7"
+    }
+  ],
+  "requires_access": []
+}

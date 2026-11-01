@@ -1,3 +1,4 @@
+from AILab_model_paths import checkpoint_state_dict, local_model_inputs, model_bundle
 # ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for background removal using various models,
 # including RMBG-2.0, INSPYRENET, BEN, BEN2 and BIREFNET-HR. It leverages deep learning techniques
@@ -20,11 +21,8 @@ import torch
 from PIL import Image
 from torchvision import transforms
 import numpy as np
-import folder_paths
 from PIL import ImageFilter
 import torch.nn.functional as F
-from huggingface_hub import hf_hub_download
-import shutil
 import sys
 import importlib.util
 import types
@@ -32,7 +30,6 @@ import types
 from AILab_utils import get_device, clean_vram, unload_model, tensor2pil, pil2tensor
 device = get_device()
 
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
 # Model configuration
 AVAILABLE_MODELS = {
@@ -89,51 +86,15 @@ class BaseModelLoader:
     def __init__(self):
         self.model = None
         self.current_model_version = None
-        self.base_cache_dir = os.path.join(folder_paths.models_dir, "RMBG")
-    
+        self.model_path = None
+
     def get_cache_dir(self, model_name):
-        cache_path = os.path.join(self.base_cache_dir, AVAILABLE_MODELS[model_name]["cache_dir"])
-        os.makedirs(cache_path, exist_ok=True)
-        return cache_path
-    
-    def check_model_cache(self, model_name):
-        model_info = AVAILABLE_MODELS[model_name]
-        cache_dir = self.get_cache_dir(model_name)
-        
-        if not os.path.exists(cache_dir):
-            return False, "Model directory not found"
-        
-        missing_files = []
-        for filename in model_info["files"].keys():
-            if not os.path.exists(os.path.join(cache_dir, model_info["files"][filename])):
-                missing_files.append(filename)
-        
-        if missing_files:
-            return False, f"Missing model files: {', '.join(missing_files)}"
-            
-        return True, "Model cache verified"
-    
-    def download_model(self, model_name):
-        model_info = AVAILABLE_MODELS[model_name]
-        cache_dir = self.get_cache_dir(model_name)
-        
-        try:
-            os.makedirs(cache_dir, exist_ok=True)
-            print(f"Downloading {model_name} model files...")
-            
-            for filename in model_info["files"].keys():
-                print(f"Downloading {filename}...")
-                hf_hub_download(
-                    repo_id=model_info["repo_id"],
-                    filename=filename,
-                    local_dir=cache_dir
-                )
-                    
-            return True, "Model files downloaded successfully"
-            
-        except Exception as e:
-            return False, f"Error downloading model files: {str(e)}"
-    
+        info = AVAILABLE_MODELS[model_name]
+        filename = next(name for name in info["files"] if name.endswith((".safetensors", ".pth")))
+        if model_name == "RMBG-2.0" and not self.model_path.lower().endswith(".safetensors"):
+            filename = "pytorch_model.bin"
+        return model_bundle(info["repo_id"], {filename: self.model_path})
+
     def clear_model(self):
         if self.model is not None:
             self.model.cpu()
@@ -151,7 +112,7 @@ class RMBGModel(BaseModelLoader):
         super().__init__()
         
     def load_model(self, model_name):
-        if self.current_model_version != model_name:
+        if self.model is None or self.current_model_version != model_name:
             self.clear_model()
 
             cache_dir = self.get_cache_dir(model_name)
@@ -197,24 +158,10 @@ class RMBGModel(BaseModelLoader):
                         attr = getattr(module, attr_name)
                         if isinstance(attr, type) and issubclass(attr, PreTrainedModel) and attr != PreTrainedModel:
                             BiRefNetConfig = getattr(config_module, "BiRefNetConfig")
-                            model_config = BiRefNetConfig()
-                            self.model = attr(model_config)
+                            model_config = BiRefNetConfig(**config)
+                            self.model = attr(config=model_config)
 
-                            weights_path = os.path.join(cache_dir, "model.safetensors")
-                            try:
-                                try:
-                                    import safetensors.torch
-                                    self.model.load_state_dict(safetensors.torch.load_file(weights_path))
-                                except ImportError:
-                                    from transformers.modeling_utils import load_state_dict
-                                    state_dict = load_state_dict(weights_path)
-                                    self.model.load_state_dict(state_dict)
-                            except Exception as load_error:
-                                pytorch_weights = os.path.join(cache_dir, "pytorch_model.bin")
-                                if os.path.exists(pytorch_weights):
-                                    self.model.load_state_dict(torch.load(pytorch_weights, map_location="cpu"))
-                                else:
-                                    raise RuntimeError(f"Failed to load weights: {str(load_error)}")
+                            self.model.load_state_dict(checkpoint_state_dict(self.model_path))
                             break
 
                     if self.model is None:
@@ -339,12 +286,12 @@ class InspyrenetModel(BaseModelLoader):
         super().__init__()
         
     def load_model(self, model_name):
-        if self.current_model_version != model_name:
+        if self.model is None or self.current_model_version != model_name:
             self.clear_model()
             
             try:
                 import transparent_background
-                self.model = transparent_background.Remover()
+                self.model = transparent_background.Remover(ckpt=self.model_path, device=str(device))
                 self.current_model_version = model_name
             except Exception as e:
                 handle_model_error(f"Failed to initialize transparent_background: {str(e)}")
@@ -375,7 +322,7 @@ class BENModel(BaseModelLoader):
         super().__init__()
         
     def load_model(self, model_name):
-        if self.current_model_version != model_name:
+        if self.model is None or self.current_model_version != model_name:
             self.clear_model()
             
             cache_dir = self.get_cache_dir(model_name)
@@ -387,7 +334,7 @@ class BENModel(BaseModelLoader):
             sys.modules[module_name] = ben_module
             spec.loader.exec_module(ben_module)
             
-            model_weights_path = os.path.join(cache_dir, "BEN_Base.pth")
+            model_weights_path = self.model_path
             self.model = ben_module.BEN_Base()
             self.model.loadcheckpoints(model_weights_path)
             
@@ -429,7 +376,7 @@ class BEN2Model(BaseModelLoader):
         super().__init__()
         
     def load_model(self, model_name):
-        if self.current_model_version != model_name:
+        if self.model is None or self.current_model_version != model_name:
             self.clear_model()
             
             try:
@@ -442,7 +389,7 @@ class BEN2Model(BaseModelLoader):
                 sys.modules[module_name] = ben2_module
                 spec.loader.exec_module(ben2_module)
                 
-                model_weights_path = os.path.join(cache_dir, "BEN2_Base.pth")
+                model_weights_path = self.model_path
                 self.model = ben2_module.BEN_Base()
                 self.model.loadcheckpoints(model_weights_path)
                 
@@ -545,6 +492,7 @@ def refine_foreground(image_bchw, masks_b1hw):
     
     return torch.from_numpy(np.stack(refined_fg))
 
+@local_model_inputs('model_path')
 class RMBG:
     def __init__(self):
         self.models = {
@@ -594,21 +542,13 @@ class RMBG:
     CATEGORY = "🧪AILab/🧽RMBG"
 
     def process_image(self, image, model, **params):
+        model_instance = self.models[model]
         try:
             processed_images = []
             processed_masks = []
             
-            model_instance = self.models[model]
-            
-            cache_status, message = model_instance.check_model_cache(model)
-            if not cache_status:
-                print(f"Cache check: {message}")
-                print("Downloading required model files...")
-                download_status, download_message = model_instance.download_model(model)
-                if not download_status:
-                    handle_model_error(download_message)
-                print("Model files downloaded successfully")
-            
+            model_instance.model_path = self.model_path
+
             model_type = AVAILABLE_MODELS[model]["type"]
             
             def _process_pair(img, mask):

@@ -1,0 +1,18 @@
+{
+  "repo": "1038lab/segformer_face",
+  "revision": "b921484d102a5095bb71472662bdba295e510744",
+  "license": null,
+  "files": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/1038lab/segformer_face/resolve/b921484d102a5095bb71472662bdba295e510744/config.json",
+      "sha256": "313bc047a0610a3ee8f7bf1b3675ec41956d1b26042988523549131b9f0dd5d4"
+    },
+    {
+      "file": "preprocessor_config.json",
+      "url": "https://huggingface.co/1038lab/segformer_face/resolve/b921484d102a5095bb71472662bdba295e510744/preprocessor_config.json",
+      "sha256": "e5a25d8fc054bf780be930e161b47d188bec1b0bf0a44fd5fdfb3f3312c0be0b"
+    }
+  ],
+  "requires_access": []
+}

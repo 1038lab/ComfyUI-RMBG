@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs, model_bundle
 # ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for background removal using BiRefNet models.
 #
@@ -16,17 +17,12 @@ import torch
 from PIL import Image, ImageFilter
 from torchvision import transforms
 import numpy as np
-import folder_paths
-from huggingface_hub import hf_hub_download
 import sys
 import importlib.util
 from safetensors.torch import load_file
 
 from AILab_utils import get_device, clean_vram, unload_model
 device = get_device()
-
-# Add model path
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
 # Model configuration
 MODEL_CONFIG = {
@@ -254,48 +250,13 @@ class BiRefNetModel:
     def __init__(self):
         self.model = None
         self.current_model_version = None
-        self.base_cache_dir = os.path.join(folder_paths.models_dir, "RMBG")
-    
+        self.model_path = None
+
     def get_cache_dir(self, model_name):
-        return os.path.join(self.base_cache_dir, MODEL_CONFIG[model_name]["cache_dir"])
-    
-    def check_model_cache(self, model_name):
-        cache_dir = self.get_cache_dir(model_name)
-        
-        if not os.path.exists(cache_dir):
-            return False, "Model directory not found"
-        
-        missing_files = []
-        for filename in MODEL_CONFIG[model_name]["files"].keys():
-            if not os.path.exists(os.path.join(cache_dir, filename)):
-                missing_files.append(filename)
-        
-        if missing_files:
-            return False, f"Missing model files: {', '.join(missing_files)}"
-            
-        return True, "Model cache verified"
-    
-    def download_model(self, model_name):
-        cache_dir = self.get_cache_dir(model_name)
-        
-        try:
-            os.makedirs(cache_dir, exist_ok=True)
-            print(f"Downloading {model_name} model files...")
-            
-            for filename in MODEL_CONFIG[model_name]["files"].keys():
-                print(f"Downloading {filename}...")
-                hf_hub_download(
-                    repo_id=MODEL_CONFIG[model_name]["repo_id"],
-                    filename=filename,
-                    local_dir=cache_dir,
-                    local_dir_use_symlinks=False
-                )
-                    
-            return True, "Model files downloaded successfully"
-            
-        except Exception as e:
-            return False, f"Error downloading model files: {str(e)}"
-    
+        info = MODEL_CONFIG[model_name]
+        filename = next(name for name in info["files"] if name.endswith(".safetensors"))
+        return model_bundle(info["repo_id"], {filename: self.model_path})
+
     def clear_model(self):
         if self.model is not None:
             self.model.cpu()
@@ -306,15 +267,14 @@ class BiRefNetModel:
             print("Model cleared from memory")
 
     def load_model(self, model_name):
-        if self.current_model_version != model_name:
+        if self.model is None or self.current_model_version != model_name:
             self.clear_model()
             
             cache_dir = self.get_cache_dir(model_name)
             model_filename = [k for k in MODEL_CONFIG[model_name]["files"].keys() if k.endswith('.py') and k != "BiRefNet_config.py"][0]
             model_path = os.path.join(cache_dir, model_filename)
             config_path = os.path.join(cache_dir, "BiRefNet_config.py")
-            weights_filename = [k for k in MODEL_CONFIG[model_name]["files"].keys() if k.endswith('.safetensors')][0]
-            weights_path = os.path.join(cache_dir, weights_filename)
+            weights_path = self.model_path
             
             try:
                 # Fix relative imports in model file
@@ -325,8 +285,6 @@ class BiRefNetModel:
                     "attn = attn.view(B_ // nW, nW, self.num_heads, N, N) + mask.unsqueeze(1).unsqueeze(0)",
                     "attn = attn.view(B_ // nW, nW, self.num_heads, N, N) + mask.to(attn.dtype).unsqueeze(1).unsqueeze(0)"
                 )
-                with open(model_path, 'w', encoding='utf-8') as f:
-                    f.write(model_content)
                 
                 # Load config and model dynamically
                 spec = importlib.util.spec_from_file_location("BiRefNet_config", config_path)
@@ -337,10 +295,10 @@ class BiRefNetModel:
                 spec = importlib.util.spec_from_file_location("birefnet", model_path)
                 model_module = importlib.util.module_from_spec(spec)
                 sys.modules["birefnet"] = model_module
-                spec.loader.exec_module(model_module)
+                exec(compile(model_content, model_path, "exec"), model_module.__dict__)
                 
                 # Initialize model
-                self.model = model_module.BiRefNet(config_module.BiRefNetConfig())
+                self.model = model_module.BiRefNet(config=config_module.BiRefNetConfig(bb_pretrained=False))
                 
                 # Load weights
                 state_dict = load_file(weights_path)
@@ -382,6 +340,7 @@ class BiRefNetModel:
         except Exception as e:
             handle_model_error(f"Error in BiRefNet processing: {str(e)}")
 
+@local_model_inputs('model_path')
 class BiRefNetRMBG:
     def __init__(self):
         self.model = BiRefNetModel()
@@ -434,14 +393,7 @@ class BiRefNetRMBG:
             params["process_res"] = process_res
             processed_images = []
             processed_masks = []
-            cache_status, message = self.model.check_model_cache(model)
-            if not cache_status:
-                print(f"Cache check: {message}")
-                print("Downloading required model files...")
-                download_status, download_message = self.model.download_model(model)
-                if not download_status:
-                    handle_model_error(download_message)
-                print("Model files downloaded successfully")
+            self.model.model_path = self.model_path
             self.model.load_model(model)
             sensitivity = params.get("sensitivity", 1.0)
             for img in image:

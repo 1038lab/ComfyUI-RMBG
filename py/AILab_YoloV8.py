@@ -1,20 +1,12 @@
-import os
+from AILab_model_paths import model_file
 from typing import Dict, List, Optional
 
 import numpy as np
 import torch
 from PIL import Image, ImageDraw
 
-import folder_paths
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
 from AILab_utils import clean_vram
-
-ULTRALYTICS_DIR = os.path.join(folder_paths.models_dir, "ultralytics")
-YOLO_LEGACY_DIR = os.path.join(folder_paths.models_dir, "yolo")
-os.makedirs(ULTRALYTICS_DIR, exist_ok=True)
-os.makedirs(YOLO_LEGACY_DIR, exist_ok=True)
-folder_paths.add_model_folder_path("ultralytics", ULTRALYTICS_DIR, is_default=True)
-folder_paths.add_model_folder_path("ultralytics", YOLO_LEGACY_DIR)
 
 DEVICE_CHOICES = ("auto", "cuda", "cpu", "mps")
 MASK_COUNT_CHOICES = ("all", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
@@ -30,21 +22,11 @@ class AILab_YoloV8Adv:
     _MODEL_CACHE: Dict[str, "YOLO"] = {}
 
     @classmethod
-    def _list_models(cls) -> List[str]:
-        files = folder_paths.get_filename_list("ultralytics")
-        return sorted(f for f in files if f.lower().endswith(".pt"))
-
-    @classmethod
     def INPUT_TYPES(cls):
-        models = cls._list_models()
-        if not models:
-            models = [f"Put .pt models into {ULTRALYTICS_DIR}"]
-        default_model = models[0]
-
         return {
             "required": {
                 "images": ("IMAGE",),
-                "yolo_model": (tuple(models), {"default": default_model, "tooltip": f"YOLOv8 weights stored under {ULTRALYTICS_DIR} (subfolders allowed)."}),
+                "model_path": ("STRING", {"default": "", "tooltip": "Absolute path to a local YOLO .pt weight file on the ComfyUI server."}),
                 "mask_count": (MASK_COUNT_CHOICES, {"default": "all", "tooltip": "Merge this many detections. 'all' merges everything (or just the selected index when specified)."}),
             },
             "optional": {
@@ -90,8 +72,8 @@ class AILab_YoloV8Adv:
             print(f"[AILab_YoloV8] Invalid classes string: {value}. Ignoring filter.")
             return None
 
-    def _resolve_model_path(self, name: str) -> str:
-        return folder_paths.get_full_path_or_raise("ultralytics", name)
+    def _resolve_model_path(self, path: str) -> str:
+        return model_file(path)
 
     def _get_model(self, model_path: str):
         model = self._MODEL_CACHE.get(model_path)
@@ -147,7 +129,7 @@ class AILab_YoloV8Adv:
     def yolo_detect(
         self,
         images,
-        yolo_model,
+        model_path,
         mask_count="all",
         conf=0.25,
         iou=0.45,
@@ -160,7 +142,7 @@ class AILab_YoloV8Adv:
         unload_model: bool = False,
     ):
         try:
-            model_path = self._resolve_model_path(yolo_model)
+            model_path = self._resolve_model_path(model_path)
             model = self._get_model(model_path)
             device_target = self._resolve_device(device)
             class_filter = self._parse_classes(classes)
@@ -244,15 +226,10 @@ class AILab_YoloV8(AILab_YoloV8Adv):
 
     @classmethod
     def INPUT_TYPES(cls):
-        models = cls._list_models()
-        if not models:
-            models = [f"Put .pt models into {ULTRALYTICS_DIR}"]
-        default_model = models[0]
-
         return {
             "required": {
                 "images": ("IMAGE",),
-                "yolo_model": (tuple(models), {"default": default_model, "tooltip": f"YOLOv8 weights stored under {ULTRALYTICS_DIR}. Advanced controls available on YOLOv8 Adv."}),
+                "model_path": ("STRING", {"default": "", "tooltip": "Absolute path to a local YOLO .pt weight file on the ComfyUI server."}),
                 "mask_count": (MASK_COUNT_CHOICES, {"default": "all", "tooltip": "Merge this many detections. 'all' merges everything (or just the selected index when specified)."}),
             },
             "optional": {
@@ -261,10 +238,10 @@ class AILab_YoloV8(AILab_YoloV8Adv):
             },
         }
 
-    def yolo_detect_simple(self, images, yolo_model, mask_count="all", select_mask_index="none", unload_model=False):
+    def yolo_detect_simple(self, images, model_path, mask_count="all", select_mask_index="none", unload_model=False):
         return super().yolo_detect(
             images=images,
-            yolo_model=yolo_model,
+            model_path=model_path,
             mask_count=mask_count,
             conf=0.25,
             iou=0.45,

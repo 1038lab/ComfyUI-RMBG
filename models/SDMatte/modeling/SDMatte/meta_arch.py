@@ -84,16 +84,16 @@ class SDMatte(nn.Module):
             sched_dir = _resolve_nested_dir(pretrained_model_name_or_path, "scheduler", "scheduler_config.json")
             tok_dir = _resolve_nested_dir(pretrained_model_name_or_path, "tokenizer", "tokenizer_config.json")
 
-            self.text_encoder = CLIPTextModel.from_pretrained(text_dir)
-            self.vae = AutoencoderKL.from_pretrained(vae_dir)
+            self.text_encoder = CLIPTextModel.from_pretrained(text_dir, local_files_only=True)
+            self.vae = AutoencoderKL.from_pretrained(vae_dir, local_files_only=True)
             self.unet = CustomUNet.from_pretrained(
-                unet_dir, low_cpu_mem_usage=True, ignore_mismatched_sizes=False
+                unet_dir, local_files_only=True, low_cpu_mem_usage=True, ignore_mismatched_sizes=False
             )
-            self.noise_scheduler = DDIMScheduler.from_pretrained(sched_dir)
-            self.tokenizer = CLIPTokenizer.from_pretrained(tok_dir)
+            self.noise_scheduler = DDIMScheduler.from_pretrained(sched_dir, local_files_only=True)
+            self.tokenizer = CLIPTokenizer.from_pretrained(tok_dir, local_files_only=True)
         else:
             text_dir = _resolve_nested_dir(pretrained_model_name_or_path, "text_encoder", "config.json")
-            text_config = CLIPTextConfig.from_pretrained(text_dir)
+            text_config = CLIPTextConfig.from_pretrained(text_dir, local_files_only=True)
             self.text_encoder = CLIPTextModel(text_config)
 
             vae_path = _resolve_nested_dir(pretrained_model_name_or_path, "vae", "config.json")
@@ -110,7 +110,7 @@ class SDMatte(nn.Module):
             self.noise_scheduler = DDIMScheduler.from_config(DDIMScheduler.load_config(scheduler_path))
 
             tok_dir = _resolve_nested_dir(pretrained_model_name_or_path, "tokenizer", "tokenizer_config.json")
-            self.tokenizer = CLIPTokenizer.from_pretrained(tok_dir)
+            self.tokenizer = CLIPTokenizer.from_pretrained(tok_dir, local_files_only=True)
 
 
     def forward(self, data):

@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs, resource_dir
 # ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for Object removal using SDMatte model.
 #
@@ -13,21 +14,17 @@
 
 import os
 import sys
-import copy
 from pathlib import Path
 
 if os.environ.get('SDMATTE_CPU_ONLY', '').lower() in ('1', 'true', 'yes'):
     os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 import torch
-import torch.nn.functional as F
 import numpy as np
 from PIL import Image, ImageFilter
-from torch.hub import download_url_to_file
 from torchvision import transforms
 from torchvision.transforms import InterpolationMode
 
-import folder_paths
 
 try:
     import comfy.model_management
@@ -55,7 +52,7 @@ except ImportError:
 # Lazy: diffusers/transformers availability is checked on first use to avoid ~3.7s import at startup
 DIFFUSERS_AVAILABLE = None  # Tri-state: None = not yet checked
 
-from AILab_utils import get_device, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color, pil2tensor, tensor2pil
+from AILab_utils import get_device, clean_vram, unload_model, process_mask, apply_background_color, pil2tensor, tensor2pil
 
 current_dir = Path(__file__).resolve().parent
 repo_root = current_dir.parent
@@ -78,47 +75,7 @@ SDMATTE_MODELS = {
 REQUIRED_COMPONENTS = ["scheduler", "text_encoder", "tokenizer", "unet", "vae"]
 
 def ensure_model_components(model_name):
-    model_info = SDMATTE_MODELS[model_name]
-    repo_id = model_info["repo_id"]
-
-    components_dir = os.path.join(folder_paths.models_dir, "RMBG", "SDMatte")
-
-    missing_components = []
-    for component in REQUIRED_COMPONENTS:
-        component_path = os.path.join(components_dir, component)
-        if not os.path.exists(component_path) or not os.listdir(component_path):
-            missing_components.append(component)
-
-    if missing_components:
-        print(f"Downloading missing SDMatte components: {missing_components}")
-        base_url = f"https://huggingface.co/{repo_id}/resolve/main"
-
-        for component in missing_components:
-            component_dir = os.path.join(components_dir, component)
-            os.makedirs(component_dir, exist_ok=True)
-
-            if component == "scheduler":
-                files = ["scheduler_config.json"]
-            elif component == "text_encoder":
-                files = ["config.json"]
-            elif component == "tokenizer":
-                files = ["merges.txt", "special_tokens_map.json", "tokenizer_config.json", "vocab.json"]
-            elif component == "unet":
-                files = ["config.json"]
-            elif component == "vae":
-                files = ["config.json"]
-
-            for file in files:
-                file_url = f"{base_url}/{component}/{file}"
-                file_path = os.path.join(component_dir, file)
-                if not os.path.exists(file_path):
-                    try:
-                        print(f"  Downloading {component}/{file}...")
-                        download_url_to_file(file_url, file_path)
-                    except Exception as e:
-                        print(f"  Warning: Failed to download {file}: {e}")
-
-    return components_dir
+    return resource_dir(SDMATTE_MODELS[model_name]["repo_id"])
 
 SDMatteCore = None
 
@@ -136,6 +93,7 @@ def _resize_mask_b1hw(mask_b1hw: torch.Tensor, size_hw=(1024, 1024)) -> torch.Te
     resize = transforms.Resize(size_hw, interpolation=InterpolationMode.BILINEAR, antialias=True)
     return resize(mask_b1hw)
 
+@local_model_inputs('model_path')
 class AILab_SDMatte:
     @classmethod
     def INPUT_TYPES(cls):
@@ -219,12 +177,8 @@ class AILab_SDMatte:
         
             model_info = SDMATTE_MODELS[model_name]
         
-            model_path = get_or_download_model_file(
-                model_info["filename"],
-                model_info["model_url"],
-                "RMBG/SDMatte"
-            )
-        
+            model_path = self.model_path
+
             pretrained_repo = ensure_model_components(model_name)
         
             sdmatte_model = SDMatteCore(
@@ -267,10 +221,8 @@ class AILab_SDMatte:
             state_dict = load_file(model_path)
             model.load_state_dict(state_dict, strict=False)
         except Exception as e:
-            if os.path.exists(model_path):
-                print(f"[SDMatte] Model file appears corrupted, deleting: {model_path}")
-                os.remove(model_path)
-            raise RuntimeError(f"Failed to load model weights. File may be corrupted. Please try again to re-download. Error: {e}")
+            raise RuntimeError(f"Failed to load SDMatte weights from {model_path}: {e}") from e
+
 
     def _apply_memory_optimizations(self, model):
         try:

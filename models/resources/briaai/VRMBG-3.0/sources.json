@@ -1,0 +1,17 @@
+{
+  "repo": "briaai/VRMBG-3.0",
+  "revision": "59716e19a6cc97f91311edea190938219c097b76",
+  "license": "other",
+  "files": [
+    {
+      "file": "README.md",
+      "url": "https://huggingface.co/briaai/VRMBG-3.0/resolve/59716e19a6cc97f91311edea190938219c097b76/README.md",
+      "sha256": "c530758cceb9266f66c3ebdd87d19bf364b4d8d69fbafa2b8bac3259942b7383"
+    }
+  ],
+  "requires_access": [
+    "config.json",
+    "model.py",
+    "vrmbg3_config.py"
+  ]
+}

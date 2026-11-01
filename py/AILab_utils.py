@@ -1,14 +1,11 @@
 # Shared utility helpers
-import os
 import gc
 from typing import Union, Optional
 import numpy as np
 import torch
 from PIL import Image, ImageFilter
-from torch.hub import download_url_to_file
 from comfy.utils import common_upscale
 import comfy.model_management as mm
-import folder_paths
 
 
 def get_device():
@@ -208,17 +205,6 @@ def apply_background_color(image: Image.Image, mask_image: Image.Image, backgrou
     return rgba_image
 
 
-def get_or_download_model_file(filename: str, url: str, dirname: str = "rmbg") -> str:
-    local_path = folder_paths.get_full_path(dirname, filename)
-    if local_path:
-        return local_path
-    folder = os.path.join(folder_paths.models_dir, dirname)
-    os.makedirs(folder, exist_ok=True)
-    local_path = os.path.join(folder, filename)
-    if not os.path.exists(local_path):
-        print(f"Downloading {filename} from {url} ...")
-        download_url_to_file(url, local_path)
-    return local_path
 
 
 def resize_image(img: Image.Image, width: int, height: int) -> Image.Image:

@@ -1,0 +1,28 @@
+{
+  "repo": "1038lab/BiRefNet",
+  "revision": "4d000788a9698c7f8d67c8c6ce2b40c768f5b909",
+  "license": null,
+  "files": [
+    {
+      "file": "BiRefNet_config.py",
+      "url": "https://huggingface.co/1038lab/BiRefNet/resolve/4d000788a9698c7f8d67c8c6ce2b40c768f5b909/BiRefNet_config.py",
+      "sha256": "e7b8c2a74f6cea6a59553d517f71d47f2c1d90e670a13416af17c25fe2f3dc52"
+    },
+    {
+      "file": "birefnet.py",
+      "url": "https://huggingface.co/1038lab/BiRefNet/resolve/4d000788a9698c7f8d67c8c6ce2b40c768f5b909/birefnet.py",
+      "sha256": "a9566611aa07a6fbb68ddb6ac8e19e62c879a428fbfc2f44efa53d233f2e302f"
+    },
+    {
+      "file": "birefnet_lite.py",
+      "url": "https://huggingface.co/1038lab/BiRefNet/resolve/4d000788a9698c7f8d67c8c6ce2b40c768f5b909/birefnet_lite.py",
+      "sha256": "1ec7679913fe0e042a108fc31a29a5ff12e84e7d91c9fff2747d45f3166ab5eb"
+    },
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/1038lab/BiRefNet/resolve/4d000788a9698c7f8d67c8c6ce2b40c768f5b909/config.json",
+      "sha256": "966a1f0165b072d2d1309756e71907750e535ba5c3790d8cd0e69713ff3a56cd"
+    }
+  ],
+  "requires_access": []
+}

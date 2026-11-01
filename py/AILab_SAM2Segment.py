@@ -1,19 +1,17 @@
+from AILab_model_paths import local_model_inputs, resource_file, groundingdino_args
 import os
 import sys
-import copy
 from pathlib import Path
 import torch
 import numpy as np
 from PIL import Image, ImageFilter
-from torch.hub import download_url_to_file
 from safetensors.torch import load_file
 
-import folder_paths
 import comfy.model_management
 
 from hydra import initialize_config_dir
 from hydra.core.global_hydra import GlobalHydra
-from AILab_utils import patch_transformers_bert, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color
+from AILab_utils import patch_transformers_bert, clean_vram, unload_model, process_mask, apply_background_color
 
 # GroundingDINO imports are deferred to first use (segment_v2) to avoid ~12.5s import at startup.
 GROUNDINGDINO_AVAILABLE = None  # Tri-state: None = not yet checked, True/False = checked
@@ -98,6 +96,7 @@ DINO_MODELS = {
     }
 }
 
+@local_model_inputs('sam2_model_path', 'dino_model_path', 'bert_model_path')
 class SAM2Segment:
     @classmethod
     def INPUT_TYPES(cls):
@@ -157,7 +156,7 @@ class SAM2Segment:
             
             print(f"Loading {model_name} in {precision.upper()} precision")
             
-            model_path = get_or_download_model_file(model_info[precision]["filename"], model_info[precision]["model_url"], "sam2")
+            model_path = self.sam2_model_path
             
             # Clear any existing Hydra instance
             if GlobalHydra().is_initialized():
@@ -235,14 +234,14 @@ class SAM2Segment:
 
             # Load GroundingDINO config and weights
             dino_info = DINO_MODELS[dino_model]
-            config_path = get_or_download_model_file(dino_info["config_filename"], dino_info["config_url"], "grounding-dino")
-            weights_path = get_or_download_model_file(dino_info["model_filename"], dino_info["model_url"], "grounding-dino")
+            config_path = resource_file("1038lab/GroundingDINO", dino_info["config_filename"])
+            weights_path = self.dino_model_path
 
             # Load and cache GroundingDINO model
             dino_key = (config_path, weights_path, device_obj)
             if dino_key not in self.dino_model_cache:
                 patch_transformers_bert()
-                args = SLConfig.fromfile(config_path)
+                args = groundingdino_args(SLConfig.fromfile(config_path), self.bert_model_path)
                 model = build_model(args)
                 checkpoint = load_file(weights_path)
                 if isinstance(checkpoint, dict) and 'model' in checkpoint:

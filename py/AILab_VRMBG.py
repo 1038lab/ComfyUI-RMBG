@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs, model_bundle
 # ComfyUI-RMBG
 # VRMBG Video Background Removal Node
 #
@@ -15,21 +16,18 @@ import torch.nn.functional as F
 import numpy as np
 from PIL import Image, ImageFilter
 from torchvision import transforms
-import folder_paths
-import comfy.model_management as mm
 
 from AILab_utils import get_device, clean_vram, unload_model as release_model, tensor2pil, pil2tensor
 
 device = get_device()
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
-MODEL_SUBDIR = os.path.join(folder_paths.models_dir, "RMBG", "VRMBG-3.0")
 REPO_URL = "https://huggingface.co/briaai/VRMBG-3.0"
 
 INFER_SIZE = 1024
 REQUIRED_FILES = ["config.json", "model.safetensors", "model.py", "vrmbg3_config.py"]
 
 
+@local_model_inputs('model_path')
 class AILab_VRMBG:
     @classmethod
     def INPUT_TYPES(cls):
@@ -60,24 +58,17 @@ class AILab_VRMBG:
         self.target_device = device
         self.normalize = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 
-    def _find_model_dir(self) -> str:
-        for base in folder_paths.get_folder_paths("rmbg"):
-            cand = os.path.join(base, "VRMBG-3.0")
-            if os.path.isdir(cand) and all(os.path.exists(os.path.join(cand, f)) for f in REQUIRED_FILES):
-                return cand
-        return MODEL_SUBDIR
-
     def _ensure_model(self):
         if self.model is not None:
             return self.model
 
-        model_dir = self._find_model_dir()
+        model_dir = model_bundle("briaai/VRMBG-3.0", {"model.safetensors": self.model_path})
         missing_files = [f for f in REQUIRED_FILES if not os.path.exists(os.path.join(model_dir, f))]
 
         if missing_files:
             raise FileNotFoundError(
                 f"[VRMBG-3.0] Model files missing: {missing_files}\n"
-                f"Automatic download has been disabled. Please download the model manually and place all required files in:\n"
+                f"Bundled resources are incomplete. Restore the repository resources; required files:\n"
                 f"  {model_dir}\n\n"
                 f"Required files:\n"
                 f"  - " + "\n  - ".join(REQUIRED_FILES) + "\n\n"

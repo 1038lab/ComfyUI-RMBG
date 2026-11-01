@@ -1,0 +1,53 @@
+{
+  "repo": "1038lab/SDMatte",
+  "revision": "22523cb0550e5f91f2de396e6cf56eb25ecd91b5",
+  "license": "openrail++",
+  "files": [
+    {
+      "file": "README.md",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/README.md",
+      "sha256": "c83c93f5b5d54fad5e60992cdd98d078c706dafbd06a5a30412a145175373f32"
+    },
+    {
+      "file": "scheduler/scheduler_config.json",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/scheduler/scheduler_config.json",
+      "sha256": "69b67209f92796b1c8fac38ebc25b546b2ae8c7a1c63d9d3e7b6eb9a60ab4b69"
+    },
+    {
+      "file": "text_encoder/config.json",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/text_encoder/config.json",
+      "sha256": "e61e3fa7566aead9a1051949c1db6336933d854900d412b92164bcdc91ad9c5f"
+    },
+    {
+      "file": "tokenizer/merges.txt",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/tokenizer/merges.txt",
+      "sha256": "0bc7695944744789d6fd6d0ab754bcbbb9e36f1c182df0a006d619ce70a1e052"
+    },
+    {
+      "file": "tokenizer/special_tokens_map.json",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/tokenizer/special_tokens_map.json",
+      "sha256": "a83f5831a70d1d21c057186d35aaa504894103d24ee905baa99bc7e83ceb70ee"
+    },
+    {
+      "file": "tokenizer/tokenizer_config.json",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/tokenizer/tokenizer_config.json",
+      "sha256": "94087ffb39b7b404b877c5d8719d4c5e3bd3cd92e89b8e7a600eaee1744e1929"
+    },
+    {
+      "file": "tokenizer/vocab.json",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/tokenizer/vocab.json",
+      "sha256": "fd67774a869730a6b27bf53d3e434e72054f2a825873c7af3bece183bb1f791e"
+    },
+    {
+      "file": "unet/config.json",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/unet/config.json",
+      "sha256": "3fe405475255f5583e1eda1ea4b5835438dd3407ab778516c4f3bb0509c8247a"
+    },
+    {
+      "file": "vae/config.json",
+      "url": "https://huggingface.co/1038lab/SDMatte/resolve/22523cb0550e5f91f2de396e6cf56eb25ecd91b5/vae/config.json",
+      "sha256": "75ecccb13ea7ada0e906072b34d673ef8b57d614f03aac57a2abb5865c499437"
+    }
+  ],
+  "requires_access": []
+}

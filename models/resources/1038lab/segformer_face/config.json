@@ -1,0 +1,111 @@
+{
+  "_name_or_path": "nvidia/mit-b3",
+  "architectures": [
+    "SegformerForSemanticSegmentation"
+  ],
+  "attention_probs_dropout_prob": 0.0,
+  "classifier_dropout_prob": 0.1,
+  "decoder_hidden_size": 768,
+  "depths": [
+    3,
+    6,
+    40,
+    3
+  ],
+  "downsampling_rates": [
+    1,
+    4,
+    8,
+    16
+  ],
+  "drop_path_rate": 0.1,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.0,
+  "hidden_sizes": [
+    64,
+    128,
+    320,
+    512
+  ],
+  "id2label": {
+    "0": "background",
+    "1": "skin",
+    "2": "nose",
+    "3": "eye_g",
+    "4": "l_eye",
+    "5": "r_eye",
+    "6": "l_brow",
+    "7": "r_brow",
+    "8": "l_ear",
+    "9": "r_ear",
+    "10": "mouth",
+    "11": "u_lip",
+    "12": "l_lip",
+    "13": "hair",
+    "14": "hat",
+    "15": "ear_r",
+    "16": "neck_l",
+    "17": "neck",
+    "18": "cloth"
+  },
+  "image_size": 224,
+  "initializer_range": 0.02,
+  "label2id": {
+    "background": 0,
+    "skin": 1,
+    "nose": 2,
+    "eye_g": 3,
+    "l_eye": 4,
+    "r_eye": 5,
+    "l_brow": 6,
+    "r_brow": 7,
+    "l_ear": 8,
+    "r_ear": 9,
+    "mouth": 10,
+    "u_lip": 11,
+    "l_lip": 12,
+    "hair": 13,
+    "hat": 14,
+    "ear_r": 15,
+    "neck_l": 16,
+    "neck": 17,
+    "cloth": 18
+  },
+  "layer_norm_eps": 1e-06,
+  "mlp_ratios": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "model_type": "segformer",
+  "num_attention_heads": [
+    1,
+    2,
+    5,
+    8
+  ],
+  "num_channels": 3,
+  "num_encoder_blocks": 4,
+  "patch_sizes": [
+    7,
+    3,
+    3,
+    3
+  ],
+  "reshape_last_stage": true,
+  "semantic_loss_ignore_index": 255,
+  "sr_ratios": [
+    8,
+    4,
+    2,
+    1
+  ],
+  "strides": [
+    4,
+    2,
+    2,
+    2
+  ],
+  "transformers_version": "4.37.0.dev0"
+}

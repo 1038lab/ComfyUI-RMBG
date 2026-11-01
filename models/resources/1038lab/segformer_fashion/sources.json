@@ -1,0 +1,18 @@
+{
+  "repo": "1038lab/segformer_fashion",
+  "revision": "e5bae2d8e3333be9f12eb6aae454c0542c1371d3",
+  "license": null,
+  "files": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/1038lab/segformer_fashion/resolve/e5bae2d8e3333be9f12eb6aae454c0542c1371d3/config.json",
+      "sha256": "06430c74add6f239c0d54c6c18f488eaa6dc50cc90a0b95f2d28811c3bedb222"
+    },
+    {
+      "file": "preprocessor_config.json",
+      "url": "https://huggingface.co/1038lab/segformer_fashion/resolve/e5bae2d8e3333be9f12eb6aae454c0542c1371d3/preprocessor_config.json",
+      "sha256": "6073ac6a37530ed2a19443d6a748f5579887b3ae48f6730073954b0b38cf3fd6"
+    }
+  ],
+  "requires_access": []
+}

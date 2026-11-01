@@ -1,0 +1,110 @@
+{
+  "_name_or_path": "nvidia/mit-b3",
+  "architectures": [
+    "SegformerForSemanticSegmentation"
+  ],
+  "attention_probs_dropout_prob": 0.0,
+  "classifier_dropout_prob": 0.1,
+  "decoder_hidden_size": 768,
+  "depths": [
+    3,
+    4,
+    18,
+    3
+  ],
+  "downsampling_rates": [
+    1,
+    4,
+    8,
+    16
+  ],
+  "drop_path_rate": 0.1,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.0,
+  "hidden_sizes": [
+    64,
+    128,
+    320,
+    512
+  ],
+  "id2label": {
+    "0": "Background",
+    "1": "Hat",
+    "10": "Right-shoe",
+    "11": "Face",
+    "12": "Left-leg",
+    "13": "Right-leg",
+    "14": "Left-arm",
+    "15": "Right-arm",
+    "16": "Bag",
+    "17": "Scarf",
+    "2": "Hair",
+    "3": "Sunglasses",
+    "4": "Upper-clothes",
+    "5": "Skirt",
+    "6": "Pants",
+    "7": "Dress",
+    "8": "Belt",
+    "9": "Left-shoe"
+  },
+  "image_size": 224,
+  "initializer_range": 0.02,
+  "label2id": {
+    "Background": "0",
+    "Bag": "16",
+    "Belt": "8",
+    "Dress": "7",
+    "Face": "11",
+    "Hair": "2",
+    "Hat": "1",
+    "Left-arm": "14",
+    "Left-leg": "12",
+    "Left-shoe": "9",
+    "Pants": "6",
+    "Right-arm": "15",
+    "Right-leg": "13",
+    "Right-shoe": "10",
+    "Scarf": "17",
+    "Skirt": "5",
+    "Sunglasses": "3",
+    "Upper-clothes": "4"
+  },
+  "layer_norm_eps": 1e-06,
+  "mlp_ratios": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "model_type": "segformer",
+  "num_attention_heads": [
+    1,
+    2,
+    5,
+    8
+  ],
+  "num_channels": 3,
+  "num_encoder_blocks": 4,
+  "patch_sizes": [
+    7,
+    3,
+    3,
+    3
+  ],
+  "reshape_last_stage": true,
+  "semantic_loss_ignore_index": 255,
+  "sr_ratios": [
+    8,
+    4,
+    2,
+    1
+  ],
+  "strides": [
+    4,
+    2,
+    2,
+    2
+  ],
+  "torch_dtype": "float32",
+  "transformers_version": "4.38.1"
+}

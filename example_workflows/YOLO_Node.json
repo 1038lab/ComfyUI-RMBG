@@ -235,7 +235,7 @@
         "Node name for S&R": "AILab_Yolo"
       },
       "widgets_values": [
-        "yolo26m-seg (Medium / 54.8MB)",
+        "",
         "all",
         "none",
         0.25,

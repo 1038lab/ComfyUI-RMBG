@@ -60,6 +60,7 @@
         }
       },
       "widgets_values": [
+        "",
         false,
         false,
         false,
@@ -150,6 +151,7 @@
         }
       },
       "widgets_values": [
+        "",
         false,
         false,
         false,
@@ -237,6 +239,9 @@
         "",
         "sam_vit_h (2.56GB)",
         "GroundingDINO_SwinT_OGC (694MB)",
+        "",
+        "",
+        "",
         0.35,
         0,
         0,
@@ -301,6 +306,7 @@
         }
       },
       "widgets_values": [
+        "",
         false,
         false,
         false,
@@ -376,6 +382,7 @@
         }
       },
       "widgets_values": [
+        "",
         false,
         false,
         false,
@@ -456,6 +463,7 @@
       },
       "widgets_values": [
         "RMBG-2.0",
+        "",
         1,
         1024,
         0,
@@ -523,6 +531,7 @@
       },
       "widgets_values": [
         "BiRefNet-general",
+        "",
         0,
         0,
         false,
@@ -1462,6 +1471,7 @@
         "SDMatte",
         "Auto",
         1024,
+        "",
         true,
         true,
         0.9,
@@ -1620,7 +1630,8 @@
       },
       "widgets_values": [
         230,
-        8
+        8,
+        ""
       ],
       "color": "#2e3e57",
       "bgcolor": "#4b5b73"
@@ -1681,6 +1692,9 @@
         "",
         "sam_vit_h (2.56GB)",
         "GroundingDINO_SwinT_OGC (694MB)",
+        "",
+        "",
+        "",
         0.35,
         0,
         0,
@@ -1819,6 +1833,9 @@
         "sam2.1_hiera_tiny",
         "GroundingDINO_SwinT_OGC (694MB)",
         "Auto",
+        "",
+        "",
+        "",
         0.35,
         0,
         0,

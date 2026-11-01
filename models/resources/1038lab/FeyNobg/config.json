@@ -1,0 +1,26 @@
+{
+  "dec_channels_inter": 64,
+  "depths": [
+    2,
+    2,
+    24,
+    2
+  ],
+  "drop_path_rate": 0.2,
+  "embed_dim": 192,
+  "image_size": 1024,
+  "mlp_ratio": 4.0,
+  "nobg_version": "0.2.0",
+  "num_heads": [
+    6,
+    12,
+    24,
+    48
+  ],
+  "num_layers": 4,
+  "patch_size": 4,
+  "use_gradient_attention": true,
+  "use_image_patch_injection": true,
+  "use_multi_scale_input": true,
+  "window_size": 12
+}

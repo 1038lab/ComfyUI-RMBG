@@ -1,0 +1,20 @@
+{
+  "_name_or_path": "ZhengPeng7/BiRefNet",
+  "architectures": [
+    "BiRefNet"
+  ],
+  "auto_map": {
+    "AutoConfig": "BiRefNet_config.BiRefNetConfig",
+    "AutoModelForImageSegmentation": "birefnet.BiRefNet"
+  },
+  "custom_pipelines": {
+    "image-segmentation": {
+      "pt": [
+        "AutoModelForImageSegmentation"
+      ],
+      "tf": [],
+      "type": "image"
+    }
+  },
+  "bb_pretrained": false
+}

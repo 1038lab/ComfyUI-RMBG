@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs, resource_file, groundingdino_args
 # ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for background removal using various models,
 # including RMBG-2.0, INSPYRENET, and BEN. It leverages deep learning techniques
@@ -13,19 +14,15 @@
 #
 # Source: https://github.com/AILab-AI/ComfyUI-RMBG
 
-import os
 import sys
 import copy
-import requests
 from urllib.parse import urlparse
 
 import torch
 import numpy as np
 from PIL import Image
 from PIL import ImageFilter
-from torch.hub import download_url_to_file
 
-import folder_paths
 import comfy.model_management
 from segment_anything import sam_model_registry, SamPredictor
 from AILab_utils import get_device, patch_transformers_bert, clean_vram, unload_model, process_mask, apply_background_color, image2mask, pil2tensor, tensor2pil
@@ -96,6 +93,7 @@ def split_image_mask(image):
         mask = torch.zeros((image.height, image.width), dtype=torch.float32, device="cpu")[None,]
     return (image_rgb, mask)
 
+@local_model_inputs('sam_model_path', 'dino_model_path', 'bert_model_path')
 class Segment:
     @classmethod
     def INPUT_TYPES(cls):
@@ -204,8 +202,7 @@ class Segment:
     def load_sam(self, model_name):
         if model_name in self._sam_model_cache:
             return self._sam_model_cache[model_name]
-        sam_checkpoint_path = self.get_local_filepath(
-            SAM_MODELS[model_name]["model_url"], "sam")
+        sam_checkpoint_path = self.sam_model_path
         model_type = SAM_MODELS[model_name]["model_type"]
         
         sam = sam_model_registry[model_type]()
@@ -229,18 +226,13 @@ class Segment:
 
         try:
             dino_model_args = self.SLConfig.fromfile(
-                self.get_local_filepath(
-                    DINO_MODELS[model_name]["config_url"],
-                    "grounding-dino"
-                )
+                resource_file("1038lab/GroundingDINO", DINO_MODELS[model_name]["config_url"].rsplit("/", 1)[-1])
             )
             patch_transformers_bert()
+            groundingdino_args(dino_model_args, self.bert_model_path)
             dino = self.build_model(dino_model_args)
             checkpoint = torch.load(
-                self.get_local_filepath(
-                    DINO_MODELS[model_name]["model_url"],
-                    "grounding-dino"
-                )
+                self.dino_model_path
             )
             dino.load_state_dict(self.clean_state_dict(checkpoint['model']), strict=False)
             device = comfy.model_management.get_torch_device()
@@ -314,27 +306,6 @@ class Segment:
         
         return create_tensor_output(image_np, masks.permute(1, 0, 2, 3).cpu().numpy(), boxes)
 
-
-    def get_local_filepath(self, url, dirname, local_file_name=None):
-        if not local_file_name:
-            local_file_name = os.path.basename(urlparse(url).path)
-
-        destination = folder_paths.get_full_path(dirname, local_file_name)
-        if destination:
-            return destination
-
-        folder = os.path.join(folder_paths.models_dir, dirname)
-        os.makedirs(folder, exist_ok=True)
-
-        destination = os.path.join(folder, local_file_name)
-        if not os.path.exists(destination):
-            try:
-                download_url_to_file(url, destination)
-            except Exception as e:
-                if os.path.exists(destination):
-                    os.remove(destination)
-                raise Exception(f'Failed to download model from {url}: {str(e)}')
-        return destination
 
 NODE_CLASS_MAPPINGS = {
     "Segment": Segment

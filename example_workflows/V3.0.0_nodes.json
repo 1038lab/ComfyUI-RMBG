@@ -197,7 +197,7 @@
         }
       },
       "widgets_values": [
-        "bbox\\face_yolov8m.pt",
+        "",
         "1",
         "3",
         0.25,
@@ -403,7 +403,7 @@
         }
       },
       "widgets_values": [
-        "bbox\\face_yolov8m.pt",
+        "",
         "all",
         "none"
       ],
@@ -565,6 +565,7 @@
       },
       "widgets_values": [
         "RMBG-2.0",
+        "",
         1,
         1024,
         0,
@@ -722,9 +723,11 @@
         }
       },
       "widgets_values": [
+        "sam3",
         "woman",
         "Separate",
         0.4,
+        "",
         0,
         0,
         0,
@@ -1349,14 +1352,16 @@
         }
       },
       "widgets_values": [
+        "girl",
         "microsoft/Florence-2-base",
-        "Phrase Grounding (text boxes)",
+        "Phrase Grounding (boxes)",
         "fp16",
         "flash_attention_2",
         true,
         "",
-        false,
-        "girl"
+        "",
+        1024,
+        false
       ],
       "color": "#222e40",
       "bgcolor": "#364254"

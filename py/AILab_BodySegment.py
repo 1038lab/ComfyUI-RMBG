@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs
 # ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for background removal using various models,
 # including RMBG-2.0, INSPYRENET, and BEN. It leverages deep learning techniques
@@ -10,26 +11,20 @@
 # Source: https://github.com/AILab-AI/ComfyUI-RMBG
 
 
-import os
 import torch
-import torch.nn as nn
 import numpy as np
 from typing import Tuple, Union
 from PIL import Image, ImageFilter
-import folder_paths
-from huggingface_hub import hf_hub_download
-import shutil
 from torchvision import transforms
 from AILab_utils import get_device, clean_vram, unload_model, pil2tensor, tensor2pil, RGB2RGBA, mask2image, image2mask
 device = get_device()
 
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
+@local_model_inputs('model_path')
 class BodySegment:
     def __init__(self):
         self.model = None
-        self.cache_dir = os.path.join(folder_paths.models_dir, "RMBG", "body_segment")
-        self.model_file = "deeplabv3p-resnet50-human.onnx"
+        self.model_path = None
     
     @classmethod
     def INPUT_TYPES(cls):
@@ -69,52 +64,18 @@ class BodySegment:
     FUNCTION = "segment_body"
     CATEGORY = "🧪AILab/🧽RMBG"
 
-    def check_model_cache(self):
-        model_path = os.path.join(self.cache_dir, self.model_file)
-        if not os.path.exists(model_path):
-            return False, "Model file not found"
-        return True, "Model cache verified"
-
     def clear_model(self):
         if self.model is not None:
             del self.model
             self.model = None
 
-    def download_model_files(self):
-        model_id = "Metal3d/deeplabv3p-resnet50-human"
-        os.makedirs(self.cache_dir, exist_ok=True)
-        print("Downloading body segmentation model...")
-        
-        try:
-            downloaded_path = hf_hub_download(
-                repo_id=model_id,
-                filename=self.model_file,
-                local_dir=self.cache_dir,
-                local_dir_use_symlinks=False
-            )
-            
-            if os.path.dirname(downloaded_path) != self.cache_dir:
-                target_path = os.path.join(self.cache_dir, self.model_file)
-                shutil.move(downloaded_path, target_path)
-            return True, "Model file downloaded successfully"
-        except Exception as e:
-            return False, f"Error downloading model file: {str(e)}"
-
     def segment_body(self, images, mask_blur=0, mask_offset=0, invert_output=False, unload_model=False, background="Alpha", background_color="#222222", **class_selections):
         try:
-            # Check and download model if needed
-            cache_status, message = self.check_model_cache()
-            if not cache_status:
-                print(f"Cache check: {message}")
-                download_status, download_message = self.download_model_files()
-                if not download_status:
-                    raise RuntimeError(download_message)
-            
             # Load model if needed
             if self.model is None:
                 import onnxruntime
                 self.model = onnxruntime.InferenceSession(
-                    os.path.join(self.cache_dir, self.model_file)
+                    self.model_path
                 )
 
             # Class mapping

@@ -1,16 +1,12 @@
-import os
-import sys
-import copy
+from AILab_model_paths import local_model_inputs, resource_file, groundingdino_args
 import torch
 import numpy as np
 from PIL import Image, ImageFilter
-from torch.hub import download_url_to_file
 
-import folder_paths
 from segment_anything import sam_model_registry, SamPredictor
 
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
-from AILab_utils import get_device, patch_transformers_bert, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color
+from AILab_utils import get_device, patch_transformers_bert, clean_vram, unload_model, process_mask, apply_background_color
 
 SAM_MODELS = {
     "sam_vit_h (2.56GB)": {
@@ -60,11 +56,6 @@ DINO_MODELS = {
     }
 }
 
-def get_groundingdino_model(device):
-    from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
-    processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-tiny")
-    model = AutoModelForZeroShotObjectDetection.from_pretrained("IDEA-Research/grounding-dino-tiny").to(device)
-    return processor, model
 
 def get_boxes(processor, model, img_pil, prompt, threshold):
     inputs = processor(images=img_pil, text=prompt, return_tensors="pt").to(model.device)
@@ -79,6 +70,7 @@ def get_boxes(processor, model, img_pil, prompt, threshold):
     )
     return results[0]["boxes"]
 
+@local_model_inputs('sam_model_path', 'dino_model_path', 'bert_model_path')
 class SegmentV2:
     @classmethod
     def INPUT_TYPES(cls):
@@ -139,12 +131,12 @@ class SegmentV2:
             img_pil = tensor2pil(image[b])
             img_np = np.array(img_pil.convert("RGB"))
             dino_info = DINO_MODELS[dino_model]
-            config_path = get_or_download_model_file(dino_info["config_filename"], dino_info["config_url"], "grounding-dino")
-            weights_path = get_or_download_model_file(dino_info["model_filename"], dino_info["model_url"], "grounding-dino")
+            config_path = resource_file("1038lab/GroundingDINO", dino_info["config_filename"])
+            weights_path = self.dino_model_path
             dino_key = (config_path, weights_path, device)
             if dino_key not in self.dino_model_cache:
                 patch_transformers_bert()
-                args = SLConfig.fromfile(config_path)
+                args = groundingdino_args(SLConfig.fromfile(config_path), self.bert_model_path)
                 model = build_model(args)
                 checkpoint = torch.load(weights_path, map_location="cpu")
                 model.load_state_dict(clean_state_dict(checkpoint["model"]), strict=False)
@@ -153,7 +145,7 @@ class SegmentV2:
                 self.dino_model_cache[dino_key] = model
             dino = self.dino_model_cache[dino_key]
             sam_info = SAM_MODELS[sam_model]
-            sam_ckpt_path = get_or_download_model_file(sam_info["filename"], sam_info["model_url"], "SAM")
+            sam_ckpt_path = self.sam_model_path
             sam_key = (sam_info["model_type"], sam_ckpt_path, device)
             if sam_key not in self.sam_model_cache:
                 try:

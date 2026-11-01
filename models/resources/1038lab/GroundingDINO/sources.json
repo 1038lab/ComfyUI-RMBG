@@ -1,0 +1,18 @@
+{
+  "repo": "1038lab/GroundingDINO",
+  "revision": "fcc0d803bc5e688e353b237b135ea77fe62e6e1e",
+  "license": null,
+  "files": [
+    {
+      "file": "GroundingDINO_SwinB.cfg.py",
+      "url": "https://huggingface.co/1038lab/GroundingDINO/resolve/fcc0d803bc5e688e353b237b135ea77fe62e6e1e/GroundingDINO_SwinB.cfg.py",
+      "sha256": "6c6a3b89b6df23fd90d247b21211dceffca3ea82d96c23859fdc7f28958e985b"
+    },
+    {
+      "file": "GroundingDINO_SwinT_OGC.cfg.py",
+      "url": "https://huggingface.co/1038lab/GroundingDINO/resolve/fcc0d803bc5e688e353b237b135ea77fe62e6e1e/GroundingDINO_SwinT_OGC.cfg.py",
+      "sha256": "172e80017f9395668a9cb5d1b8bd9d061c0e360471c6ed673c83b69bb14399f1"
+    }
+  ],
+  "requires_access": []
+}

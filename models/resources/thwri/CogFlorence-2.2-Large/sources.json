@@ -1,0 +1,23 @@
+{
+  "repo": "thwri/CogFlorence-2.2-Large",
+  "revision": "19f2c614fdfd18ba49c81d567d70d3a68313e0bb",
+  "license": "mit",
+  "files": [
+    {
+      "file": "README.md",
+      "url": "https://huggingface.co/thwri/CogFlorence-2.2-Large/resolve/19f2c614fdfd18ba49c81d567d70d3a68313e0bb/README.md",
+      "sha256": "8ca3bcbe6e0118222678d63b098fb33ee50a6424dc13ed76d443bd8c8d835a03"
+    },
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/thwri/CogFlorence-2.2-Large/resolve/19f2c614fdfd18ba49c81d567d70d3a68313e0bb/config.json",
+      "sha256": "fa081841369aa9c6e42faf5c52368d673b561e2c5f8fa03d1256e7408cb4130e"
+    },
+    {
+      "file": "tokenizer.json",
+      "url": "https://huggingface.co/thwri/CogFlorence-2.2-Large/resolve/19f2c614fdfd18ba49c81d567d70d3a68313e0bb/tokenizer.json",
+      "sha256": "d69dcdb2323e124ac4f800cb9863ddccea0d7bb11e16125e8df3bd60f2f8aeac"
+    }
+  ],
+  "requires_access": []
+}

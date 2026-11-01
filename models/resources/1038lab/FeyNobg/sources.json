@@ -1,0 +1,18 @@
+{
+  "repo": "1038lab/FeyNobg",
+  "revision": "59dd27c65909b7dcc2de8c3239712b0b997c3e41",
+  "license": null,
+  "files": [
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/1038lab/FeyNobg/resolve/59dd27c65909b7dcc2de8c3239712b0b997c3e41/config.json",
+      "sha256": "1384c6af29d5a54bde9531faac136f02654fea2a38d6bf97fa9fa51949cc6f3a"
+    },
+    {
+      "file": "preprocessor_config.json",
+      "url": "https://huggingface.co/1038lab/FeyNobg/resolve/59dd27c65909b7dcc2de8c3239712b0b997c3e41/preprocessor_config.json",
+      "sha256": "ecd4050a0e22ff56310484c3618f4361fbd63b9c4ccfd941816fa3346c2cff90"
+    }
+  ],
+  "requires_access": []
+}

@@ -1,0 +1,28 @@
+{
+  "repo": "microsoft/Florence-2-base",
+  "revision": "5ca5edf5bd017b9919c05d08aebef5e4c7ac3bac",
+  "license": "mit",
+  "files": [
+    {
+      "file": "LICENSE",
+      "url": "https://huggingface.co/microsoft/Florence-2-base/resolve/5ca5edf5bd017b9919c05d08aebef5e4c7ac3bac/LICENSE",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    {
+      "file": "README.md",
+      "url": "https://huggingface.co/microsoft/Florence-2-base/resolve/5ca5edf5bd017b9919c05d08aebef5e4c7ac3bac/README.md",
+      "sha256": "e49de5527bd39688745ce20388bf3f31fdb891abc0e6950a3f64630114769d17"
+    },
+    {
+      "file": "config.json",
+      "url": "https://huggingface.co/microsoft/Florence-2-base/resolve/5ca5edf5bd017b9919c05d08aebef5e4c7ac3bac/config.json",
+      "sha256": "c666d0fe0172d46e115e8fba6cd93cd83714575b33a73005cab8d24ce2a3aa8f"
+    },
+    {
+      "file": "tokenizer.json",
+      "url": "https://huggingface.co/microsoft/Florence-2-base/resolve/5ca5edf5bd017b9919c05d08aebef5e4c7ac3bac/tokenizer.json",
+      "sha256": "847bbeab6174d66a88898f729d52fa8d355fafe1bea101cf960dd404581df70e"
+    }
+  ],
+  "requires_access": []
+}

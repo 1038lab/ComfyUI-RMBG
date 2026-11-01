@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs, model_bundle
 # ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for fashion segmentation using segformer-b3-fashion model.
 # It leverages deep learning techniques to process images and generate masks for fashion items segmentation.
@@ -8,20 +9,15 @@
 #
 # Source: https://github.com/AILab-AI/ComfyUI-RMBG
 
-import os
 import torch
 import torch.nn as nn
 import numpy as np
 from typing import Tuple, Union
 from PIL import Image, ImageFilter
-import folder_paths
-from huggingface_hub import hf_hub_download
-import shutil
 from torchvision import transforms
 from AILab_utils import get_device, clean_vram, unload_model, pil2tensor, tensor2pil, RGB2RGBA, mask2image
 device = get_device()
 
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
 AVAILABLE_MODELS = {
     "segformer_fashion": "1038lab/segformer_fashion"
@@ -89,11 +85,12 @@ class FashionSegmentAccessories:
         selected = [name for name, selected in class_selections.items() if selected]
         return (selected,)
 
+@local_model_inputs('model_path')
 class FashionSegmentClothing:
     def __init__(self):
         self.processor = None
         self.model = None
-        self.cache_dir = os.path.join(folder_paths.models_dir, "RMBG", "segformer_fashion")
+        self.cache_dir = None
         self.class_map = {
             "Unlabelled": 0, "shirt, blouse": 1, "top, t-shirt, sweatshirt": 2, "sweater": 3,
             "cardigan": 4, "jacket": 5, "vest": 6, "pants": 7, "shorts": 8, "skirt": 9, "coat": 10,
@@ -167,75 +164,24 @@ class FashionSegmentClothing:
     FUNCTION = "segment_fashion"
     CATEGORY = "🧪AILab/🧽RMBG"
 
-    def check_model_cache(self):
-        if not os.path.exists(self.cache_dir):
-            return False, "Model directory not found"
-        
-        required_files = [
-            'config.json',
-            'model.safetensors',
-            'preprocessor_config.json'
-        ]
-        
-        missing_files = [f for f in required_files if not os.path.exists(os.path.join(self.cache_dir, f))]
-        if missing_files:
-            return False, f"Missing required model files: {', '.join(missing_files)}"
-        return True, "Model cache verified"
-
     def clear_model(self):
         if self.model is not None:
             self.model.cpu()
             del self.model
             self.model = None
-            self.processor = None
             torch.cuda.empty_cache()
-
-    def download_model_files(self):
-        model_id = AVAILABLE_MODELS["segformer_fashion"]
-        model_files = {
-            'config.json': 'config.json',
-            'model.safetensors': 'model.safetensors',
-            'preprocessor_config.json': 'preprocessor_config.json'
-        }
-        
-        os.makedirs(self.cache_dir, exist_ok=True)
-        print(f"Downloading fashion segmentation model files...")
-        
-        try:
-            for save_name, repo_path in model_files.items():
-                print(f"Downloading {save_name}...")
-                downloaded_path = hf_hub_download(
-                    repo_id=model_id,
-                    filename=repo_path,
-                    local_dir=self.cache_dir,
-                    local_dir_use_symlinks=False
-                )
-                
-                if os.path.dirname(downloaded_path) != self.cache_dir:
-                    target_path = os.path.join(self.cache_dir, save_name)
-                    shutil.move(downloaded_path, target_path)
-            return True, "Model files downloaded successfully"
-        except Exception as e:
-            return False, f"Error downloading model files: {str(e)}"
+        self.processor = None
 
     def segment_fashion(self, images, accessories_options=None, process_res=512, mask_blur=0, mask_offset=0, 
                        invert_output=False, unload_model=False, background="Alpha", background_color="#222222", **class_selections):
+        self.cache_dir = model_bundle('1038lab/segformer_fashion', {"model.safetensors": self.model_path})
         if accessories_options is None:
             accessories_options = []
         try:
-            # Check and download model
-            cache_status, message = self.check_model_cache()
-            if not cache_status:
-                print(f"Cache check: {message}")
-                download_status, download_message = self.download_model_files()
-                if not download_status:
-                    raise RuntimeError(download_message)
-            
-            # Load model if needed
-            if self.processor is None:
+            if self.processor is None or self.model is None:
                 from transformers import SegformerImageProcessor, AutoModelForSemanticSegmentation
-                self.processor = SegformerImageProcessor.from_pretrained(self.cache_dir)
-                self.model = AutoModelForSemanticSegmentation.from_pretrained(self.cache_dir)
+                self.processor = SegformerImageProcessor.from_pretrained(self.cache_dir, local_files_only=True)
+                self.model = AutoModelForSemanticSegmentation.from_pretrained(self.cache_dir, local_files_only=True)
                 self.model.eval()
                 for param in self.model.parameters():
                     param.requires_grad = False

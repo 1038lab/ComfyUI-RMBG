@@ -1,5 +1,4 @@
-import hashlib
-import io
+from AILab_model_paths import local_model_inputs, resource_dir
 import os
 import random
 from typing import Any, Dict, List, Tuple
@@ -12,15 +11,11 @@ from PIL import Image, ImageColor, ImageDraw, ImageFont
 import comfy.model_management as mm
 from comfy.utils import ProgressBar, load_torch_file
 import comfy.ops
-import folder_paths
 
 from models.florence2.config import Florence2Config
 from models.florence2.model import Florence2
 from models.florence2.processing import Processor
 
-MODEL_DIR = os.path.join(folder_paths.models_dir, "LLM")
-os.makedirs(MODEL_DIR, exist_ok=True)
-folder_paths.add_model_folder_path("LLM", MODEL_DIR)
 
 MODE_CONFIGS = {
     "Polygon Mask (prompt)": {
@@ -57,15 +52,13 @@ MODEL_CHOICES = (
 COLOR_BANK = ["blue", "orange", "green", "purple", "pink", "cyan"]
 
 
-
-
-
+@local_model_inputs('model_path')
 class AILab_Florence2:
     CATEGORY = "🧪AILab/🧽RMBG"
     RETURN_TYPES = ("IMAGE", "MASK", "JSON", "BBOX")
     RETURN_NAMES = ("IMAGE", "MASK", "DATA", "BBOXES")
     FUNCTION = "analyze"
-    MODEL_CACHE: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
+    MODEL_CACHE: Dict[Tuple[str, str, str, str], Dict[str, Any]] = {}
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -127,30 +120,18 @@ class AILab_Florence2:
             },
         }
 
-    def _ensure_weights(self, model_name: str) -> str:
-        target = os.path.join(MODEL_DIR, model_name.split("/")[-1])
-        if os.path.exists(target):
-            return target
-        from huggingface_hub import snapshot_download
-
-        snapshot_download(model_name, local_dir=target, local_dir_use_symlinks=False)
-        return target
 
     def _get_model(self, model_name: str, precision: str, attention: str) -> Dict[str, Any]:
-        key = (model_name, precision)
+        key = (model_name, self.model_path, precision, attention)
         if key in self.MODEL_CACHE:
             return self.MODEL_CACHE[key]
 
         dtype = {"fp16": torch.float16, "bf16": torch.bfloat16, "fp32": torch.float32}[precision]
-        weights = self._ensure_weights(model_name)
+        weights = resource_dir(model_name)
         offload = mm.unet_offload_device()
 
         config_path = os.path.join(weights, "config.json")
-        checkpoint_path = os.path.join(weights, "model.safetensors")
-        if not os.path.exists(checkpoint_path):
-            checkpoint_path = os.path.join(weights, "pytorch_model.bin")
-        if not os.path.exists(checkpoint_path):
-            raise FileNotFoundError(f"No model weights found at {weights}")
+        checkpoint_path = self.model_path
 
         config = Florence2Config.from_json(config_path)
         model = Florence2(config, dtype=dtype, device="cpu", operations=comfy.ops.manual_cast)

@@ -1,3 +1,4 @@
+from AILab_model_paths import local_model_inputs
 # ComfyUI-RMBG
 # This custom node for ComfyUI provides functionality for Object removal using Big-Lama model.
 #
@@ -10,15 +11,11 @@
 # Source: https://github.com/AILab-AI/ComfyUI-RMBG
 
 
-import os
 import torch
 import numpy as np
 from PIL import Image, ImageOps, ImageFilter
-import folder_paths
 from comfy.model_management import get_torch_device
 from torchvision import transforms
-from huggingface_hub import hf_hub_download
-import shutil
 import gc
 from AILab_utils import clean_vram, unload_model, tensor2pil, pil2tensor
 
@@ -44,8 +41,8 @@ def cropimage(image, w, h):
     return image.crop((0, 0, w, h))
 
 DEVICE = get_torch_device()
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
+@local_model_inputs('model_path')
 class AILab_LamaRemover:
     @classmethod
     def INPUT_TYPES(s):
@@ -76,16 +73,13 @@ class AILab_LamaRemover:
     def __init__(self):
         self.model = None
         self.device = DEVICE
-        self.cache_dir = os.path.join(folder_paths.models_dir, "RMBG", "Lama")
-        self.model_path = os.path.join(self.cache_dir, "big-lama.pt")
+        self.model_path = None
         self.to_pil = transforms.ToPILImage()
     
     def load_model(self):
         if self.model is not None:
             return
             
-        if not os.path.exists(self.model_path):
-            self.download_model()
         
         try:
             self.model = torch.jit.load(self.model_path, map_location=self.device)
@@ -96,23 +90,6 @@ class AILab_LamaRemover:
         
         self.model.eval()
         self.model.to(self.device)
-    
-    def download_model(self):
-        os.makedirs(self.cache_dir, exist_ok=True)
-        print("Downloading Big-Lama model...")
-        try:
-            downloaded_path = hf_hub_download(
-                repo_id="1038lab/Lama",
-                filename="big-lama.pt",
-                local_dir=self.cache_dir,
-                local_dir_use_symlinks=False
-            )
-            if os.path.dirname(downloaded_path) != self.cache_dir:
-                target_path = os.path.join(self.cache_dir, "big-lama.pt")
-                shutil.move(downloaded_path, target_path)
-            print("Model downloaded successfully")
-        except Exception as e:
-            raise RuntimeError(f"Error downloading Big-Lama model: {str(e)}")
 
     def process_with_model(self, img_tensor, mask_tensor):
         img_tensor = img_tensor.to(self.device)

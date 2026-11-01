@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+
+# Local operating-system files and runtime environments.
+.DS_Store
+.venv/
+venv/
+.cache/
+
+# Model weights and runtime files are supplied separately.
+weights/
+input/
+output/
+temp/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.bin
+*.gguf

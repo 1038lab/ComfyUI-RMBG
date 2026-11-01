@@ -1,19 +1,15 @@
-import os
+from AILab_model_paths import local_model_inputs
 import json
 from pathlib import Path
 from typing import Any, List, Tuple, Optional
 import torch
 import numpy as np
 from PIL import Image, ImageFilter
-from huggingface_hub import hf_hub_download
-import folder_paths
 
 from AILab_utils import get_device, clean_vram, unload_model as release_model, tensor2pil, pil2tensor
 
 device = get_device()
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
 
-MODEL_SUBDIR = os.path.join(folder_paths.models_dir, "RMBG", "finegrain-box-segmenter")
 REPO_ID = "1038lab/finegrain-box-segmenter"
 WEIGHTS_FILENAME = "finegrain-box-segmenter.safetensors"
 
@@ -74,6 +70,7 @@ def parse_bounding_boxes(bboxes_input: Any, box_str: str, img_w: int, img_h: int
     return boxes
 
 
+@local_model_inputs('model_path')
 class AILab_FinegrainBoxSegment:
     @classmethod
     def INPUT_TYPES(cls):
@@ -114,17 +111,7 @@ class AILab_FinegrainBoxSegment:
         except ImportError as e:
             raise RuntimeError("The 'refiners' library is required for Finegrain Box Segmenter. Please run: pip install refiners") from e
 
-        os.makedirs(MODEL_SUBDIR, exist_ok=True)
-        local_weights = os.path.join(MODEL_SUBDIR, WEIGHTS_FILENAME)
-
-        if not os.path.exists(local_weights):
-            print(f"[Finegrain] Downloading {WEIGHTS_FILENAME} from {REPO_ID} to {MODEL_SUBDIR}...")
-            local_weights = hf_hub_download(
-                repo_id=REPO_ID,
-                filename=WEIGHTS_FILENAME,
-                local_dir=MODEL_SUBDIR,
-                local_dir_use_symlinks=False
-            )
+        local_weights = self.model_path
 
         self.segmenter = BoxSegmenter(
             margin=margin,
