@@ -149,6 +149,24 @@ def patch_transformers_bert():
         pass
 
 
+def resolve_local_text_encoder(args):
+    text_encoder = getattr(args, "text_encoder_type", None)
+    if not text_encoder or os.path.isdir(text_encoder):
+        return args
+    local_dir = os.path.join(folder_paths.models_dir, os.path.basename(text_encoder.rstrip("/\\")))
+    if os.path.isfile(os.path.join(local_dir, "config.json")):
+        args.text_encoder_type = local_dir
+        return args
+    try:
+        from huggingface_hub import snapshot_download
+        cached = snapshot_download(repo_id=text_encoder, local_files_only=True)
+        if cached and os.path.isdir(cached):
+            args.text_encoder_type = cached
+    except Exception:
+        pass
+    return args
+
+
 def tensor2pil(image: torch.Tensor) -> Image.Image:
     return Image.fromarray(np.clip(255.0 * image.cpu().numpy().squeeze(), 0, 255).astype(np.uint8))
 

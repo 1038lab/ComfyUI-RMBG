@@ -54,9 +54,9 @@ def _resolve_device(user_choice):
     if user_choice == "CPU":
         return torch.device("cpu")
     if user_choice == "GPU":
-        if auto_device.type != "cuda":
+        if auto_device.type == "cpu":
             raise RuntimeError("GPU unavailable")
-        return torch.device("cuda")
+        return auto_device
     return auto_device
 
 
@@ -107,22 +107,22 @@ class SAM3Segment:
         model_names = list(SAM3_SAFETENSOR_MODELS.keys())
         return {
             "required": {
-                "image": ("IMAGE",),
-                "model_name": (model_names, {"default": model_names[0]}),
-                "prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "Describe the concept"}),
-                "output_mode": (["Merged", "Separate"], {"default": "Merged"}),
-                "confidence_threshold": ("FLOAT", {"default": 0.5, "min": 0.05, "max": 0.95, "step": 0.01}),
+                "image": ("IMAGE", {"tooltip": "Input image batch for SAM3 segmentation."}),
+                "model_name": (model_names, {"default": model_names[0], "tooltip": "SAM3 checkpoint to load from models/sam3."}),
+                "prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "Describe the concept", "tooltip": "Text prompt describing the target object or concept to segment."}),
+                "output_mode": (["Merged", "Separate"], {"default": "Merged", "tooltip": "Merged combines all matched masks into one; Separate outputs one item per instance."}),
+                "confidence_threshold": ("FLOAT", {"default": 0.5, "min": 0.05, "max": 0.95, "step": 0.01, "tooltip": "Minimum confidence score to keep a detected mask."}),
             },
             "optional": {
-                "max_segments": ("INT", {"default": 0, "min": 0, "max": 128, "step": 1}),
-                "segment_pick": ("INT", {"default": 0, "min": 0, "max": 128, "step": 1}),
-                "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1}),
-                "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1}),
-                "device": (["Auto", "CPU", "GPU"], {"default": "Auto"}),
-                "invert_output": ("BOOLEAN", {"default": False}),
-                "unload_model": ("BOOLEAN", {"default": False}),
-                "background": (["Alpha", "Color"], {"default": "Alpha"}),
-                "background_color": ("COLORCODE", {"default": "#222222"}),
+                "max_segments": ("INT", {"default": 0, "min": 0, "max": 128, "step": 1, "tooltip": "Maximum number of segments to keep (0 = unlimited)."}),
+                "segment_pick": ("INT", {"default": 0, "min": 0, "max": 128, "step": 1, "tooltip": "1-based index of a specific segment to select (0 = keep all)."}),
+                "mask_blur": ("INT", {"default": 0, "min": 0, "max": 64, "step": 1, "tooltip": "Apply Gaussian blur to mask edges."}),
+                "mask_offset": ("INT", {"default": 0, "min": -64, "max": 64, "step": 1, "tooltip": "Expand or shrink mask boundary (positive = expand, negative = shrink)."}),
+                "device": (["Auto", "CPU", "GPU"], {"default": "Auto", "tooltip": "Execution device (Auto uses ComfyUI selected device)."}),
+                "invert_output": ("BOOLEAN", {"default": False, "tooltip": "Invert the generated mask output."}),
+                "unload_model": ("BOOLEAN", {"default": False, "tooltip": "Unload SAM3 model from VRAM after execution."}),
+                "background": (["Alpha", "Color"], {"default": "Alpha", "tooltip": "Background type for the cutout IMAGE output."}),
+                "background_color": ("COLORCODE", {"default": "#222222", "tooltip": "Background fill color when background is set to Color."}),
             },
         }
 
@@ -136,29 +136,26 @@ class SAM3Segment:
 
     def _load_processor(self, model_name, device_choice):
         torch_device = _resolve_device(device_choice)
-        device_str = "cuda" if torch_device.type == "cuda" else "cpu"
+        device_str = torch_device.type
         cache_key = (model_name, device_str)
         if cache_key not in self.processor_cache:
             model_info = SAM3_SAFETENSOR_MODELS[model_name]
             ckpt_path = get_or_download_model_file(model_info["filename"], model_info["model_url"], "sam3")
 
-            # Build the model architecture (without loading weights)
             model = build_sam3_image_model(
                 bpe_path=SAM3_BPE_PATH,
-                device="cpu",  # load on CPU first, move later
+                device="cpu",
                 eval_mode=True,
-                checkpoint_path=None,  # we load manually below
+                checkpoint_path=None,
                 load_from_HF=False,
                 enable_segmentation=True,
                 enable_inst_interactivity=False,
             )
 
-            # Load safetensors checkpoint
             _load_safetensors_checkpoint(model, ckpt_path)
 
-            # Move to target device (keep FP32 — autocast handles precision at inference)
-            if device_str == "cuda":
-                model = model.cuda()
+            if device_str != "cpu":
+                model = model.to(torch_device)
             model.eval()
 
             processor = Sam3Processor(model, device=device_str)

@@ -28,7 +28,7 @@ from torch.hub import download_url_to_file
 import folder_paths
 import comfy.model_management
 from segment_anything import sam_model_registry, SamPredictor
-from AILab_utils import get_device, patch_transformers_bert, clean_vram, unload_model, process_mask, apply_background_color, image2mask, pil2tensor, tensor2pil
+from AILab_utils import get_device, patch_transformers_bert, resolve_local_text_encoder, clean_vram, unload_model, process_mask, apply_background_color, image2mask, pil2tensor, tensor2pil
 
 SAM_MODELS = {
     "sam_vit_h (2.56GB)": {
@@ -110,10 +110,10 @@ class Segment:
         }
         return {
             "required": {
-                "image": ("IMAGE",),
+                "image": ("IMAGE", {"tooltip": "Input image batch for Grounded-SAM segmentation."}),
                 "prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "Object to segment", "tooltip": tooltips["prompt"]}),
-                "sam_model": (list(SAM_MODELS.keys()),),
-                "dino_model": (list(DINO_MODELS.keys()),),
+                "sam_model": (list(SAM_MODELS.keys()), {"tooltip": "Select the SAM model variant."}),
+                "dino_model": (list(DINO_MODELS.keys()), {"tooltip": "Select the GroundingDINO detection model."}),
             },
             "optional": {
                 "threshold": ("FLOAT", {"default": 0.30, "min": 0.05, "max": 0.95, "step": 0.01, "tooltip": tooltips["threshold"]}),
@@ -235,6 +235,7 @@ class Segment:
                 )
             )
             patch_transformers_bert()
+            resolve_local_text_encoder(dino_model_args)
             dino = self.build_model(dino_model_args)
             checkpoint = torch.load(
                 self.get_local_filepath(

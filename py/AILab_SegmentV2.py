@@ -10,7 +10,7 @@ import folder_paths
 from segment_anything import sam_model_registry, SamPredictor
 
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
-from AILab_utils import get_device, patch_transformers_bert, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color
+from AILab_utils import get_device, patch_transformers_bert, resolve_local_text_encoder, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color
 
 SAM_MODELS = {
     "sam_vit_h (2.56GB)": {
@@ -93,10 +93,10 @@ class SegmentV2:
         }
         return {
             "required": {
-                "image": ("IMAGE",),
+                "image": ("IMAGE", {"tooltip": "Input image batch for Grounded-SAM V2 segmentation."}),
                 "prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "Object to segment", "tooltip": tooltips["prompt"]}),
-                "sam_model": (list(SAM_MODELS.keys()),),
-                "dino_model": (list(DINO_MODELS.keys()),),
+                "sam_model": (list(SAM_MODELS.keys()), {"tooltip": "Select the SAM model variant."}),
+                "dino_model": (list(DINO_MODELS.keys()), {"tooltip": "Select the GroundingDINO detection model."}),
             },
             "optional": {
                 "threshold": ("FLOAT", {"default": 0.35, "min": 0.05, "max": 0.95, "step": 0.01, "tooltip": tooltips["threshold"]}),
@@ -145,6 +145,7 @@ class SegmentV2:
             if dino_key not in self.dino_model_cache:
                 patch_transformers_bert()
                 args = SLConfig.fromfile(config_path)
+                resolve_local_text_encoder(args)
                 model = build_model(args)
                 checkpoint = torch.load(weights_path, map_location="cpu")
                 model.load_state_dict(clean_state_dict(checkpoint["model"]), strict=False)

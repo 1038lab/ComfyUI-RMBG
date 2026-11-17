@@ -112,7 +112,10 @@ class AILab_FinegrainBoxSegment:
         try:
             from refiners.solutions import BoxSegmenter
         except ImportError as e:
-            raise RuntimeError("The 'refiners' library is required for Finegrain Box Segmenter. Please run: pip install refiners") from e
+            raise RuntimeError(
+                "Finegrain Box Segmenter requires the GitHub version of 'refiners' (PyPI 0.4.0 does not include refiners.solutions). "
+                "Please run: pip install --upgrade git+https://github.com/finegrain-ai/refiners.git"
+            ) from e
 
         os.makedirs(MODEL_SUBDIR, exist_ok=True)
         local_weights = os.path.join(MODEL_SUBDIR, WEIGHTS_FILENAME)

@@ -156,7 +156,7 @@ class AILab_SDMatte:
         }
         return {
             "required": {
-                "image": ("IMAGE",),
+                "image": ("IMAGE", {"tooltip": tooltips["image"]}),
                 "model": (list(SDMATTE_MODELS.keys()), {"default": "SDMatte", "tooltip": tooltips["model"]}),
                 "device": (["Auto", "CPU", "GPU"], {"default": "Auto", "tooltip": tooltips["device"]}),
                 "process_res": ("INT", {"default": 1024, "min": 256, "max": 2048, "step": 8, "tooltip": tooltips["process_res"]}),

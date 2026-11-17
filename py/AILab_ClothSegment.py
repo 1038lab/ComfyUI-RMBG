@@ -49,7 +49,7 @@ class ClothesSegment:
         
         return {
             "required": {
-                "images": ("IMAGE",),
+                "images": ("IMAGE", {"tooltip": "Input image batch for clothing segmentation."}),
             },
             "optional": {
                 **{cls_name: ("BOOLEAN", {"default": False}) 

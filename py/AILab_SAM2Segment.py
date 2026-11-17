@@ -13,7 +13,7 @@ import comfy.model_management
 
 from hydra import initialize_config_dir
 from hydra.core.global_hydra import GlobalHydra
-from AILab_utils import patch_transformers_bert, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color
+from AILab_utils import patch_transformers_bert, resolve_local_text_encoder, clean_vram, unload_model, get_or_download_model_file, process_mask, apply_background_color
 
 # GroundingDINO imports are deferred to first use (segment_v2) to avoid ~12.5s import at startup.
 GROUNDINGDINO_AVAILABLE = None  # Tri-state: None = not yet checked, True/False = checked
@@ -115,7 +115,7 @@ class SAM2Segment:
         }
         return {
             "required": {
-                "image": ("IMAGE",),
+                "image": ("IMAGE", {"tooltip": "Input image batch for SAM2 segmentation."}),
                 "prompt": ("STRING", {"default": "", "multiline": True, "placeholder": "Object to segment", "tooltip": tooltips["prompt"]}),
                 "sam2_model": (list(SAM2_MODELS.keys()), {"default": "sam2.1_hiera_tiny", "tooltip": tooltips["sam2_model"]}),
                 "dino_model": (list(DINO_MODELS.keys()), {"default": "GroundingDINO_SwinT_OGC (694MB)", "tooltip": tooltips["dino_model"]}),
@@ -243,6 +243,7 @@ class SAM2Segment:
             if dino_key not in self.dino_model_cache:
                 patch_transformers_bert()
                 args = SLConfig.fromfile(config_path)
+                resolve_local_text_encoder(args)
                 model = build_model(args)
                 checkpoint = load_file(weights_path)
                 if isinstance(checkpoint, dict) and 'model' in checkpoint:

@@ -82,42 +82,32 @@ class AILab_PreviewBase:
         self.output_dir = folder_paths.get_temp_directory()
         self.type = "temp"
         self.prefix_append = ""
-
-    def get_unique_filename(self, filename_prefix):
-        os.makedirs(self.output_dir, exist_ok=True)
-        filename = filename_prefix + self.prefix_append
-        counter = 1
-        while True:
-            file = f"{filename}_{counter:04d}.png"
-            full_path = os.path.join(self.output_dir, file)
-            if not os.path.exists(full_path):
-                return full_path, file
-            counter += 1
+        self.compress_level = 1
 
     def save_image(self, image, filename_prefix, prompt=None, extra_pnginfo=None):
         results = []
-      
         try:
+            prefix = filename_prefix + self.prefix_append
             if isinstance(image, torch.Tensor):
-                if len(image.shape) == 4:  # Batch of images
-                    for i in range(image.shape[0]):
-                        full_output_path, file = self.get_unique_filename(filename_prefix)
-                        img = Image.fromarray(np.clip(image[i].cpu().numpy() * 255, 0, 255).astype(np.uint8))
-                        img.save(full_output_path)        
-                        results.append({"filename": file, "subfolder": "", "type": self.type})
-                else:
-                    full_output_path, file = self.get_unique_filename(filename_prefix)
-                    img = Image.fromarray(np.clip(image.cpu().numpy() * 255, 0, 255).astype(np.uint8))
-                    img.save(full_output_path)
-                    results.append({"filename": file, "subfolder": "", "type": self.type})
+                images = image.unsqueeze(0) if image.ndim == 3 else image
+                full_output_folder, filename, counter, subfolder, _ = folder_paths.get_save_image_path(
+                    prefix, self.output_dir, images[0].shape[1], images[0].shape[0]
+                )
+                for batch_number, img_tensor in enumerate(images):
+                    img = Image.fromarray(np.clip(img_tensor.cpu().numpy() * 255, 0, 255).astype(np.uint8))
+                    file = f"{filename.replace('%batch_num%', str(batch_number))}_{counter:05}_.png"
+                    img.save(os.path.join(full_output_folder, file), compress_level=self.compress_level)
+                    results.append({"filename": file, "subfolder": subfolder, "type": self.type})
+                    counter += 1
             else:
-                full_output_path, file = self.get_unique_filename(filename_prefix)
-                image.save(full_output_path)
-                results.append({"filename": file, "subfolder": "", "type": self.type})
+                full_output_folder, filename, counter, subfolder, _ = folder_paths.get_save_image_path(
+                    prefix, self.output_dir, image.width, image.height
+                )
+                file = f"{filename}_{counter:05}_.png"
+                image.save(os.path.join(full_output_folder, file), compress_level=self.compress_level)
+                results.append({"filename": file, "subfolder": subfolder, "type": self.type})
 
-            return {
-                "ui": {"images": results},
-            }
+            return {"ui": {"images": results}}
         except Exception as e:
             print(f"Error saving image: {e}")
             return {"ui": {}}

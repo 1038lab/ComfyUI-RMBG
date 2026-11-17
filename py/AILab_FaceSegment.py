@@ -51,7 +51,7 @@ class FaceSegment:
         }
         return {
             "required": {
-                "images": ("IMAGE",),
+                "images": ("IMAGE", {"tooltip": "Input image batch for face parsing segmentation."}),
             },
             "optional": {
                 **{cls_name: ("BOOLEAN", {"default": False}) 

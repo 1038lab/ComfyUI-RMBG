@@ -146,10 +146,10 @@ class FashionSegmentClothing:
         
         return {
             "required": {
-                "images": ("IMAGE",),
+                "images": ("IMAGE", {"tooltip": "Input image batch for fashion and clothing segmentation."}),
             },
             "optional": {
-                "accessories_options": ("ACCESSORIES_OPTIONS",),
+                "accessories_options": ("ACCESSORIES_OPTIONS", {"tooltip": tooltips["accessories_options"]}),
                 **{cls_name: ("BOOLEAN", {"default": False,}) 
                    for cls_name in clothing_classes},
                 "process_res": ("INT", {"default": 512, "min": 128, "max": 2048, "step": 32, "tooltip": tooltips["process_res"]}),

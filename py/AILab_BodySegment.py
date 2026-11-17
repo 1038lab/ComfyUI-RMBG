@@ -50,7 +50,7 @@ class BodySegment:
         
         return {
             "required": {
-                "images": ("IMAGE",),
+                "images": ("IMAGE", {"tooltip": "Input image batch for body part segmentation."}),
             },
             "optional": {
                 **{cls_name: ("BOOLEAN", {"default": False}) 

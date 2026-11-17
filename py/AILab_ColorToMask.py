@@ -42,9 +42,9 @@ class AILab_ColorToMask:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                 "images": ("IMAGE",),
-                 "invert": ("BOOLEAN", {"default": False}),
-                 "threshold": ("INT", {"default": 10, "min": 0, "max": 255, "step": 1}),
+                 "images": ("IMAGE", {"tooltip": "Input image batch to convert matching colors into a mask."}),
+                 "invert": ("BOOLEAN", {"default": False, "tooltip": "Invert the generated mask output."}),
+                 "threshold": ("INT", {"default": 10, "min": 0, "max": 255, "step": 1, "tooltip": "Color distance tolerance (0 = exact match, higher = broader range)."}),
                  "mask_color": ("COLORCODE", {"default": "#FFFFFF", "tooltip": "Mask color (hex)"}),
         },
     }

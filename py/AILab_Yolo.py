@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw
 
 import folder_paths
 from AILab_ImageMaskTools import pil2tensor, tensor2pil
-from AILab_utils import apply_background_color, clean_vram, get_or_download_model_file, process_mask
+from AILab_utils import apply_background_color, clean_vram, get_device, get_or_download_model_file, process_mask
 
 ULTRALYTICS_DIR = os.path.join(folder_paths.models_dir, "ultralytics")
 YOLO_LEGACY_DIR = os.path.join(folder_paths.models_dir, "yolo")
@@ -95,7 +95,7 @@ class AILab_Yolo:
 
         return {
             "required": {
-                "images": ("IMAGE",),
+                "images": ("IMAGE", {"tooltip": "Input image batch for YOLO segmentation."}),
                 "model": (tuple(models), {"default": default_model, "tooltip": f"YOLO model weights stored under {ULTRALYTICS_DIR} (presets download automatically)."}),
                 "mask_count": (MASK_COUNT_CHOICES, {"default": "all", "tooltip": "Merge this many detections. 'all' merges everything (or just the selected index when specified)."}),
             },
@@ -121,11 +121,7 @@ class AILab_Yolo:
     def _resolve_device(self, requested: str) -> str:
         if requested != "auto":
             return requested
-        if torch.cuda.is_available():
-            return "cuda"
-        if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-            return "mps"
-        return "cpu"
+        return get_device().type
 
     def _parse_classes(self, value: str) -> Optional[List[int]]:
         if not value or not value.strip():
