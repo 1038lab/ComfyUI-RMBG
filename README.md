@@ -3,6 +3,7 @@
 A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, VRMBG-3.0, FeyNoBg, Finegrain Box Segmenter, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte, SAM, SAM2, SAM3, Florence-2, YOLOv8/YOLO11, Big-Lama, and GroundingDINO, while also incorporating real-time background replacement, instant VRAM unloading, and enhanced edge detection for improved accuracy.
 
 ## News & Updates
+- **2026/11/16**: Update ComfyUI-RMBG to **v3.3.1** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v331-20261116) )
 - **2026/10/20**: Update ComfyUI-RMBG to **v3.3.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v330-20261020) )
   ![V3 3 0_nodes](https://github.com/user-attachments/assets/97138882-e084-43cf-a6d2-8745981109f3)
   - Added Canvas (RMBG) interactive multi-layer compositing studio with aspect-locked transform gizmos and dynamic layer slots.
