@@ -1,4 +1,156 @@
 {
+  "AILab_VRMBG": {
+    "display_name": "VRMBG 视频去背",
+    "inputs": {
+      "images": {
+        "name": "连续帧图像",
+        "tooltip": "用于时序连续去背景的连续视频帧批次 [B, H, W, C]。"
+      },
+      "reset_state": {
+        "name": "重置时序状态",
+        "tooltip": "在当前批次开始时重置时序先验缓存。独立视频段保持开启，分块连续输入时设为关闭。"
+      },
+      "mask_blur": {
+        "name": "遮罩羽化",
+        "tooltip": "用于柔化遮罩边缘的高斯模糊半径。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "以像素为单位向外扩展（正数）或向内收缩（负数）遮罩边界。"
+      },
+      "invert_output": {
+        "name": "反转遮罩",
+        "tooltip": "反转输出的遮罩。"
+      },
+      "background": {
+        "name": "背景模式",
+        "tooltip": "输出格式：Alpha 输出透明通道，Color 填充纯色背景。"
+      },
+      "background_color": {
+        "name": "背景颜色",
+        "tooltip": "当背景模式设为 Color 时使用的十六进制颜色值。"
+      },
+      "unload_model": {
+        "name": "释放显存",
+        "tooltip": "执行完成后立即卸载模型权重以释放显存。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像"
+      },
+      "1": {
+        "name": "遮罩"
+      },
+      "2": {
+        "name": "遮罩预览图"
+      }
+    }
+  },
+  "AILab_FeyNoBg": {
+    "display_name": "FeyNoBg 极致发丝抠图",
+    "inputs": {
+      "image": {
+        "name": "图像",
+        "tooltip": "需要去除背景的输入图像批次。"
+      },
+      "refine_foreground": {
+        "name": "细化前景边缘",
+        "tooltip": "亚像素级前景边缘细化，大幅优化微细毛发与半透明边界。"
+      },
+      "mask_blur": {
+        "name": "遮罩羽化",
+        "tooltip": "用于柔化遮罩边缘的高斯模糊半径。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "以像素为单位向外扩展（正数）或向内收缩（负数）遮罩边界。"
+      },
+      "invert_output": {
+        "name": "反转遮罩",
+        "tooltip": "反转输出的遮罩。"
+      },
+      "background": {
+        "name": "背景模式",
+        "tooltip": "输出格式：Alpha 输出透明图，Color 填充纯色背景。"
+      },
+      "background_color": {
+        "name": "背景颜色",
+        "tooltip": "当背景模式设为 Color 时使用的十六进制颜色值。"
+      },
+      "unload_model": {
+        "name": "释放显存",
+        "tooltip": "执行完成后立即卸载模型权重以释放显存。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像"
+      },
+      "1": {
+        "name": "遮罩"
+      },
+      "2": {
+        "name": "遮罩预览图"
+      }
+    }
+  },
+  "AILab_FinegrainBoxSegment": {
+    "display_name": "Finegrain 框选高清抠图",
+    "inputs": {
+      "image": {
+        "name": "图像",
+        "tooltip": "输入图像批次，原生 1024px 高清抠图。"
+      },
+      "bboxes": {
+        "name": "检测框",
+        "tooltip": "来自 Florence-2 或 YOLO 目标检测节点的边界框输入。"
+      },
+      "box_coordinates": {
+        "name": "手动坐标框",
+        "tooltip": "手动输入的提示边界框，支持像素坐标或归一化坐标 'x1, y1, x2, y2'。"
+      },
+      "margin": {
+        "name": "安全边距",
+        "tooltip": "检测框周边的安全预留边距比例。"
+      },
+      "mask_blur": {
+        "name": "遮罩羽化",
+        "tooltip": "柔化遮罩边缘半径（0 为禁用）。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "以像素为单位向外扩展或向内收缩遮罩边缘。"
+      },
+      "invert_output": {
+        "name": "反转遮罩",
+        "tooltip": "反转输出的遮罩。"
+      },
+      "background": {
+        "name": "背景模式",
+        "tooltip": "背景类型：Alpha（透明输出）或 Color（填充纯色背景）。"
+      },
+      "background_color": {
+        "name": "背景颜色",
+        "tooltip": "选择 Color 背景模式时的十六进制背景颜色。"
+      },
+      "unload_model": {
+        "name": "释放显存",
+        "tooltip": "执行完成后立即卸载模型权重以释放显存。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像"
+      },
+      "1": {
+        "name": "遮罩"
+      },
+      "2": {
+        "name": "遮罩预览图"
+      }
+    }
+  },
   "RMBG": {
     "display_name": "去除背景 (RMBG)",
     "inputs": {
@@ -695,6 +847,12 @@
       },
       "unload_model": {
         "name": "释放模型显存"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -714,6 +872,12 @@
       },
       "unload_model": {
         "name": "释放模型显存"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -730,6 +894,12 @@
       },
       "unload_model": {
         "name": "释放模型显存"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -764,6 +934,9 @@
       },
       "megapixels": {
         "name": "百万像素"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -792,6 +965,9 @@
       },
       "unload_model": {
         "name": "释放模型显存"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -838,6 +1014,9 @@
       },
       "megapixels": {
         "name": "百万像素"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1562,6 +1741,9 @@
       },
       "2": {
         "name": "遮罩图像"
+      },
+      "3": {
+        "name": "检测框"
       }
     }
   },
@@ -1672,6 +1854,15 @@
       "model_name": {
         "name": "模型名称"
       },
+      "model": {
+        "name": "模型"
+      },
+      "mode": {
+        "name": "模式"
+      },
+      "prompt": {
+        "name": "提示词"
+      },
       "attention": {
         "name": "Attention"
       },
@@ -1687,16 +1878,50 @@
     },
     "outputs": {
       "0": {
-        "name": "标注图像"
+        "name": "图像"
       },
       "1": {
         "name": "遮罩"
       },
       "2": {
-        "name": "遮罩列表"
+        "name": "JSON 数据"
       },
       "3": {
-        "name": "JSON 数据"
+        "name": "边界框列表"
+      }
+    }
+  },
+  "AILab_Florence2Caption": {
+    "display_name": "Florence2 图生文 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "图像"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "mode": {
+        "name": "模式"
+      },
+      "precision": {
+        "name": "精度"
+      },
+      "attention": {
+        "name": "Attention"
+      },
+      "max_new_tokens": {
+        "name": "最大生成Token数"
+      },
+      "unload_model": {
+        "name": "释放模型显存"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "文本"
+      },
+      "1": {
+        "name": "数据"
       }
     }
   },
@@ -1931,6 +2156,9 @@
       },
       "sort_method": {
         "name": "排序方式"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1962,6 +2190,12 @@
       },
       "mask": {
         "name": "遮罩"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -2146,6 +2380,203 @@
       },
       "2": {
         "name": "遮罩列表"
+      }
+    }
+  },
+  "AILab_Canvas": {
+    "display_name": "图层画布 (RMBG)",
+    "description": "高性能交互式图层画布，支持无损 PyTorch GPU 硬件仿射合成与透明通道融合。",
+    "inputs": {
+      "canvas_width": {
+        "name": "画布宽度",
+        "tooltip": "未启用自适应背景尺寸时，画布的目标像素宽度。"
+      },
+      "canvas_height": {
+        "name": "画布高度",
+        "tooltip": "未启用自适应背景尺寸时，画布的目标像素高度。"
+      },
+      "bg_color": {
+        "name": "底色模式",
+        "tooltip": "未连接背景图或透明留白区域时的画布基底颜色。"
+      },
+      "custom_bg_hex": {
+        "name": "自定义十六进制色值",
+        "tooltip": "底色模式设为 custom 时生效的十六进制颜色代码（如 #FF5500）。"
+      },
+      "fit_background_size": {
+        "name": "自适应背景尺寸",
+        "tooltip": "开启后，若连接了背景图像，画布尺寸将自动匹配该背景图像的物理宽高。"
+      },
+      "background": {
+        "name": "背景图像",
+        "tooltip": "可选的底层背景图像输入（支持 RGB 或 RGBA）。"
+      },
+      "layer_1": {
+        "name": "layer_1",
+        "tooltip": "首个前景图层图像输入（原生支持 RGB 或 RGBA）。"
+      },
+      "background_color": {
+        "name": "背景颜色",
+        "tooltip": "选择背景颜色（使用拾色器）。"
+      },
+      "canvas_state": {
+        "name": "画布状态",
+        "tooltip": "包含图层坐标、缩放、旋转与顺序的序列化 JSON 布局。"
+      },
+      "Background": {
+        "name": "背景图像",
+        "tooltip": "可选的背景图像输入。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像",
+        "tooltip": "合成后的最终输出图像。"
+      },
+      "1": {
+        "name": "遮罩",
+        "tooltip": "合成后的图层 Alpha 整体遮罩。"
+      }
+    }
+  },
+  "AILab_ImageCompareView": {
+    "display_name": "图像对比 (RMBG) 🔀🖼️",
+    "description": "实时交互式图像对比节点，直接在节点画布上渲染左右/上下擦除、叠加、差异图、并排或高亮差异对比。",
+    "inputs": {
+      "image1": {
+        "name": "图像 1",
+        "tooltip": "用于对比的第一张图像（如原图）。"
+      },
+      "image2": {
+        "name": "图像 2",
+        "tooltip": "用于对比的第二张图像（如处理后图像）。"
+      },
+      "mode": {
+        "name": "对比模式",
+        "tooltip": "选择对比显示模式。",
+        "options": {
+          "left_right": "左右对比",
+          "up_down": "上下对比",
+          "overlay": "叠加透明",
+          "difference": "像素差异",
+          "side_by_side": "并排显示",
+          "highlight_diff": "高亮差异"
+        }
+      },
+      "match_size": {
+        "name": "匹配尺寸",
+        "tooltip": "开启后，当两张图像尺寸不一致时将图像 2 缩放至图像 1 尺寸。"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像",
+        "tooltip": "当前对比模式合成的输出图像"
+      },
+      "1": {
+        "name": "差异遮罩",
+        "tooltip": "两张输入图像之间的绝对差异遮罩"
+      }
+    }
+  },
+  "AILab_Yolo": {
+    "display_name": "YOLO 分割 (RMBG)",
+    "description": "",
+    "inputs": {
+      "images": {
+        "name": "图像",
+        "tooltip": "用于 YOLO 实例分割的输入图像批次。"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "mask_count": {
+        "name": "遮罩数量",
+        "tooltip": "合并的检测结果数量；'all' 表示合并全部（或仅保留所选索引）。"
+      },
+      "select_mask_index": {
+        "name": "选择遮罩索引",
+        "tooltip": "从 1 开始的遮罩索引；设为 'none' 表示从第一个检测开始。"
+      },
+      "conf": {
+        "name": "置信度",
+        "tooltip": "传递给 Ultralytics 的置信度阈值。"
+      },
+      "iou": {
+        "name": "IoU 阈值",
+        "tooltip": "NMS 非极大值抑制使用的 IoU 阈值。"
+      },
+      "classes": {
+        "name": "类别过滤",
+        "tooltip": "逗号分隔的类别 ID 或范围（如 0,2,5-7）；留空保留所有类别。"
+      },
+      "annotation_mode": {
+        "name": "标注模式",
+        "tooltip": "ANNOTATED_IMAGE 输出的标注显示模式。"
+      },
+      "background": {
+        "name": "背景类型",
+        "tooltip": "抠图 IMAGE 输出的背景类型。"
+      },
+      "background_color": {
+        "name": "背景颜色",
+        "tooltip": "当背景设为 Color 时的填充颜色。"
+      },
+      "mask_blur": {
+        "name": "遮罩模糊",
+        "tooltip": "对遮罩边缘应用高斯模糊。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "扩展或收缩遮罩边界（正值扩展，负值收缩）。"
+      },
+      "invert_output": {
+        "name": "反转输出",
+        "tooltip": "反转生成的遮罩输出。"
+      },
+      "device": {
+        "name": "运行设备",
+        "tooltip": "强制指定运行设备，或自动检测 CUDA → MPS → CPU。"
+      },
+      "max_det": {
+        "name": "最大检测数",
+        "tooltip": "每张图像的最大检测目标数。"
+      },
+      "retina_masks": {
+        "name": "高分辨率遮罩",
+        "tooltip": "启用 Ultralytics 高分辨率遮罩（retina_masks）。"
+      },
+      "agnostic_nms": {
+        "name": "类别无关 NMS",
+        "tooltip": "启用跨类别的非极大值抑制。"
+      },
+      "unload_model": {
+        "name": "卸载模型",
+        "tooltip": "执行完成后从显存中卸载模型。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像",
+        "tooltip": "输出图像"
+      },
+      "1": {
+        "name": "标注图像",
+        "tooltip": "带检测标注的输出图像"
+      },
+      "2": {
+        "name": "遮罩",
+        "tooltip": "输出遮罩"
+      },
+      "3": {
+        "name": "遮罩列表",
+        "tooltip": "输出遮罩列表"
       }
     }
   }

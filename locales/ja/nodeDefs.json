@@ -652,6 +652,12 @@
       },
       "unload_model": {
         "name": "モデルアンロード"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -714,6 +720,12 @@
       },
       "unload_model": {
         "name": "モデルアンロード"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -730,6 +742,12 @@
       },
       "unload_model": {
         "name": "モデルアンロード"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -767,6 +785,9 @@
       },
       "megapixels": {
         "name": "メガピクセル"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -795,6 +816,9 @@
       },
       "unload_model": {
         "name": "モデルアンロード"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -841,6 +865,9 @@
       },
       "megapixels": {
         "name": "メガピクセル"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1565,6 +1592,9 @@
       },
       "2": {
         "name": "マスク画像"
+      },
+      "3": {
+        "name": "検出枠"
       }
     }
   },
@@ -1686,6 +1716,15 @@
       },
       "text_prompt": {
         "name": "Text Prompt"
+      },
+      "model": {
+        "name": "モデル"
+      },
+      "mode": {
+        "name": "モード"
+      },
+      "prompt": {
+        "name": "プロンプト"
       }
     },
     "outputs": {
@@ -1934,6 +1973,9 @@
       },
       "sort_method": {
         "name": "ソート順"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1965,6 +2007,12 @@
       },
       "mask": {
         "name": "マスク"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -2149,6 +2197,385 @@
       },
       "2": {
         "name": "マスクリスト"
+      }
+    }
+  },
+  "AILab_VRMBG": {
+    "display_name": "VRMBG 動画背景除去",
+    "inputs": {
+      "images": {
+        "name": "連続フレーム画像",
+        "tooltip": "時間的一貫性を持つ動画フレームバッチ [B, H, W, C]。"
+      },
+      "reset_state": {
+        "name": "時系列状態リセット",
+        "tooltip": "現在のバッチの開始時に時系列状態をリセットします。"
+      },
+      "mask_blur": {
+        "name": "マスクブラー",
+        "tooltip": "マスクエッジをぼかす半径。"
+      },
+      "mask_offset": {
+        "name": "マスクオフセット",
+        "tooltip": "マスク境界を拡大または縮小します。"
+      },
+      "invert_output": {
+        "name": "マスク反転",
+        "tooltip": "マスクを反転します。"
+      },
+      "background": {
+        "name": "背景モード",
+        "tooltip": "Alpha（透明）または Color（単色背景）。"
+      },
+      "background_color": {
+        "name": "背景色",
+        "tooltip": "背景色のカラーコード。"
+      },
+      "unload_model": {
+        "name": "モデル解放",
+        "tooltip": "実行後にVRAMを解放します。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像"
+      },
+      "1": {
+        "name": "マスク"
+      },
+      "2": {
+        "name": "マスク画像"
+      }
+    }
+  },
+  "AILab_FeyNoBg": {
+    "display_name": "FeyNoBg 極細髪の毛マッティング",
+    "inputs": {
+      "image": {
+        "name": "画像",
+        "tooltip": "背景除去を行う画像。"
+      },
+      "refine_foreground": {
+        "name": "前景エッジ精緻化",
+        "tooltip": "細い髪の毛や半透明エッジを改善します。"
+      },
+      "mask_blur": {
+        "name": "マスクブラー",
+        "tooltip": "マスクエッジをぼかす半径。"
+      },
+      "mask_offset": {
+        "name": "マスクオフセット",
+        "tooltip": "マスク境界を拡大または縮小します。"
+      },
+      "invert_output": {
+        "name": "マスク反転",
+        "tooltip": "マスクを反転します。"
+      },
+      "background": {
+        "name": "背景モード",
+        "tooltip": "Alpha（透明）または Color。"
+      },
+      "background_color": {
+        "name": "背景色",
+        "tooltip": "背景色。"
+      },
+      "unload_model": {
+        "name": "モデル解放",
+        "tooltip": "VRAMを解放します。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像"
+      },
+      "1": {
+        "name": "マスク"
+      },
+      "2": {
+        "name": "マスク画像"
+      }
+    }
+  },
+  "AILab_FinegrainBoxSegment": {
+    "display_name": "Finegrain ボックス高精細背景除去",
+    "inputs": {
+      "image": {
+        "name": "画像",
+        "tooltip": "1024pxの高精細切り抜き。"
+      },
+      "bboxes": {
+        "name": "バウンディングボックス",
+        "tooltip": "Florence-2 または YOLO からの枠。"
+      },
+      "box_coordinates": {
+        "name": "座標入力",
+        "tooltip": "手動座標指定。"
+      },
+      "margin": {
+        "name": "マージン",
+        "tooltip": "余白比率。"
+      },
+      "mask_blur": {
+        "name": "マスクブラー",
+        "tooltip": "ブラー半径。"
+      },
+      "mask_offset": {
+        "name": "マスクオフセット",
+        "tooltip": "オフセット。"
+      },
+      "invert_output": {
+        "name": "マスク反転",
+        "tooltip": "マスク反転。"
+      },
+      "background": {
+        "name": "背景モード",
+        "tooltip": "背景モード。"
+      },
+      "background_color": {
+        "name": "背景色",
+        "tooltip": "背景色。"
+      },
+      "unload_model": {
+        "name": "モデル解放",
+        "tooltip": "VRAM解放。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像"
+      },
+      "1": {
+        "name": "マスク"
+      },
+      "2": {
+        "name": "マスク画像"
+      }
+    }
+  },
+  "AILab_ImageCompareView": {
+    "display_name": "画像比較 (RMBG) 🔀🖼️",
+    "description": "ノードキャンバス上で2枚の画像をリアルタイムに比較表示します（ワイプ、オーバーレイ、差分、並列表示など）。",
+    "inputs": {
+      "image1": {
+        "name": "画像 1",
+        "tooltip": "比較する1枚目の画像（元画像など）。"
+      },
+      "image2": {
+        "name": "画像 2",
+        "tooltip": "比較する2枚目の画像（処理後の画像など）。"
+      },
+      "mode": {
+        "name": "比較モード",
+        "tooltip": "比較表示モードを選択します。",
+        "options": {
+          "left_right": "左右比較",
+          "up_down": "上下比較",
+          "overlay": "オーバーレイ",
+          "difference": "差分",
+          "side_by_side": "並べて表示",
+          "highlight_diff": "差分ハイライト"
+        }
+      },
+      "match_size": {
+        "name": "サイズを合わせる",
+        "tooltip": "有効時、画像サイズが異なると画像2を画像1のサイズにリサイズします。"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像",
+        "tooltip": "現在の比較モードで合成された出力画像"
+      },
+      "1": {
+        "name": "差分マスク",
+        "tooltip": "2つの入力画像間の絶対差分マスク"
+      }
+    }
+  },
+  "AILab_Yolo": {
+    "display_name": "YOLO セグメンテーション (RMBG)",
+    "description": "",
+    "inputs": {
+      "images": {
+        "name": "画像",
+        "tooltip": "YOLO セグメンテーション用の入力画像バッチ。"
+      },
+      "model": {
+        "name": "モデル"
+      },
+      "mask_count": {
+        "name": "マスク数",
+        "tooltip": "統合する検出数。'all' ですべて統合します。"
+      },
+      "select_mask_index": {
+        "name": "マスクインデックス選択",
+        "tooltip": "1始まりのマスクインデックス。'none' で先頭から使用します。"
+      },
+      "conf": {
+        "name": "信頼度",
+        "tooltip": "Ultralytics に渡す信頼度しきい値。"
+      },
+      "iou": {
+        "name": "IoU しきい値",
+        "tooltip": "NMS 時に使用する IoU しきい値。"
+      },
+      "classes": {
+        "name": "クラス指定",
+        "tooltip": "カンマ区切りのクラス ID または範囲（例: 0,2,5-7）。空ですべて対象。"
+      },
+      "annotation_mode": {
+        "name": "注釈モード",
+        "tooltip": "ANNOTATED_IMAGE 出力の表示モード。"
+      },
+      "background": {
+        "name": "背景",
+        "tooltip": "切り抜き IMAGE 出力の背景タイプ。"
+      },
+      "background_color": {
+        "name": "背景色",
+        "tooltip": "背景が Color の場合の塗りつぶし色。"
+      },
+      "mask_blur": {
+        "name": "マスクぼかし",
+        "tooltip": "マスク境界にガウスぼかしを適用します。"
+      },
+      "mask_offset": {
+        "name": "マスクオフセット",
+        "tooltip": "マスク境界を拡張または収縮します（正=拡張、負=収縮）。"
+      },
+      "invert_output": {
+        "name": "出力を反転",
+        "tooltip": "生成されたマスク出力を反転します。"
+      },
+      "device": {
+        "name": "デバイス",
+        "tooltip": "実行デバイスを指定、または CUDA → MPS → CPU を自動選択。"
+      },
+      "max_det": {
+        "name": "最大検出数",
+        "tooltip": "1画像あたりの最大検出数。"
+      },
+      "retina_masks": {
+        "name": "高解像度マスク",
+        "tooltip": "Ultralytics の高解像度マスク（retina_masks）を使用します。"
+      },
+      "agnostic_nms": {
+        "name": "クラス非依存 NMS",
+        "tooltip": "クラス非依存の NMS を有効にします。"
+      },
+      "unload_model": {
+        "name": "モデルをアンロード",
+        "tooltip": "実行後に VRAM からモデルを解放します。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像",
+        "tooltip": "出力画像"
+      },
+      "1": {
+        "name": "注釈付き画像",
+        "tooltip": "検出結果を描画した出力画像"
+      },
+      "2": {
+        "name": "マスク",
+        "tooltip": "出力マスク"
+      },
+      "3": {
+        "name": "マスクリスト",
+        "tooltip": "出力マスクリスト"
+      }
+    }
+  },
+  "AILab_Florence2Caption": {
+    "display_name": "Florence2 画像キャプション (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "画像"
+      },
+      "model": {
+        "name": "モデル"
+      },
+      "mode": {
+        "name": "モード"
+      },
+      "precision": {
+        "name": "精度"
+      },
+      "attention": {
+        "name": "アテンション"
+      },
+      "max_new_tokens": {
+        "name": "最大生成トークン数"
+      },
+      "unload_model": {
+        "name": "モデルをアンロード"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "テキスト"
+      },
+      "1": {
+        "name": "データ"
+      }
+    }
+  },
+  "AILab_Canvas": {
+    "display_name": "レイヤーキャンバス (RMBG)",
+    "description": "移動・拡大縮小・回転・透明度調整に対応したインタラクティブなマルチレイヤー合成キャンバス。",
+    "inputs": {
+      "canvas_width": {
+        "name": "キャンバス幅"
+      },
+      "canvas_height": {
+        "name": "キャンバス高さ"
+      },
+      "background_color": {
+        "name": "背景色",
+        "tooltip": "背景色を選択します（カラーピッカー使用）。"
+      },
+      "canvas_state": {
+        "name": "キャンバス状態",
+        "tooltip": "レイヤーの座標・スケール・回転・順序を含む JSON レイアウト。"
+      },
+      "Background": {
+        "name": "背景画像",
+        "tooltip": "オプションの背景画像入力。"
+      },
+      "bg_color": {
+        "name": "背景色モード",
+        "tooltip": "背景画像が未接続または余白がある場合のキャンバス基底色。"
+      },
+      "custom_bg_hex": {
+        "name": "カスタム HEX",
+        "tooltip": "bg_color が custom のときに適用される HEX カラーコード（例: #FF5500）。"
+      },
+      "fit_background_size": {
+        "name": "背景サイズに合わせる",
+        "tooltip": "背景画像が接続されている場合、キャンバスサイズを自動的に一致させます。"
+      },
+      "background": {
+        "name": "背景画像",
+        "tooltip": "オプションの背景画像入力（RGB または RGBA）。"
+      },
+      "layer_1": {
+        "name": "layer_1",
+        "tooltip": "最初の前景レイヤー画像入力（RGB または RGBA）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像"
+      },
+      "1": {
+        "name": "マスク"
       }
     }
   }

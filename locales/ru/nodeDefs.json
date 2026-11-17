@@ -695,6 +695,12 @@
       },
       "unload_model": {
         "name": "Выгрузить модель"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -714,6 +720,12 @@
       },
       "unload_model": {
         "name": "Выгрузить модель"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -730,6 +742,12 @@
       },
       "unload_model": {
         "name": "Выгрузить модель"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -764,6 +782,9 @@
       },
       "megapixels": {
         "name": "Мегапиксели"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -792,6 +813,9 @@
       },
       "unload_model": {
         "name": "Выгрузить модель"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -838,6 +862,9 @@
       },
       "megapixels": {
         "name": "Мегапиксели"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1562,6 +1589,9 @@
       },
       "2": {
         "name": "ИЗОБРАЖЕНИЕ МАСКИ"
+      },
+      "3": {
+        "name": "BBOXES"
       }
     }
   },
@@ -1683,6 +1713,15 @@
       },
       "text_prompt": {
         "name": "Text Prompt"
+      },
+      "model": {
+        "name": "Модель"
+      },
+      "mode": {
+        "name": "Режим"
+      },
+      "prompt": {
+        "name": "Промпт"
       }
     },
     "outputs": {
@@ -1931,6 +1970,9 @@
       },
       "sort_method": {
         "name": "Метод сортировки"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1962,6 +2004,12 @@
       },
       "mask": {
         "name": "Маска"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -2146,6 +2194,385 @@
       },
       "2": {
         "name": "СПИСОК МАСОК"
+      }
+    }
+  },
+  "AILab_VRMBG": {
+    "display_name": "VRMBG Удаление фона видео",
+    "inputs": {
+      "images": {
+        "name": "Кадры видео",
+        "tooltip": "Последовательность видеокадров [B, H, W, C]."
+      },
+      "reset_state": {
+        "name": "Сброс состояния",
+        "tooltip": "Сброс временного состояния."
+      },
+      "mask_blur": {
+        "name": "Размытие маски",
+        "tooltip": "Радиус размытия маски."
+      },
+      "mask_offset": {
+        "name": "Смещение маски",
+        "tooltip": "Расширение или сужение маски."
+      },
+      "invert_output": {
+        "name": "Инвертировать маску",
+        "tooltip": "Инвертировать маску."
+      },
+      "background": {
+        "name": "Фон",
+        "tooltip": "Alpha или Color."
+      },
+      "background_color": {
+        "name": "Цвет фона",
+        "tooltip": "Цвет фона."
+      },
+      "unload_model": {
+        "name": "Выгрузить модель",
+        "tooltip": "Освободить видеопамять."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "МАСКА-ИЗОБРАЖЕНИЕ"
+      }
+    }
+  },
+  "AILab_FeyNoBg": {
+    "display_name": "FeyNoBg Ультратонкий маттинг",
+    "inputs": {
+      "image": {
+        "name": "Изображение",
+        "tooltip": "Изображение для удаления фона."
+      },
+      "refine_foreground": {
+        "name": "Уточнение краев",
+        "tooltip": "Улучшение тонких волос и полупрозрачных деталей."
+      },
+      "mask_blur": {
+        "name": "Размытие маски",
+        "tooltip": "Радиус размытия."
+      },
+      "mask_offset": {
+        "name": "Смещение маски",
+        "tooltip": "Смещение."
+      },
+      "invert_output": {
+        "name": "Инвертировать маску",
+        "tooltip": "Инвертировать."
+      },
+      "background": {
+        "name": "Фон",
+        "tooltip": "Alpha или Color."
+      },
+      "background_color": {
+        "name": "Цвет фона",
+        "tooltip": "Цвет фона."
+      },
+      "unload_model": {
+        "name": "Выгрузить модель",
+        "tooltip": "Освободить память."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "МАСКА-ИЗОБРАЖЕНИЕ"
+      }
+    }
+  },
+  "AILab_FinegrainBoxSegment": {
+    "display_name": "Finegrain Высокоточное сегментирование",
+    "inputs": {
+      "image": {
+        "name": "Изображение",
+        "tooltip": "Сегментация 1024px."
+      },
+      "bboxes": {
+        "name": "Рамки обнаружения",
+        "tooltip": "Рамки от Florence-2 или YOLO."
+      },
+      "box_coordinates": {
+        "name": "Координаты вручную",
+        "tooltip": "Ручной ввод координат."
+      },
+      "margin": {
+        "name": "Отступ",
+        "tooltip": "Запас отступа."
+      },
+      "mask_blur": {
+        "name": "Размытие маски",
+        "tooltip": "Размытие."
+      },
+      "mask_offset": {
+        "name": "Смещение маски",
+        "tooltip": "Смещение."
+      },
+      "invert_output": {
+        "name": "Инвертировать маску",
+        "tooltip": "Инвертировать."
+      },
+      "background": {
+        "name": "Фон",
+        "tooltip": "Alpha или Color."
+      },
+      "background_color": {
+        "name": "Цвет фона",
+        "tooltip": "Цвет фона."
+      },
+      "unload_model": {
+        "name": "Выгрузить модель",
+        "tooltip": "Освободить видеопамять."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ИЗОБРАЖЕНИЕ"
+      },
+      "1": {
+        "name": "МАСКА"
+      },
+      "2": {
+        "name": "МАСКА-ИЗОБРАЖЕНИЕ"
+      }
+    }
+  },
+  "AILab_ImageCompareView": {
+    "display_name": "Сравнение изображений (RMBG) 🔀🖼️",
+    "description": "Интерактивное сравнение двух изображений в реальном времени прямо на холсте узла.",
+    "inputs": {
+      "image1": {
+        "name": "Изображение 1",
+        "tooltip": "Первое изображение для сравнения (например, оригинал)."
+      },
+      "image2": {
+        "name": "Изображение 2",
+        "tooltip": "Второе изображение для сравнения (например, результат)."
+      },
+      "mode": {
+        "name": "Режим",
+        "tooltip": "Режим отображения сравнения.",
+        "options": {
+          "left_right": "Слева / Справа",
+          "up_down": "Сверху / Снизу",
+          "overlay": "Наложение",
+          "difference": "Разница",
+          "side_by_side": "Рядом",
+          "highlight_diff": "Подсветка разницы"
+        }
+      },
+      "match_size": {
+        "name": "Совместить размер",
+        "tooltip": "Если включено, масштабирует изображение 2 под размер изображения 1."
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Итоговое изображение для текущего режима"
+      },
+      "1": {
+        "name": "DIFF_MASK",
+        "tooltip": "Маска абсолютной разницы между двумя изображениями"
+      }
+    }
+  },
+  "AILab_Yolo": {
+    "display_name": "YOLO Сегментация (RMBG)",
+    "description": "",
+    "inputs": {
+      "images": {
+        "name": "Изображения",
+        "tooltip": "Пакет входных изображений для сегментации YOLO."
+      },
+      "model": {
+        "name": "Модель"
+      },
+      "mask_count": {
+        "name": "Число масок",
+        "tooltip": "Сколько обнаружений объединить ('all' объединяет все)."
+      },
+      "select_mask_index": {
+        "name": "Индекс маски",
+        "tooltip": "Индекс (с 1) первой маски; 'none' — с первого обнаружения."
+      },
+      "conf": {
+        "name": "Уверенность",
+        "tooltip": "Порог уверенности для Ultralytics."
+      },
+      "iou": {
+        "name": "IoU",
+        "tooltip": "Порог IoU для NMS."
+      },
+      "classes": {
+        "name": "Классы",
+        "tooltip": "Список или диапазоны ID классов через запятую (напр. 0,2,5-7); пусто — все."
+      },
+      "annotation_mode": {
+        "name": "Режим аннотации",
+        "tooltip": "Режим отображения для выхода ANNOTATED_IMAGE."
+      },
+      "background": {
+        "name": "Фон",
+        "tooltip": "Тип фона для вырезанного изображения."
+      },
+      "background_color": {
+        "name": "Цвет фона",
+        "tooltip": "Цвет заливки, если фон установлен в Color."
+      },
+      "mask_blur": {
+        "name": "Размытие маски",
+        "tooltip": "Размытие по Гауссу для краёв маски."
+      },
+      "mask_offset": {
+        "name": "Смещение маски",
+        "tooltip": "Расширение или сжатие границ маски."
+      },
+      "invert_output": {
+        "name": "Инвертировать вывод",
+        "tooltip": "Инвертировать выходную маску."
+      },
+      "device": {
+        "name": "Устройство",
+        "tooltip": "Указать устройство или автовыбор CUDA → MPS → CPU."
+      },
+      "max_det": {
+        "name": "Макс. объектов",
+        "tooltip": "Максимальное число обнаружений на изображение."
+      },
+      "retina_masks": {
+        "name": "Маски высокого разр.",
+        "tooltip": "Использовать маски высокого разрешения (retina_masks)."
+      },
+      "agnostic_nms": {
+        "name": "Классонезависимый NMS",
+        "tooltip": "Включить NMS без учёта классов."
+      },
+      "unload_model": {
+        "name": "Выгрузить модель",
+        "tooltip": "Выгрузить модель из VRAM после выполнения."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Выходное изображение"
+      },
+      "1": {
+        "name": "ANNOTATED_IMAGE",
+        "tooltip": "Изображение с разметкой"
+      },
+      "2": {
+        "name": "MASK",
+        "tooltip": "Выходная маска"
+      },
+      "3": {
+        "name": "MASK_LIST",
+        "tooltip": "Список масок"
+      }
+    }
+  },
+  "AILab_Florence2Caption": {
+    "display_name": "Florence2 Описание изображения (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Изображение"
+      },
+      "model": {
+        "name": "Модель"
+      },
+      "mode": {
+        "name": "Режим"
+      },
+      "precision": {
+        "name": "Точность"
+      },
+      "attention": {
+        "name": "Внимание"
+      },
+      "max_new_tokens": {
+        "name": "Макс. токенов"
+      },
+      "unload_model": {
+        "name": "Выгрузить модель"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "TEXT"
+      },
+      "1": {
+        "name": "DATA"
+      }
+    }
+  },
+  "AILab_Canvas": {
+    "display_name": "Холст слоёв (RMBG)",
+    "description": "Интерактивный многослойный холст с трансформациями и альфа-композитингом.",
+    "inputs": {
+      "canvas_width": {
+        "name": "Ширина холста"
+      },
+      "canvas_height": {
+        "name": "Высота холста"
+      },
+      "background_color": {
+        "name": "Цвет фона",
+        "tooltip": "Выберите цвет фона (палитра)."
+      },
+      "canvas_state": {
+        "name": "Состояние холста",
+        "tooltip": "Сериализованный JSON-макет с координатами, масштабом и порядком слоёв."
+      },
+      "Background": {
+        "name": "Фон",
+        "tooltip": "Необязательное фоновое изображение."
+      },
+      "bg_color": {
+        "name": "Режим цвета фона",
+        "tooltip": "Базовый цвет холста, если фоновое изображение не подключено."
+      },
+      "custom_bg_hex": {
+        "name": "Свой HEX-цвет",
+        "tooltip": "HEX-код цвета (напр. #FF5500), применяемый при bg_color = custom."
+      },
+      "fit_background_size": {
+        "name": "Под размер фона",
+        "tooltip": "Автоматически подгоняет размер холста под подключённое фоновое изображение."
+      },
+      "background": {
+        "name": "Фон",
+        "tooltip": "Необязательное фоновое изображение (RGB или RGBA)."
+      },
+      "layer_1": {
+        "name": "layer_1",
+        "tooltip": "Первое изображение слоя (RGB или RGBA)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASK"
       }
     }
   }

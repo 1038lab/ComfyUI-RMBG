@@ -695,6 +695,12 @@
       },
       "unload_model": {
         "name": "Décharger le modèle"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -714,6 +720,12 @@
       },
       "unload_model": {
         "name": "Décharger le modèle"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -730,6 +742,12 @@
       },
       "unload_model": {
         "name": "Décharger le modèle"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -764,6 +782,9 @@
       },
       "megapixels": {
         "name": "Mégapixels"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -792,6 +813,9 @@
       },
       "unload_model": {
         "name": "Décharger le modèle"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -838,6 +862,9 @@
       },
       "megapixels": {
         "name": "Mégapixels"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1562,6 +1589,9 @@
       },
       "2": {
         "name": "IMAGE DU MASQUE"
+      },
+      "3": {
+        "name": "BBOXES"
       }
     }
   },
@@ -1683,6 +1713,15 @@
       },
       "text_prompt": {
         "name": "Text Prompt"
+      },
+      "model": {
+        "name": "Modèle"
+      },
+      "mode": {
+        "name": "Mode"
+      },
+      "prompt": {
+        "name": "Invite"
       }
     },
     "outputs": {
@@ -1931,6 +1970,9 @@
       },
       "sort_method": {
         "name": "Méthode de tri"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1962,6 +2004,12 @@
       },
       "mask": {
         "name": "Masque"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -2146,6 +2194,385 @@
       },
       "2": {
         "name": "LISTE DE MASQUES"
+      }
+    }
+  },
+  "AILab_VRMBG": {
+    "display_name": "Suppression Fond Vidéo VRMBG",
+    "inputs": {
+      "images": {
+        "name": "Images Vidéo",
+        "tooltip": "Images consécutives pour suppression de fond temporelle."
+      },
+      "reset_state": {
+        "name": "Réinitialiser État",
+        "tooltip": "Réinitialise le contexte temporel."
+      },
+      "mask_blur": {
+        "name": "Flou de Masque",
+        "tooltip": "Rayon de flou pour adoucir les bords."
+      },
+      "mask_offset": {
+        "name": "Décalage Masque",
+        "tooltip": "Dilater ou contracter les bords du masque."
+      },
+      "invert_output": {
+        "name": "Inverser Masque",
+        "tooltip": "Inverse le masque."
+      },
+      "background": {
+        "name": "Type de Fond",
+        "tooltip": "Alpha ou Couleur."
+      },
+      "background_color": {
+        "name": "Couleur de Fond",
+        "tooltip": "Couleur de fond."
+      },
+      "unload_model": {
+        "name": "Décharger Modèle",
+        "tooltip": "Libérer la VRAM."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASQUE"
+      },
+      "2": {
+        "name": "IMAGE MASQUE"
+      }
+    }
+  },
+  "AILab_FeyNoBg": {
+    "display_name": "Détourage Ultra-Fin FeyNoBg",
+    "inputs": {
+      "image": {
+        "name": "Image",
+        "tooltip": "Image à détourer."
+      },
+      "refine_foreground": {
+        "name": "Affiner les Bords",
+        "tooltip": "Améliore les détails fins tels que cheveux et éléments translucides."
+      },
+      "mask_blur": {
+        "name": "Flou de Masque",
+        "tooltip": "Rayon de flou."
+      },
+      "mask_offset": {
+        "name": "Décalage Masque",
+        "tooltip": "Décalage."
+      },
+      "invert_output": {
+        "name": "Inverser Masque",
+        "tooltip": "Inverser."
+      },
+      "background": {
+        "name": "Type de Fond",
+        "tooltip": "Alpha ou Couleur."
+      },
+      "background_color": {
+        "name": "Couleur de Fond",
+        "tooltip": "Couleur."
+      },
+      "unload_model": {
+        "name": "Décharger Modèle",
+        "tooltip": "Libérer VRAM."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASQUE"
+      },
+      "2": {
+        "name": "IMAGE MASQUE"
+      }
+    }
+  },
+  "AILab_FinegrainBoxSegment": {
+    "display_name": "Segmentation Cadre Finegrain",
+    "inputs": {
+      "image": {
+        "name": "Image",
+        "tooltip": "Détourage haute définition 1024px."
+      },
+      "bboxes": {
+        "name": "Boîtes Détectées",
+        "tooltip": "Cadres de détection."
+      },
+      "box_coordinates": {
+        "name": "Coordonnées Manuelles",
+        "tooltip": "Coordonnées manuelles."
+      },
+      "margin": {
+        "name": "Marge",
+        "tooltip": "Marge de sécurité."
+      },
+      "mask_blur": {
+        "name": "Flou de Masque",
+        "tooltip": "Flou."
+      },
+      "mask_offset": {
+        "name": "Décalage Masque",
+        "tooltip": "Décalage."
+      },
+      "invert_output": {
+        "name": "Inverser Masque",
+        "tooltip": "Inverser."
+      },
+      "background": {
+        "name": "Type de Fond",
+        "tooltip": "Alpha ou Couleur."
+      },
+      "background_color": {
+        "name": "Couleur de Fond",
+        "tooltip": "Couleur."
+      },
+      "unload_model": {
+        "name": "Décharger Modèle",
+        "tooltip": "Libérer VRAM."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASQUE"
+      },
+      "2": {
+        "name": "IMAGE MASQUE"
+      }
+    }
+  },
+  "AILab_ImageCompareView": {
+    "display_name": "Comparaison d'Images (RMBG) 🔀🖼️",
+    "description": "Comparateur d'images interactif en temps réel directement sur le canevas du nœud.",
+    "inputs": {
+      "image1": {
+        "name": "Image 1",
+        "tooltip": "Première image à comparer (ex. originale)."
+      },
+      "image2": {
+        "name": "Image 2",
+        "tooltip": "Seconde image à comparer (ex. traitée)."
+      },
+      "mode": {
+        "name": "Mode",
+        "tooltip": "Mode d'affichage de la comparaison.",
+        "options": {
+          "left_right": "Gauche / Droite",
+          "up_down": "Haut / Bas",
+          "overlay": "Superposition",
+          "difference": "Différence",
+          "side_by_side": "Côte à côte",
+          "highlight_diff": "Surligner les différences"
+        }
+      },
+      "match_size": {
+        "name": "Adapter la taille",
+        "tooltip": "Si activé, redimensionne l'image 2 à la taille de l'image 1."
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Image composée selon le mode actuel"
+      },
+      "1": {
+        "name": "DIFF_MASK",
+        "tooltip": "Masque de différence absolue entre les deux images"
+      }
+    }
+  },
+  "AILab_Yolo": {
+    "display_name": "Segmentation YOLO (RMBG)",
+    "description": "",
+    "inputs": {
+      "images": {
+        "name": "Images",
+        "tooltip": "Lot d'images d'entrée pour la segmentation YOLO."
+      },
+      "model": {
+        "name": "Modèle"
+      },
+      "mask_count": {
+        "name": "Nombre de masques",
+        "tooltip": "Nombre de détections à fusionner ('all' fusionne tout)."
+      },
+      "select_mask_index": {
+        "name": "Index du masque",
+        "tooltip": "Index (base 1) du premier masque à conserver ; 'none' pour commencer au début."
+      },
+      "conf": {
+        "name": "Confiance",
+        "tooltip": "Seuil de confiance transmis à Ultralytics."
+      },
+      "iou": {
+        "name": "IoU",
+        "tooltip": "Seuil IoU utilisé lors de la NMS."
+      },
+      "classes": {
+        "name": "Classes",
+        "tooltip": "Liste ou plages d'ID de classes (ex. 0,2,5-7) ; vide pour toutes."
+      },
+      "annotation_mode": {
+        "name": "Mode d'annotation",
+        "tooltip": "Mode d'affichage pour la sortie ANNOTATED_IMAGE."
+      },
+      "background": {
+        "name": "Arrière-plan",
+        "tooltip": "Type d'arrière-plan pour la découpe IMAGE."
+      },
+      "background_color": {
+        "name": "Couleur d'arrière-plan",
+        "tooltip": "Couleur de remplissage lorsque l'arrière-plan est sur Color."
+      },
+      "mask_blur": {
+        "name": "Flou du masque",
+        "tooltip": "Applique un flou gaussien aux bords du masque."
+      },
+      "mask_offset": {
+        "name": "Décalage du masque",
+        "tooltip": "Étend ou rétracte le contour du masque."
+      },
+      "invert_output": {
+        "name": "Inverser la sortie",
+        "tooltip": "Inverse le masque généré."
+      },
+      "device": {
+        "name": "Périphérique",
+        "tooltip": "Force un périphérique ou détecte CUDA → MPS → CPU."
+      },
+      "max_det": {
+        "name": "Détections max",
+        "tooltip": "Nombre maximal de détections par image."
+      },
+      "retina_masks": {
+        "name": "Masques haute résolution",
+        "tooltip": "Utilise les masques haute résolution (retina_masks)."
+      },
+      "agnostic_nms": {
+        "name": "NMS agnostique",
+        "tooltip": "Active la NMS indépendante des classes."
+      },
+      "unload_model": {
+        "name": "Décharger le modèle",
+        "tooltip": "Libère le modèle de la VRAM après exécution."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Image de sortie"
+      },
+      "1": {
+        "name": "IMAGE_ANNOTÉE",
+        "tooltip": "Image avec annotations de détection"
+      },
+      "2": {
+        "name": "MASQUE",
+        "tooltip": "Masque de sortie"
+      },
+      "3": {
+        "name": "LISTE_MASQUES",
+        "tooltip": "Liste des masques"
+      }
+    }
+  },
+  "AILab_Florence2Caption": {
+    "display_name": "Florence2 Image vers Texte (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Image"
+      },
+      "model": {
+        "name": "Modèle"
+      },
+      "mode": {
+        "name": "Mode"
+      },
+      "precision": {
+        "name": "Précision"
+      },
+      "attention": {
+        "name": "Attention"
+      },
+      "max_new_tokens": {
+        "name": "Jetons max"
+      },
+      "unload_model": {
+        "name": "Décharger le modèle"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "TEXTE"
+      },
+      "1": {
+        "name": "DONNÉES"
+      }
+    }
+  },
+  "AILab_Canvas": {
+    "display_name": "Canevas de Calques (RMBG)",
+    "description": "Studio de composition multi-calques interactif avec transformation et fusion alpha.",
+    "inputs": {
+      "canvas_width": {
+        "name": "Largeur du canevas"
+      },
+      "canvas_height": {
+        "name": "Hauteur du canevas"
+      },
+      "background_color": {
+        "name": "Couleur d'arrière-plan",
+        "tooltip": "Choisir la couleur d'arrière-plan (sélecteur de couleur)."
+      },
+      "canvas_state": {
+        "name": "État du canevas",
+        "tooltip": "Mise en page JSON sérialisée (coordonnées, échelles, rotations, ordre)."
+      },
+      "Background": {
+        "name": "Arrière-plan",
+        "tooltip": "Image d'arrière-plan optionnelle."
+      },
+      "bg_color": {
+        "name": "Couleur de fond",
+        "tooltip": "Couleur de base du canevas lorsqu'aucune image de fond n'est connectée."
+      },
+      "custom_bg_hex": {
+        "name": "Hex personnalisé",
+        "tooltip": "Code couleur hexadécimal (ex. #FF5500) appliqué lorsque bg_color est custom."
+      },
+      "fit_background_size": {
+        "name": "Adapter à l'image de fond",
+        "tooltip": "Ajuste automatiquement les dimensions du canevas à l'image de fond connectée."
+      },
+      "background": {
+        "name": "Arrière-plan",
+        "tooltip": "Image d'arrière-plan optionnelle (RGB ou RGBA)."
+      },
+      "layer_1": {
+        "name": "layer_1",
+        "tooltip": "Première image de calque (RGB ou RGBA)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASQUE"
       }
     }
   }

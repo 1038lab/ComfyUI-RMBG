@@ -1,4 +1,156 @@
 {
+  "AILab_VRMBG": {
+    "display_name": "VRMBG Video Background Removal (RMBG)",
+    "inputs": {
+      "images": {
+        "name": "Images",
+        "tooltip": "Batch of consecutive video frames [B, H, W, C] for temporal background removal."
+      },
+      "reset_state": {
+        "name": "Reset State",
+        "tooltip": "Reset temporal prior state at the beginning of this batch."
+      },
+      "mask_blur": {
+        "name": "Mask Blur",
+        "tooltip": "Gaussian blur radius for softening mask edges."
+      },
+      "mask_offset": {
+        "name": "Mask Offset",
+        "tooltip": "Expand or shrink the mask boundary in pixels."
+      },
+      "invert_output": {
+        "name": "Invert Output",
+        "tooltip": "Invert the output mask."
+      },
+      "background": {
+        "name": "Background",
+        "tooltip": "Output format: Alpha for transparent cutout, or Color for solid background."
+      },
+      "background_color": {
+        "name": "Background Color",
+        "tooltip": "Hex background color used when background mode is set to Color."
+      },
+      "unload_model": {
+        "name": "Unload Model",
+        "tooltip": "Unload model weights from VRAM immediately after execution."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASK"
+      },
+      "2": {
+        "name": "MASK_IMAGE"
+      }
+    }
+  },
+  "AILab_FeyNoBg": {
+    "display_name": "FeyNoBg (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Image",
+        "tooltip": "Input image batch to remove background from."
+      },
+      "refine_foreground": {
+        "name": "Refine Foreground",
+        "tooltip": "Sub-pixel foreground boundary refinement for fine hairs and semi-transparent edges."
+      },
+      "mask_blur": {
+        "name": "Mask Blur",
+        "tooltip": "Gaussian blur radius for softening mask edges."
+      },
+      "mask_offset": {
+        "name": "Mask Offset",
+        "tooltip": "Expand or shrink the mask boundary in pixels."
+      },
+      "invert_output": {
+        "name": "Invert Output",
+        "tooltip": "Invert the output mask."
+      },
+      "background": {
+        "name": "Background",
+        "tooltip": "Output format: Alpha for transparent PNG, or Color to composite against background."
+      },
+      "background_color": {
+        "name": "Background Color",
+        "tooltip": "Hex background color used when background mode is set to Color."
+      },
+      "unload_model": {
+        "name": "Unload Model",
+        "tooltip": "Unload model weights from VRAM immediately after execution."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASK"
+      },
+      "2": {
+        "name": "MASK_IMAGE"
+      }
+    }
+  },
+  "AILab_FinegrainBoxSegment": {
+    "display_name": "Finegrain Box Segmenter (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Image",
+        "tooltip": "Input image batch to segment with high definition 1024px quality."
+      },
+      "bboxes": {
+        "name": "BBoxes",
+        "tooltip": "Bounding box(es) from Florence-2 or YOLO detection nodes."
+      },
+      "box_coordinates": {
+        "name": "Box Coordinates",
+        "tooltip": "Manual bounding box as 'x1, y1, x2, y2' in pixel or normalized [0..1] coordinates."
+      },
+      "margin": {
+        "name": "Margin",
+        "tooltip": "Safety padding margin around bounding boxes."
+      },
+      "mask_blur": {
+        "name": "Mask Blur",
+        "tooltip": "Blur mask edges (0 to disable)."
+      },
+      "mask_offset": {
+        "name": "Mask Offset",
+        "tooltip": "Expand or shrink mask edges in pixels."
+      },
+      "invert_output": {
+        "name": "Invert Output",
+        "tooltip": "Invert the output mask."
+      },
+      "background": {
+        "name": "Background",
+        "tooltip": "Background type: Alpha (transparent) or Color (custom solid background)."
+      },
+      "background_color": {
+        "name": "Background Color",
+        "tooltip": "Hex color code for background when Color mode is selected."
+      },
+      "unload_model": {
+        "name": "Unload Model",
+        "tooltip": "Unload model from VRAM immediately after execution."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE"
+      },
+      "1": {
+        "name": "MASK"
+      },
+      "2": {
+        "name": "MASK_IMAGE"
+      }
+    }
+  },
   "RMBG": {
     "display_name": "Remove Background (RMBG)",
     "inputs": {
@@ -695,6 +847,12 @@
       },
       "unload_model": {
         "name": "Unload Model"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -714,6 +872,12 @@
       },
       "unload_model": {
         "name": "Unload Model"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -730,6 +894,12 @@
       },
       "unload_model": {
         "name": "Unload Model"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -764,6 +934,9 @@
       },
       "megapixels": {
         "name": "Megapixels"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -792,6 +965,9 @@
       },
       "unload_model": {
         "name": "Unload Model"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -806,6 +982,10 @@
       },
       "3": {
         "name": "HEIGHT"
+      },
+      "2": {
+        "name": "WIDTH",
+        "tooltip": "Output WIDTH tensor"
       }
     }
   },
@@ -838,6 +1018,9 @@
       },
       "megapixels": {
         "name": "Megapixels"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -857,7 +1040,7 @@
         "name": "Mask"
       },
       "5": {
-        "name": "Metadata"
+        "name": "METADATA"
       }
     }
   },
@@ -1559,6 +1742,9 @@
       },
       "2": {
         "name": "MASK_IMAGE"
+      },
+      "3": {
+        "name": "BBOXES"
       }
     }
   },
@@ -1669,6 +1855,15 @@
       "model_name": {
         "name": "Model Name"
       },
+      "model": {
+        "name": "Model"
+      },
+      "mode": {
+        "name": "Mode"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
       "attention": {
         "name": "Attention"
       },
@@ -1684,16 +1879,50 @@
     },
     "outputs": {
       "0": {
-        "name": "ANNOTATED_IMAGE"
+        "name": "IMAGE"
       },
       "1": {
         "name": "MASK"
       },
       "2": {
-        "name": "MASK_LIST"
+        "name": "DATA"
       },
       "3": {
-        "name": "JSON"
+        "name": "BBOXES"
+      }
+    }
+  },
+  "AILab_Florence2Caption": {
+    "display_name": "Florence2 Image to Text (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "Image"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "mode": {
+        "name": "Mode"
+      },
+      "precision": {
+        "name": "Precision"
+      },
+      "attention": {
+        "name": "Attention"
+      },
+      "max_new_tokens": {
+        "name": "Max New Tokens"
+      },
+      "unload_model": {
+        "name": "Unload Model"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "TEXT"
+      },
+      "1": {
+        "name": "DATA"
       }
     }
   },
@@ -1928,6 +2157,9 @@
       },
       "sort_method": {
         "name": "Sort Method"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1959,6 +2191,12 @@
       },
       "mask": {
         "name": "Mask"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -2027,7 +2265,8 @@
       "2": {
         "name": "height"
       }
-    }
+    },
+    "description": "Calculate width and height from aspect ratio and megapixel target,\nand optionally output an empty latent image ready for sampling."
   },
   "AILab_UnbatchImages": {
     "display_name": "Unbatch Images (RMBG) 🖼️",
@@ -2143,6 +2382,203 @@
       },
       "2": {
         "name": "MASK_LIST"
+      }
+    }
+  },
+  "AILab_Canvas": {
+    "display_name": "Canvas (RMBG)",
+    "description": "High-performance interactive image layer canvas with lossless PyTorch GPU compositing.",
+    "inputs": {
+      "canvas_width": {
+        "name": "Canvas Width",
+        "tooltip": "Canvas width in pixels when not fitting background image size."
+      },
+      "canvas_height": {
+        "name": "Canvas Height",
+        "tooltip": "Canvas height in pixels when not fitting background image size."
+      },
+      "bg_color": {
+        "name": "Background Color",
+        "tooltip": "Base canvas color used when no background image is connected or for empty margins."
+      },
+      "custom_bg_hex": {
+        "name": "Custom Hex",
+        "tooltip": "Hex color code (e.g. #FF5500) applied when bg_color is custom."
+      },
+      "fit_background_size": {
+        "name": "Fit Background Size",
+        "tooltip": "When connected, automatically set canvas dimensions to match the background image."
+      },
+      "background": {
+        "name": "Background",
+        "tooltip": "Optional background image input (RGB or RGBA)."
+      },
+      "layer_1": {
+        "name": "layer_1",
+        "tooltip": "First layer image input (accepts RGB or RGBA)."
+      },
+      "background_color": {
+        "name": "Background Color",
+        "tooltip": "Pick background color (use color picker)."
+      },
+      "canvas_state": {
+        "name": "Canvas State",
+        "tooltip": "Serialized JSON layout containing layer coordinates, scales, rotations, and order."
+      },
+      "Background": {
+        "name": "Background",
+        "tooltip": "Optional background image input."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Composited output image."
+      },
+      "1": {
+        "name": "MASK",
+        "tooltip": "Aggregated layer alpha mask."
+      }
+    }
+  },
+  "AILab_ImageCompareView": {
+    "display_name": "Image Compare (RMBG) 🔀🖼️",
+    "description": "Real-time interactive image compare node with wipe, overlay, difference, side-by-side, and highlight-diff modes.",
+    "inputs": {
+      "image1": {
+        "name": "Image1",
+        "tooltip": "First image to compare (e.g. before / original)."
+      },
+      "image2": {
+        "name": "Image2",
+        "tooltip": "Second image to compare (e.g. after / processed)."
+      },
+      "mode": {
+        "name": "Mode",
+        "tooltip": "Comparison mode.",
+        "options": {
+          "left_right": "Left Right",
+          "up_down": "Up Down",
+          "overlay": "Overlay",
+          "difference": "Difference",
+          "side_by_side": "Side By Side",
+          "highlight_diff": "Highlight Diff"
+        }
+      },
+      "match_size": {
+        "name": "Match Size",
+        "tooltip": "If True, resize image2 to match image1 dimensions when they differ."
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Output IMAGE tensor"
+      },
+      "1": {
+        "name": "DIFF_MASK",
+        "tooltip": "Output DIFF_MASK tensor"
+      }
+    }
+  },
+  "AILab_Yolo": {
+    "display_name": "YOLO Segmentation (RMBG)",
+    "description": "",
+    "inputs": {
+      "images": {
+        "name": "Images",
+        "tooltip": "Input image batch for YOLO segmentation."
+      },
+      "model": {
+        "name": "Model"
+      },
+      "mask_count": {
+        "name": "Mask Count",
+        "tooltip": "Merge this many detections. 'all' merges everything (or just the selected index when specified)."
+      },
+      "select_mask_index": {
+        "name": "Select Mask Index",
+        "tooltip": "1-based index of the first mask to keep. Use 'none' to start from the first detection."
+      },
+      "conf": {
+        "name": "Conf",
+        "tooltip": "Confidence threshold forwarded to Ultralytics."
+      },
+      "iou": {
+        "name": "Iou",
+        "tooltip": "IOU used during NMS."
+      },
+      "classes": {
+        "name": "Classes",
+        "tooltip": "Comma list or ranges of class IDs; empty keeps every class."
+      },
+      "annotation_mode": {
+        "name": "Annotation Mode",
+        "tooltip": "Display mode for ANNOTATED_IMAGE output."
+      },
+      "background": {
+        "name": "Background",
+        "tooltip": "Background type for cutout IMAGE output."
+      },
+      "background_color": {
+        "name": "Background Color",
+        "tooltip": "Background color when background is set to Color."
+      },
+      "mask_blur": {
+        "name": "Mask Blur",
+        "tooltip": "Apply Gaussian blur to mask edges."
+      },
+      "mask_offset": {
+        "name": "Mask Offset",
+        "tooltip": "Expand/Shrink mask boundary (positive = expand, negative = shrink)."
+      },
+      "invert_output": {
+        "name": "Invert Output",
+        "tooltip": "Invert the mask output."
+      },
+      "device": {
+        "name": "Device",
+        "tooltip": "Force a device or auto-detect CUDA → MPS → CPU."
+      },
+      "max_det": {
+        "name": "Max Det",
+        "tooltip": "Maximum detections per image."
+      },
+      "retina_masks": {
+        "name": "Retina Masks",
+        "tooltip": "Use high-resolution masks (Ultralytics retina_masks flag)."
+      },
+      "agnostic_nms": {
+        "name": "Agnostic Nms",
+        "tooltip": "Enable class-agnostic NMS."
+      },
+      "unload_model": {
+        "name": "Unload Model",
+        "tooltip": "Unload model from VRAM after execution."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Output IMAGE tensor"
+      },
+      "1": {
+        "name": "ANNOTATED_IMAGE",
+        "tooltip": "Output ANNOTATED_IMAGE tensor"
+      },
+      "2": {
+        "name": "MASK",
+        "tooltip": "Output MASK tensor"
+      },
+      "3": {
+        "name": "MASK_LIST",
+        "tooltip": "Output MASK_LIST tensor"
       }
     }
   }

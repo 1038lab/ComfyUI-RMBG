@@ -695,6 +695,12 @@
       },
       "unload_model": {
         "name": "釋放模型顯存"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -714,6 +720,12 @@
       },
       "unload_model": {
         "name": "釋放模型顯存"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -730,6 +742,12 @@
       },
       "unload_model": {
         "name": "釋放模型顯存"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -764,6 +782,9 @@
       },
       "megapixels": {
         "name": "百萬像素"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -792,6 +813,9 @@
       },
       "unload_model": {
         "name": "釋放模型顯存"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -838,6 +862,9 @@
       },
       "megapixels": {
         "name": "百萬像素"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1562,6 +1589,9 @@
       },
       "2": {
         "name": "遮罩圖像"
+      },
+      "3": {
+        "name": "檢測框"
       }
     }
   },
@@ -1683,6 +1713,15 @@
       },
       "text_prompt": {
         "name": "Text Prompt"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "mode": {
+        "name": "模式"
+      },
+      "prompt": {
+        "name": "提示詞"
       }
     },
     "outputs": {
@@ -1931,6 +1970,9 @@
       },
       "sort_method": {
         "name": "排序方式"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1962,6 +2004,12 @@
       },
       "mask": {
         "name": "遮罩"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -2146,6 +2194,385 @@
       },
       "2": {
         "name": "遮罩列表"
+      }
+    }
+  },
+  "AILab_VRMBG": {
+    "display_name": "VRMBG 影片去背",
+    "inputs": {
+      "images": {
+        "name": "連續幀影像",
+        "tooltip": "用於時序連續去背景的連續影片幀批次 [B, H, W, C]。"
+      },
+      "reset_state": {
+        "name": "重設時序狀態",
+        "tooltip": "在當前批次開始時重設時序先驗快取。"
+      },
+      "mask_blur": {
+        "name": "遮罩羽化",
+        "tooltip": "用於柔化遮罩邊緣的高斯模糊半徑。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "以像素為單位擴展或收縮遮罩邊界。"
+      },
+      "invert_output": {
+        "name": "反轉遮罩",
+        "tooltip": "反轉輸出的遮罩。"
+      },
+      "background": {
+        "name": "背景模式",
+        "tooltip": "輸出格式：Alpha 輸出透明通道，Color 填充純色背景。"
+      },
+      "background_color": {
+        "name": "背景顏色",
+        "tooltip": "背景顏色十六進位值。"
+      },
+      "unload_model": {
+        "name": "釋放顯存",
+        "tooltip": "執行完成後立即卸載模型權重以釋放顯存。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "影像"
+      },
+      "1": {
+        "name": "遮罩"
+      },
+      "2": {
+        "name": "遮罩預覽圖"
+      }
+    }
+  },
+  "AILab_FeyNoBg": {
+    "display_name": "FeyNoBg 極致髮絲去背",
+    "inputs": {
+      "image": {
+        "name": "影像",
+        "tooltip": "需要去除背景的輸入影像批次。"
+      },
+      "refine_foreground": {
+        "name": "細化前景邊緣",
+        "tooltip": "亞像素級前景邊緣細化，大幅優化微細毛髮與半透明邊界。"
+      },
+      "mask_blur": {
+        "name": "遮罩羽化",
+        "tooltip": "用於柔化遮罩邊緣的高斯模糊半徑。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "擴展或收縮遮罩邊界。"
+      },
+      "invert_output": {
+        "name": "反轉遮罩",
+        "tooltip": "反轉輸出的遮罩。"
+      },
+      "background": {
+        "name": "背景模式",
+        "tooltip": "輸出格式：Alpha 透明圖，Color 純色背景。"
+      },
+      "background_color": {
+        "name": "背景顏色",
+        "tooltip": "十六進位顏色值。"
+      },
+      "unload_model": {
+        "name": "釋放顯存",
+        "tooltip": "卸載模型權重釋放顯存。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "影像"
+      },
+      "1": {
+        "name": "遮罩"
+      },
+      "2": {
+        "name": "遮罩預覽圖"
+      }
+    }
+  },
+  "AILab_FinegrainBoxSegment": {
+    "display_name": "Finegrain 框選高畫質去背",
+    "inputs": {
+      "image": {
+        "name": "影像",
+        "tooltip": "原生 1024px 高畫質去背。"
+      },
+      "bboxes": {
+        "name": "偵測框",
+        "tooltip": "來自 Florence-2 或 YOLO 的邊界框。"
+      },
+      "box_coordinates": {
+        "name": "手動座標框",
+        "tooltip": "手動輸入的邊界框座標。"
+      },
+      "margin": {
+        "name": "安全邊距",
+        "tooltip": "邊界框周邊的安全預留邊距比例。"
+      },
+      "mask_blur": {
+        "name": "遮罩羽化",
+        "tooltip": "遮罩羽化半徑。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "遮罩邊緣偏移。"
+      },
+      "invert_output": {
+        "name": "反轉遮罩",
+        "tooltip": "反轉輸出遮罩。"
+      },
+      "background": {
+        "name": "背景模式",
+        "tooltip": "Alpha 或 Color 背景。"
+      },
+      "background_color": {
+        "name": "背景顏色",
+        "tooltip": "十六進位背景顏色。"
+      },
+      "unload_model": {
+        "name": "釋放顯存",
+        "tooltip": "卸載模型權重。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "影像"
+      },
+      "1": {
+        "name": "遮罩"
+      },
+      "2": {
+        "name": "遮罩預覽圖"
+      }
+    }
+  },
+  "AILab_ImageCompareView": {
+    "display_name": "圖像對比 (RMBG) 🔀🖼️",
+    "description": "即時互動式圖像對比節點，直接在節點畫布上渲染左右/上下擦除、疊加、差異圖、並排或高亮差異對比。",
+    "inputs": {
+      "image1": {
+        "name": "圖像 1",
+        "tooltip": "用於對比的第一張圖像（如原圖）。"
+      },
+      "image2": {
+        "name": "圖像 2",
+        "tooltip": "用於對比的第二張圖像（如處理後圖像）。"
+      },
+      "mode": {
+        "name": "對比模式",
+        "tooltip": "選擇對比顯示模式。",
+        "options": {
+          "left_right": "左右對比",
+          "up_down": "上下對比",
+          "overlay": "疊加透明",
+          "difference": "像素差異",
+          "side_by_side": "並排顯示",
+          "highlight_diff": "高亮差異"
+        }
+      },
+      "match_size": {
+        "name": "匹配尺寸",
+        "tooltip": "開啟後，當兩張圖像尺寸不一致時將圖像 2 縮放至圖像 1 尺寸。"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "圖像",
+        "tooltip": "當前對比模式合成的輸出圖像"
+      },
+      "1": {
+        "name": "差異遮罩",
+        "tooltip": "兩張輸入圖像之間的絕對差異遮罩"
+      }
+    }
+  },
+  "AILab_Yolo": {
+    "display_name": "YOLO 分割 (RMBG)",
+    "description": "",
+    "inputs": {
+      "images": {
+        "name": "圖像",
+        "tooltip": "用於 YOLO 實例分割的輸入圖像批次。"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "mask_count": {
+        "name": "遮罩數量",
+        "tooltip": "合併的偵測結果數量；'all' 表示合併全部（或僅保留所選索引）。"
+      },
+      "select_mask_index": {
+        "name": "選擇遮罩索引",
+        "tooltip": "從 1 開始的遮罩索引；設為 'none' 表示從第一個偵測開始。"
+      },
+      "conf": {
+        "name": "置信度",
+        "tooltip": "傳遞給 Ultralytics 的置信度閾值。"
+      },
+      "iou": {
+        "name": "IoU 閾值",
+        "tooltip": "NMS 非極大值抑制使用的 IoU 閾值。"
+      },
+      "classes": {
+        "name": "類別過濾",
+        "tooltip": "逗號分隔的類別 ID 或範圍（如 0,2,5-7）；留空保留所有類別。"
+      },
+      "annotation_mode": {
+        "name": "標註模式",
+        "tooltip": "ANNOTATED_IMAGE 輸出的標註顯示模式。"
+      },
+      "background": {
+        "name": "背景類型",
+        "tooltip": "去背 IMAGE 輸出的背景類型。"
+      },
+      "background_color": {
+        "name": "背景顏色",
+        "tooltip": "當背景設為 Color 時的填充顏色。"
+      },
+      "mask_blur": {
+        "name": "遮罩模糊",
+        "tooltip": "對遮罩邊緣套用高斯模糊。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "擴展或收縮遮罩邊界（正值擴展，負值收縮）。"
+      },
+      "invert_output": {
+        "name": "反轉輸出",
+        "tooltip": "反轉生成的遮罩輸出。"
+      },
+      "device": {
+        "name": "運行設備",
+        "tooltip": "強制指定運行設備，或自動偵測 CUDA → MPS → CPU。"
+      },
+      "max_det": {
+        "name": "最大偵測數",
+        "tooltip": "每張圖像的最大偵測目標數。"
+      },
+      "retina_masks": {
+        "name": "高解析度遮罩",
+        "tooltip": "啟用 Ultralytics 高解析度遮罩（retina_masks）。"
+      },
+      "agnostic_nms": {
+        "name": "類別無關 NMS",
+        "tooltip": "啟用跨類別的非極大值抑制。"
+      },
+      "unload_model": {
+        "name": "卸載模型",
+        "tooltip": "執行完成後從顯存中卸載模型。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "圖像",
+        "tooltip": "輸出圖像"
+      },
+      "1": {
+        "name": "標註圖像",
+        "tooltip": "帶偵測標註的輸出圖像"
+      },
+      "2": {
+        "name": "遮罩",
+        "tooltip": "輸出遮罩"
+      },
+      "3": {
+        "name": "遮罩列表",
+        "tooltip": "輸出遮罩列表"
+      }
+    }
+  },
+  "AILab_Florence2Caption": {
+    "display_name": "Florence2 圖像轉文字 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "圖像"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "mode": {
+        "name": "模式"
+      },
+      "precision": {
+        "name": "精度"
+      },
+      "attention": {
+        "name": "注意力機制"
+      },
+      "max_new_tokens": {
+        "name": "最大生成 Token 數"
+      },
+      "unload_model": {
+        "name": "卸載模型"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "文字"
+      },
+      "1": {
+        "name": "資料"
+      }
+    }
+  },
+  "AILab_Canvas": {
+    "display_name": "圖層畫布 (RMBG)",
+    "description": "互動式多圖層合成畫布，支援縮放、旋轉與透明通道融合。",
+    "inputs": {
+      "canvas_width": {
+        "name": "畫布寬度"
+      },
+      "canvas_height": {
+        "name": "畫布高度"
+      },
+      "background_color": {
+        "name": "背景顏色",
+        "tooltip": "選擇背景顏色（使用拾色器）。"
+      },
+      "canvas_state": {
+        "name": "畫布狀態",
+        "tooltip": "包含圖層座標、縮放、旋轉與順序的序列化 JSON 佈局。"
+      },
+      "Background": {
+        "name": "背景圖像",
+        "tooltip": "可選的背景圖像輸入。"
+      },
+      "bg_color": {
+        "name": "底色模式",
+        "tooltip": "未連接背景圖或透明留白區域時的畫布基底顏色。"
+      },
+      "custom_bg_hex": {
+        "name": "自訂十六進位色值",
+        "tooltip": "底色模式設為 custom 時生效的十六進位顏色代碼（如 #FF5500）。"
+      },
+      "fit_background_size": {
+        "name": "自適應背景尺寸",
+        "tooltip": "開啟後，若連接了背景圖像，畫布尺寸將自動匹配該背景圖像的寬高。"
+      },
+      "background": {
+        "name": "背景圖像",
+        "tooltip": "可選的底層背景圖像輸入（支援 RGB 或 RGBA）。"
+      },
+      "layer_1": {
+        "name": "layer_1",
+        "tooltip": "首個前景圖層圖像輸入（支援 RGB 或 RGBA）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "圖像"
+      },
+      "1": {
+        "name": "遮罩"
       }
     }
   }

@@ -695,6 +695,12 @@
       },
       "unload_model": {
         "name": "모델 언로드"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -714,6 +720,12 @@
       },
       "unload_model": {
         "name": "모델 언로드"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -730,6 +742,12 @@
       },
       "unload_model": {
         "name": "모델 언로드"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -767,6 +785,9 @@
       },
       "megapixels": {
         "name": "메가픽셀"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -795,6 +816,9 @@
       },
       "unload_model": {
         "name": "모델 언로드"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -841,6 +865,9 @@
       },
       "megapixels": {
         "name": "메가픽셀"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1565,6 +1592,9 @@
       },
       "2": {
         "name": "마스크 이미지"
+      },
+      "3": {
+        "name": "바운딩 박스"
       }
     }
   },
@@ -1686,6 +1716,15 @@
       },
       "text_prompt": {
         "name": "Text Prompt"
+      },
+      "model": {
+        "name": "모델"
+      },
+      "mode": {
+        "name": "모드"
+      },
+      "prompt": {
+        "name": "프롬프트"
       }
     },
     "outputs": {
@@ -1934,6 +1973,9 @@
       },
       "sort_method": {
         "name": "정렬 방법"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -1965,6 +2007,12 @@
       },
       "mask": {
         "name": "마스크"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
       }
     },
     "outputs": {
@@ -2149,6 +2197,385 @@
       },
       "2": {
         "name": "마스크 목록"
+      }
+    }
+  },
+  "AILab_VRMBG": {
+    "display_name": "VRMBG 비디오 배경 제거",
+    "inputs": {
+      "images": {
+        "name": "연속 프레임 이미지",
+        "tooltip": "비디오 프레임 배치 [B, H, W, C]."
+      },
+      "reset_state": {
+        "name": "시계열 상태 초기화",
+        "tooltip": "시계열 상태를 초기화합니다."
+      },
+      "mask_blur": {
+        "name": "마스크 블러",
+        "tooltip": "마스크 가장자리 블러 반경."
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋",
+        "tooltip": "마스크 경계 확장/축소."
+      },
+      "invert_output": {
+        "name": "마스크 반전",
+        "tooltip": "마스크 반전."
+      },
+      "background": {
+        "name": "배경 모드",
+        "tooltip": "Alpha(투명) 또는 Color."
+      },
+      "background_color": {
+        "name": "배경 색상",
+        "tooltip": "배경 색상."
+      },
+      "unload_model": {
+        "name": "모델 언로드",
+        "tooltip": "VRAM 해제."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 이미지"
+      }
+    }
+  },
+  "AILab_FeyNoBg": {
+    "display_name": "FeyNoBg 초정밀 헤어 매팅",
+    "inputs": {
+      "image": {
+        "name": "이미지",
+        "tooltip": "입력 이미지."
+      },
+      "refine_foreground": {
+        "name": "전경 에지 정제",
+        "tooltip": "미세한 머리카락 및 반투명 경계를 개선합니다."
+      },
+      "mask_blur": {
+        "name": "마스크 블러",
+        "tooltip": "블러 반경."
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋",
+        "tooltip": "마스크 오프셋."
+      },
+      "invert_output": {
+        "name": "마스크 반전",
+        "tooltip": "마스크 반전."
+      },
+      "background": {
+        "name": "배경 모드",
+        "tooltip": "Alpha 또는 Color."
+      },
+      "background_color": {
+        "name": "배경 색상",
+        "tooltip": "배경 색상."
+      },
+      "unload_model": {
+        "name": "모델 언로드",
+        "tooltip": "VRAM 해제."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 이미지"
+      }
+    }
+  },
+  "AILab_FinegrainBoxSegment": {
+    "display_name": "Finegrain 박스 고화질 배경 제거",
+    "inputs": {
+      "image": {
+        "name": "이미지",
+        "tooltip": "1024px 고화질 분할."
+      },
+      "bboxes": {
+        "name": "바운딩 박스",
+        "tooltip": "검출 박스."
+      },
+      "box_coordinates": {
+        "name": "수동 좌표 박스",
+        "tooltip": "수동 좌표 입력."
+      },
+      "margin": {
+        "name": "여백",
+        "tooltip": "여백 비율."
+      },
+      "mask_blur": {
+        "name": "마스크 블러",
+        "tooltip": "블러 반경."
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋",
+        "tooltip": "오프셋."
+      },
+      "invert_output": {
+        "name": "마스크 반전",
+        "tooltip": "마스크 반전."
+      },
+      "background": {
+        "name": "배경 모드",
+        "tooltip": "Alpha 또는 Color."
+      },
+      "background_color": {
+        "name": "배경 색상",
+        "tooltip": "배경 색상."
+      },
+      "unload_model": {
+        "name": "모델 언로드",
+        "tooltip": "VRAM 해제."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
+      },
+      "2": {
+        "name": "마스크 이미지"
+      }
+    }
+  },
+  "AILab_ImageCompareView": {
+    "display_name": "이미지 비교 (RMBG) 🔀🖼️",
+    "description": "노드 캔버스에서 두 이미지를 실시간으로 비교합니다(좌우/상하, 오버레이, 차이, 나란히 보기 등).",
+    "inputs": {
+      "image1": {
+        "name": "이미지 1",
+        "tooltip": "비교할 첫 번째 이미지(예: 원본)."
+      },
+      "image2": {
+        "name": "이미지 2",
+        "tooltip": "비교할 두 번째 이미지(예: 처리된 이미지)."
+      },
+      "mode": {
+        "name": "비교 모드",
+        "tooltip": "비교 표시 모드를 선택합니다.",
+        "options": {
+          "left_right": "좌우 비교",
+          "up_down": "상하 비교",
+          "overlay": "오버레이",
+          "difference": "차이",
+          "side_by_side": "나란히 보기",
+          "highlight_diff": "차이 강조"
+        }
+      },
+      "match_size": {
+        "name": "크기 맞추기",
+        "tooltip": "활성화 시 두 이미지 크기가 다르면 이미지 2를 이미지 1 크기에 맞춥니다."
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "extra_pnginfo": {
+        "name": "Extra Pnginfo"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지",
+        "tooltip": "현재 비교 모드로 합성된 출력 이미지"
+      },
+      "1": {
+        "name": "차이 마스크",
+        "tooltip": "두 입력 이미지 간의 절대 차이 마스크"
+      }
+    }
+  },
+  "AILab_Yolo": {
+    "display_name": "YOLO 세그멘테이션 (RMBG)",
+    "description": "",
+    "inputs": {
+      "images": {
+        "name": "이미지",
+        "tooltip": "YOLO 세그멘테이션을 위한 입력 이미지 배치."
+      },
+      "model": {
+        "name": "모델"
+      },
+      "mask_count": {
+        "name": "마스크 수",
+        "tooltip": "병합할 감지 수. 'all'은 전체를 병합합니다."
+      },
+      "select_mask_index": {
+        "name": "마스크 인덱스 선택",
+        "tooltip": "1부터 시작하는 마스크 인덱스. 'none'은 첫 번째 감지부터 사용합니다."
+      },
+      "conf": {
+        "name": "신뢰도",
+        "tooltip": "Ultralytics에 전달할 신뢰도 임계값."
+      },
+      "iou": {
+        "name": "IoU 임계값",
+        "tooltip": "NMS 시 사용할 IoU 임계값."
+      },
+      "classes": {
+        "name": "클래스 필터",
+        "tooltip": "쉼표로 구분된 클래스 ID 또는 범위(예: 0,2,5-7). 비워 두면 전체 포함."
+      },
+      "annotation_mode": {
+        "name": "주석 모드",
+        "tooltip": "ANNOTATED_IMAGE 출력 표시 모드."
+      },
+      "background": {
+        "name": "배경",
+        "tooltip": "컷아웃 IMAGE 출력의 배경 유형."
+      },
+      "background_color": {
+        "name": "배경 색상",
+        "tooltip": "배경이 Color일 때 채울 색상."
+      },
+      "mask_blur": {
+        "name": "마스크 블러",
+        "tooltip": "마스크 가장자리에 가우시안 블러 적용."
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋",
+        "tooltip": "마스크 경계 확장/축소(양수=확장, 음수=축소)."
+      },
+      "invert_output": {
+        "name": "출력 반전",
+        "tooltip": "생성된 마스크 출력을 반전합니다."
+      },
+      "device": {
+        "name": "장치",
+        "tooltip": "실행 장치 지정 또는 CUDA → MPS → CPU 자동 감지."
+      },
+      "max_det": {
+        "name": "최대 감지 수",
+        "tooltip": "이미지당 최대 감지 객체 수."
+      },
+      "retina_masks": {
+        "name": "고해상도 마스크",
+        "tooltip": "Ultralytics 고해상도 마스크(retina_masks) 사용."
+      },
+      "agnostic_nms": {
+        "name": "클래스 무관 NMS",
+        "tooltip": "클래스 무관 NMS 활성화."
+      },
+      "unload_model": {
+        "name": "모델 언로드",
+        "tooltip": "실행 후 VRAM에서 모델 해제."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지",
+        "tooltip": "출력 이미지"
+      },
+      "1": {
+        "name": "주석 이미지",
+        "tooltip": "감지 결과가 표시된 출력 이미지"
+      },
+      "2": {
+        "name": "마스크",
+        "tooltip": "출력 마스크"
+      },
+      "3": {
+        "name": "마스크 목록",
+        "tooltip": "출력 마스크 목록"
+      }
+    }
+  },
+  "AILab_Florence2Caption": {
+    "display_name": "Florence2 이미지 캡션 (RMBG)",
+    "inputs": {
+      "image": {
+        "name": "이미지"
+      },
+      "model": {
+        "name": "모델"
+      },
+      "mode": {
+        "name": "모드"
+      },
+      "precision": {
+        "name": "정밀도"
+      },
+      "attention": {
+        "name": "어텐션"
+      },
+      "max_new_tokens": {
+        "name": "최대 생성 토큰"
+      },
+      "unload_model": {
+        "name": "모델 언로드"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "텍스트"
+      },
+      "1": {
+        "name": "데이터"
+      }
+    }
+  },
+  "AILab_Canvas": {
+    "display_name": "레이어 캔버스 (RMBG)",
+    "description": "이동, 크기 조절, 회전 및 투명도 블렌딩을 지원하는 대화형 멀티 레이어 합성 캔버스.",
+    "inputs": {
+      "canvas_width": {
+        "name": "캔버스 너비"
+      },
+      "canvas_height": {
+        "name": "캔버스 높이"
+      },
+      "background_color": {
+        "name": "배경 색상",
+        "tooltip": "배경 색상 선택(색상 선택기 사용)."
+      },
+      "canvas_state": {
+        "name": "캔버스 상태",
+        "tooltip": "레이어 좌표, 크기, 회전 및 순서를 담은 직렬화된 JSON 레이아웃."
+      },
+      "Background": {
+        "name": "배경 이미지",
+        "tooltip": "선택적 배경 이미지 입력."
+      },
+      "bg_color": {
+        "name": "배경색 모드",
+        "tooltip": "배경 이미지가 연결되지 않았거나 여백에 사용되는 기본 캔버스 색상."
+      },
+      "custom_bg_hex": {
+        "name": "사용자 지정 HEX",
+        "tooltip": "bg_color가 custom일 때 적용되는 16진수 색상 코드(예: #FF5500)."
+      },
+      "fit_background_size": {
+        "name": "배경 크기에 맞추기",
+        "tooltip": "배경 이미지가 연결되면 캔버스 크기를 배경 이미지에 자동으로 맞춥니다."
+      },
+      "background": {
+        "name": "배경 이미지",
+        "tooltip": "선택적 배경 이미지 입력(RGB 또는 RGBA)."
+      },
+      "layer_1": {
+        "name": "layer_1",
+        "tooltip": "첫 번째 전경 레이어 이미지 입력(RGB 또는 RGBA)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지"
+      },
+      "1": {
+        "name": "마스크"
       }
     }
   }
