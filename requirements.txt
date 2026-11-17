@@ -6,7 +6,7 @@ groundingdino-py>=0.4.0
 opencv-python>=4.7.0
 onnxruntime>=1.15.0
 onnxruntime-gpu>=1.15.0
-protobuf>=3.20.2
+protobuf>=3.20.2,<6.0.0
 transformers>=4.30.0
 diffusers>=0.18.0
 
@@ -23,4 +23,4 @@ typing_extensions
 
 # FeyNoBg & Finegrain Box Segmenter
 nobg>=0.3.1
-refiners>=0.4.0
+# Optional (Finegrain Box Segmenter): pip install --upgrade git+https://github.com/finegrain-ai/refiners.git

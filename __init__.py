@@ -4,24 +4,21 @@ import os
 import importlib.util
 
 __repo_name__ = "ComfyUI-RMBG"
-__version__ = "3.3.0"
+__version__ = "3.3.1"
 
-# Locate current and node directories
 current_dir = Path(__file__).parent
 nodes_dir = current_dir / "py"
 
-# Add both current and nodes directories to sys.path
-for path in [current_dir, nodes_dir]:
-    if str(path) not in sys.path:
+for path in (current_dir, nodes_dir):
+    if path.exists() and str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-# Initialize mappings
 NODE_CLASS_MAPPINGS = {}
 NODE_DISPLAY_NAME_MAPPINGS = {}
 WEB_DIRECTORY = "./web"
 
+
 def load_nodes():
-    """Automatically discover and load node definitions"""
     if not nodes_dir.exists():
         return
     for file in sorted(nodes_dir.glob("*.py")):
@@ -43,7 +40,7 @@ def load_nodes():
         except Exception as e:
             print(f"[{__repo_name__}] Error loading {file.stem}: {e}")
 
-# Load all nodes
+
 load_nodes()
 
 __all__ = ["NODE_CLASS_MAPPINGS", "NODE_DISPLAY_NAME_MAPPINGS", "WEB_DIRECTORY"]
