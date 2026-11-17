@@ -1,5 +1,10 @@
 # ComfyUI-RMBG Update Log
 
+## V3.3.1 (2026/11/16)
+### Bug Fixes
+- **Offline GroundingDINO**: Resolve local `bert-base-uncased` from `ComfyUI/models/` or local Hugging Face cache without pinging `huggingface.co` on every run. ([#224](https://github.com/1038lab/ComfyUI-RMBG/issues/224))
+- **Faster Previews**: Use `compress_level=1` and `folder_paths.get_save_image_path` in preview nodes to match native `PreviewImage` speed. ([#223](https://github.com/1038lab/ComfyUI-RMBG/issues/223))
+- **Finegrain Box Segmenter**: Make `refiners` optional in `requirements.txt` / `pyproject.toml` with GitHub install guidance. ([#221](https://github.com/1038lab/ComfyUI-RMBG/issues/221))
 ## V3.3.0 (2026/10/20)
 ### New Nodes
 - **Canvas (RMBG)**: An interactive multi-layer image compositing studio built directly into the ComfyUI node canvas:
