@@ -1,11 +1,19 @@
 # ComfyUI-RMBG
 
-A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, VRMBG-3.0, FeyNoBg, Finegrain Box Segmenter, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte, SAM, SAM2, SAM3, Florence-2, YOLOv8/YOLO11, Big-Lama, and GroundingDINO, while also incorporating real-time background replacement, instant VRAM unloading, and enhanced edge detection for improved accuracy.
+A sophisticated ComfyUI custom node engineered for advanced image background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-3.0, RMBG-2.0, VRMBG-3.0, MultiMatte, FeyNoBg, Finegrain Box Segmenter, INSPYRENET, BEN, BEN2, BiRefNet, Lucida, SDMatte, SAM, SAM2, SAM3, Florence-2, YOLOv8/YOLO11, Big-Lama, and GroundingDINO, while also incorporating real-time background replacement, instant VRAM unloading, and enhanced edge detection for improved accuracy.
 
 ## News & Updates
+- **2026/11/23**: Update ComfyUI-RMBG to **v3.4.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v340-20261123) )
+
+![RMBG_V3](example_workflows/RMBG_V3.jpg)
+  - Added `RMBG-3.0 (RMBG)` for studio-grade soft transparency on fine hair, fur, glass, and cluttered backgrounds using ComfyUI's native model loaders ([Workflow](example_workflows/RMBG_V3.json)).
+
+  ![MultiMatte](example_workflows/MultiMatte.jpg)
+  - Added `MultiMatte (RMBG)` for prompt-guided soft alpha cutouts — extract any specific object or leave blank for automatic subject cutout with zero extra dependencies ([Workflow](example_workflows/MultiMatte.json)).
+  - Synchronized 7-language UI translations across all 49 nodes.
+
 - **2026/11/16**: Update ComfyUI-RMBG to **v3.3.1** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v331-20261116) )
 - **2026/10/20**: Update ComfyUI-RMBG to **v3.3.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v330-20261020) )
-  ![V3 3 0_nodes](https://github.com/user-attachments/assets/97138882-e084-43cf-a6d2-8745981109f3)
   - Added Canvas (RMBG) interactive multi-layer compositing studio with aspect-locked transform gizmos and dynamic layer slots.
   - Added VRMBG (Video Background Removal) node for flicker-free sequential video matting.
   - Added FeyNoBg (Ultra-Fine Matting) node with deepened Swin-L architecture for fine hairs and semi-transparent subjects.
@@ -14,7 +22,7 @@ A sophisticated ComfyUI custom node engineered for advanced image background rem
   - Rebuilt Florence-2 on a native local PyTorch architecture (100% offline, zero remote code vulnerabilities, removed matplotlib).
   - Native FP16 acceleration for RMBG-2.0 and BiRefNet with automatic intermediate VRAM clearing.
 - **2026/09/30**: Update ComfyUI-RMBG to **v3.2.0** ( [update.md](https://github.com/1038lab/ComfyUI-RMBG/blob/main/update.md#v320-20260930) )
-  ![v3 2 0_sam3](https://github.com/user-attachments/assets/9b165789-a291-4df0-a147-67cca8011262)
+  ![v2.9.4_sam3](https://github.com/user-attachments/assets/9b165789-a291-4df0-a147-67cca8011262)
   - Upgraded to new `SAM3 Multiplex` segmentation node with native `safetensors` support (`sam3.safetensors`, `sam3.1_multiplex_fp16.safetensors`)
   - Added `unload_model` toggle across all nodes for instant GPU VRAM release
   - Added New `Resolution Selector` & `Image Compare` nodes
@@ -191,10 +199,13 @@ https://github.com/user-attachments/assets/7faa00d3-bbe2-42b8-95ed-2c830a1ff04f
 ![comfyui-rmbg version compare](https://github.com/user-attachments/assets/2d23cf42-ca74-49e5-a8bf-9de377bd71aa)
 
 ## Features
-- Background Removal (RMBG Node)
-  - Multiple models: RMBG-2.0, INSPYRENET, BEN, BEN2
-  - Various background options
+- Background Removal (RMBG & RMBG-3.0 Nodes)
+  - Multiple models: RMBG-3.0 (FP8 / NVFP4 / BF16 via ComfyUI native `Fibo 2.0`), RMBG-2.0, INSPYRENET, BEN, BEN2
+  - Various background options (`Alpha` / `Color`), `refine_foreground`, and selective `unload_model`
   - Batch processing support
+
+- Promptable Alpha Matting (MultiMatte)
+  - Text-prompted continuous alpha matting built on SAM 3 (`1038lab/MultiMatte`) for hair, glass, and semi-transparent subjects
   
 - Object Segmentation (Segment Node)
   - Text-prompted object detection
@@ -254,6 +265,8 @@ install requirment.txt in the ComfyUI-RMBG folder
 
 ### 4. Manually download the models:
 - Most models can be automatically downloaded to `ComfyUI/models/RMBG/` on first use. VRMBG-3.0 requires manual download due to official BRIA license terms.
+- Manually download the RMBG-3.0 weights from [1038lab/RMBG-3.0](https://huggingface.co/1038lab/RMBG-3.0) (`RMBG-3.0-fp8.safetensors`, `RMBG-3.0-nvfp4.safetensors`, or `RMBG-3.0-bf16.safetensors`) into `/ComfyUI/models/diffusion_models/`, paired with `qwen3vl_4b` ([Comfy-Org/Qwen3-VL](https://huggingface.co/Comfy-Org/Qwen3-VL), `Load CLIP` type: `fibo2`) in `/ComfyUI/models/text_encoders/` and [`flux2-vae.safetensors`](https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors) in `/ComfyUI/models/vae/` (see [RMBG-3.0 Setup](#rmbg-30) for direct links).
+- Manually download the MultiMatte model from [1038lab/MultiMatte](https://huggingface.co/1038lab/MultiMatte) (`MultiMatte-bf16.safetensors`, `MultiMatte-fp8.safetensors`, or `MultiMatte.safetensors`) into `/ComfyUI/models/RMBG/MultiMatte` (or let the node auto-download on first run).
 - Manually download the RMBG-2.0 model by visiting this [link](https://huggingface.co/1038lab/RMBG-2.0), then download the files and place them in the `/ComfyUI/models/RMBG/RMBG-2.0` folder.
 - Manually download the VRMBG-3.0 model by visiting official [briaai/VRMBG-3.0](https://huggingface.co/briaai/VRMBG-3.0), then download the files (`config.json`, `model.safetensors`, `model.py`, `vrmbg3_config.py`) and place them in the `/ComfyUI/models/RMBG/VRMBG-3.0` folder.
 - Manually download the FeyNoBg model by visiting this [link](https://huggingface.co/1038lab/FeyNobg), then download the files (`config.json`, `FeyNobg.safetensors`, `preprocessor_config.json`) and place them in the `/ComfyUI/models/RMBG/FeyNoBg` folder.
@@ -317,6 +330,32 @@ install requirment.txt in the ComfyUI-RMBG folder
 
 <details>
 <summary><h2>About Models</h2></summary>
+
+## RMBG-3.0
+![RMBG_V3](example_workflows/RMBG_V3.jpg)
+
+RMBG-3.0 brings BRIA AI's latest-generation background removal directly into ComfyUI using native `Load Diffusion Model`, `Load CLIP`, and `Load VAE` nodes ([Workflow](example_workflows/RMBG_V3.json)):
+- **Clean semi-transparent edges**: Captures wispy hair, pet fur, glassware, sheer fabrics, fences, and motion-blurred outlines with smooth, natural transparency instead of harsh cutout edges or white halos.
+- **Handles messy backgrounds**: Reliably separates subjects even when foreground and background colors are similar or cluttered.
+
+### Required Models & Setup (Manual Download)
+Unlike other nodes that auto-download, `RMBG-3.0 (RMBG)` uses ComfyUI's native loaders and requires **3 model files** placed in the folders below:
+
+| Component | ComfyUI Loader & Setting | Download (Click to Download) | Save To |
+| :--- | :--- | :--- | :--- |
+| **Diffusion Model** *(pick one)* | `Load Diffusion Model` | [RMBG-3.0-fp8.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-fp8.safetensors) *(7.57 GB, recommended)*<br>[RMBG-3.0-nvfp4.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-nvfp4.safetensors) *(5.43 GB, RTX 50 series)*<br>[RMBG-3.0-bf16.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-bf16.safetensors) *(15.14 GB, full BF16)* | `ComfyUI/models/diffusion_models/` |
+| **CLIP / Text Encoder** *(pick one)* | `Load CLIP` (**Type: `fibo2`**) | [qwen3vl_4b_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_4b_bf16.safetensors) *(recommended)*<br>[qwen3vl_4b_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors) *(lower VRAM)* | `ComfyUI/models/text_encoders/` |
+| **VAE** | `Load VAE` | [flux2-vae.safetensors](https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors) | `ComfyUI/models/vae/` |
+
+> Make sure to set `type` to **`fibo2`** in the `Load CLIP` node, then connect `MODEL`, `CLIP`, and `VAE` directly to `RMBG-3.0 (RMBG)`.
+
+## MultiMatte
+![MultiMatte](example_workflows/MultiMatte.jpg)
+
+MultiMatte lets you extract fine, hair-level cutouts of either the main subject or any specific part of an image just by typing what you want ([1038lab/MultiMatte](https://huggingface.co/1038lab/MultiMatte) | [Workflow](example_workflows/MultiMatte.json)):
+- **Cut out anything with simple text — or leave it blank**: Type what you want to keep (e.g., `"person"`, `"woman in red"`, `"flowing hair"`, `"glass bottle"`, `"wedding veil"`), or leave the prompt empty to automatically extract the main foreground subject.
+- **Soft, natural edges instead of jagged SAM cutouts**: Unlike standard segmentation masks that cut with hard edges, MultiMatte preserves delicate strands of hair, fur, and semi-transparent materials, with built-in edge color cleanup to prevent dark or colored fringes.
+- **Plug-and-play**: Automatically downloads your chosen size (`MultiMatte-bf16 (1.57GB)` default, `MultiMatte-fp8 (0.84GB)` for smaller downloads, or `MultiMatte-fp32 (3.13GB)`) into `ComfyUI/models/RMBG/MultiMatte/` without needing any extra third-party packages or breaking existing ComfyUI environments.
 
 ## RMBG-2.0
 RMBG-2.0 is is developed by BRIA AI and uses the BiRefNet architecture which includes:
@@ -468,6 +507,8 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
   - Ensure image outputs are connected and upstream nodes ran successfully
 
 ## Credits
+- RMBG-3.0: https://huggingface.co/briaai/RMBG-3.0 (Quantized mirror: https://huggingface.co/1038lab/RMBG-3.0)
+- MultiMatte: https://huggingface.co/feyninc/multimatte (Mirror: https://huggingface.co/1038lab/MultiMatte)
 - RMBG-2.0: https://huggingface.co/briaai/RMBG-2.0
 - VRMBG-3.0: https://huggingface.co/briaai/VRMBG-3.0
 - FeyNoBg: https://huggingface.co/1038lab/FeyNobg
@@ -499,4 +540,4 @@ GroundingDINO is a model for text-prompted object detection and segmentation, of
 If this custom node helps you or you like my work, please give me ⭐ on this repo! It's a great encouragement for my efforts!
 
 ## License
-GPL-3.0 License<img width="1527" height="1121" alt="2026-10-20-00-12-39" src="https://github.com/user-attachments/assets/7c6da7e5-d324-48e8-b655-5c567360fff6" />
+GPL-3.0 License

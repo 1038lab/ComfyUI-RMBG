@@ -1,10 +1,27 @@
 # ComfyUI-RMBG Update Log
 
+## V3.4.0 (2026/11/23)
+### New Nodes
+- **RMBG-3.0 (`AILab_RMBG3`)** ([README Details](README.md#rmbg-30) | [Workflow](example_workflows/RMBG_V3.json)):
+  ![RMBG_V3](example_workflows/RMBG_V3.jpg)
+  - **Next-Level Edge Quality**: Tackles the hardest background removal cases where older models struggle — wispy hair, pet fur, glassware, sheer fabrics, fences, motion blur, and busy backgrounds — delivering clean, natural transparency without white halos.
+  - **Native ComfyUI Workflow**: Plugs directly into ComfyUI's built-in `Load Diffusion Model`, `Load CLIP (fibo2)`, and `Load VAE (flux2-vae)` loaders, with `sensitivity`, `refine_foreground`, and selective `unload_model` for instant VRAM recovery.
+  - **Choose Your Size**: Available at [1038lab/RMBG-3.0](https://huggingface.co/1038lab/RMBG-3.0) in `NVFP4` (5.43 GB, RTX 50 series), `FP8` (7.57 GB), and `BF16` (15.14 GB).
+- **MultiMatte (`AILab_MultiMatte`)** ([README Details](README.md#multimatte) | [Workflow](example_workflows/MultiMatte.json)):
+  ![MultiMatte](example_workflows/MultiMatte.jpg)
+  - **Cut Out Anything by Text (or One-Click Auto)**: Type what you want to extract (e.g., `"flowing hair"`, `"glass bottle"`, `"woman in red"`) to isolate specific subjects or transparent objects — or leave it blank to automatically cut out the main subject.
+  - **Soft Hair-Level Edges**: Preserves fine hairs and semi-transparent details cleanly instead of producing jagged binary edges, with built-in foreground color refinement to prevent edge color bleed.
+  - **Zero Dependency Hassle**: Works out of the box inside existing ComfyUI setups with no extra third-party library installs or package upgrades needed. Auto-downloads `MultiMatte-bf16 (1.57GB)` (default), `MultiMatte-fp8 (0.84GB)`, or `MultiMatte-fp32 (3.13GB)` into `ComfyUI/models/RMBG/MultiMatte/`.
+
+### Improvements
+- **Localization Sync**: Synchronized 7-language UI translations (`en`, `zh`, `zh-TW`, `ja`, `ko`, `fr`, `ru`) across all 49 nodes.
+
 ## V3.3.1 (2026/11/16)
 ### Bug Fixes
 - **Offline GroundingDINO**: Resolve local `bert-base-uncased` from `ComfyUI/models/` or local Hugging Face cache without pinging `huggingface.co` on every run. ([#224](https://github.com/1038lab/ComfyUI-RMBG/issues/224))
 - **Faster Previews**: Use `compress_level=1` and `folder_paths.get_save_image_path` in preview nodes to match native `PreviewImage` speed. ([#223](https://github.com/1038lab/ComfyUI-RMBG/issues/223))
 - **Finegrain Box Segmenter**: Make `refiners` optional in `requirements.txt` / `pyproject.toml` with GitHub install guidance. ([#221](https://github.com/1038lab/ComfyUI-RMBG/issues/221))
+
 ## V3.3.0 (2026/10/20)
 ### New Nodes
 - **Canvas (RMBG)**: An interactive multi-layer image compositing studio built directly into the ComfyUI node canvas:
