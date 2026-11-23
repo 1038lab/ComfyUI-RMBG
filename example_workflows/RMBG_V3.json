@@ -1,0 +1,568 @@
+{
+  "id": "21b3850c-1f26-4a92-9ba2-47900b124fab",
+  "revision": 0,
+  "last_node_id": 8,
+  "last_link_id": 6,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "AILab_RMBG3",
+      "pos": [
+        -952.3474441620523,
+        51.20407453056489
+      ],
+      "size": [
+        340,
+        360
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 3
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            6
+          ]
+        },
+        {
+          "name": "MASK_IMAGE",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_RMBG3",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        1,
+        0,
+        0,
+        false,
+        false,
+        false,
+        4,
+        90174295409316,
+        "randomize",
+        "Alpha",
+        "#222222"
+      ],
+      "widgets_values_named": {
+        "sensitivity": 1,
+        "mask_blur": 0,
+        "mask_offset": 0,
+        "invert_output": false,
+        "refine_foreground": false,
+        "unload_model": false,
+        "steps": 4,
+        "seed": 90174295409316,
+        "control_after_generate": "randomize",
+        "background": "Alpha",
+        "background_color": "#222222"
+      },
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 2,
+      "type": "UNETLoader",
+      "pos": [
+        -1293.4169393283491,
+        51.20407453056489
+      ],
+      "size": [
+        329.06949516629686,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.46.1",
+        "Node name for S&R": "UNETLoader",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        "rmbg-3.0-bf16.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "rmbg-3.0-bf16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 3,
+      "type": "CLIPLoader",
+      "pos": [
+        -1293.4169393283491,
+        175.2040745305649
+      ],
+      "size": [
+        326.85436867684575,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.46.1",
+        "Node name for S&R": "CLIPLoader",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        "qwen3vl_4b_fp8_scaled.safetensors",
+        "fibo2",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+        "type": "fibo2",
+        "device": "default"
+      }
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [
+        -1293.4169393283491,
+        323.20407453056487
+      ],
+      "size": [
+        324.63924218739464,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.46.1",
+        "Node name for S&R": "VAELoader",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        "flux2-vae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "flux2-vae.safetensors"
+      }
+    },
+    {
+      "id": 5,
+      "type": "AILab_LoadImage",
+      "pos": [
+        -1628.3063919426545,
+        51.20407453056489
+      ],
+      "size": [
+        322.88945261430524,
+        758.6438650520885
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_LoadImage",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        "",
+        "a38aeb65-905c-4cc2-96c6-6e75e565cf3c.png",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "widgets_values_named": {
+        "image_path_or_URL": "",
+        "image": "a38aeb65-905c-4cc2-96c6-6e75e565cf3c.png",
+        "upscale_method": "lanczos",
+        "megapixels": 0,
+        "scale_by": 1,
+        "resize_mode": "longest_side",
+        "size": 0,
+        "upload": "image"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 6,
+      "type": "AILab_Preview",
+      "pos": [
+        -600.3474441620523,
+        51.20407453056489
+      ],
+      "size": [
+        1220.6761840476272,
+        950.3598355461731
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 5
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {},
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 7,
+      "type": "MarkdownNote",
+      "pos": [
+        -2044.7495834141355,
+        52.36489459157931
+      ],
+      "size": [
+        375.5393704478422,
+        633.711873968624
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "8.0.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Guide: [ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG)\n\n## Model Links\n\n- [Hugging Face: 1038lab/RMBG-3.0](https://huggingface.co/1038lab/RMBG-3.0) (Official: [briaai/RMBG-3.0](https://huggingface.co/briaai/RMBG-3.0))\n\n**diffusion_models** *(pick one)*\n\n- [RMBG-3.0-fp8.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-fp8.safetensors) *(7.57 GB, recommended)*\n- [RMBG-3.0-nvfp4.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-nvfp4.safetensors) *(5.43 GB, RTX 50 series)*\n- [RMBG-3.0-bf16.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-bf16.safetensors) *(15.14 GB, full BF16)*\n\n**text_encoders** *(pick one)*\n\n- [qwen3vl_4b_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_4b_bf16.safetensors) *(recommended)*\n- [qwen3vl_4b_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors) *(lower VRAM)*\n\n**vae**\n\n- [flux2-vae.safetensors](https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors)\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 diffusion_models/\n│   │   └── RMBG-3.0-fp8.safetensors   # or nvfp4 / bf16\n│   ├── 📂 text_encoders/\n│   │   └── qwen3vl_4b_bf16.safetensors # or fp8_scaled\n│   └── 📂 vae/\n│       └── flux2-vae.safetensors\n```\n\n## Loader & Node Settings\n\n- In **Load CLIP**, set **`type` = `fibo2`**, then connect `MODEL`, `CLIP`, and `VAE` directly to **RMBG-3.0 (RMBG)**.\n- Keep **`steps` = `4`** (RMBG-3.0 is distilled for 4 steps).\n- Lower **`sensitivity`** to boost semi-transparent foregrounds (wispy hair, fur, glassware, sheer fabrics); enable **`refine_foreground`** to remove edge color fringes and **`unload_model`** to release the diffusion model from VRAM after each run.\n\n## Report Issue\n\nNote: Please update ComfyUI ([guide](https://docs.comfy.org/installation/update_comfyui)) and **ComfyUI-RMBG** to the latest version first.\n\n- Node / Workflow issues: [ComfyUI-RMBG/issues](https://github.com/1038lab/ComfyUI-RMBG/issues)"
+      ],
+      "widgets_values_named": {
+        "text": "Guide: [ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG)\n\n## Model Links\n\n- [Hugging Face: 1038lab/RMBG-3.0](https://huggingface.co/1038lab/RMBG-3.0) (Official: [briaai/RMBG-3.0](https://huggingface.co/briaai/RMBG-3.0))\n\n**diffusion_models** *(pick one)*\n\n- [RMBG-3.0-fp8.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-fp8.safetensors) *(7.57 GB, recommended)*\n- [RMBG-3.0-nvfp4.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-nvfp4.safetensors) *(5.43 GB, RTX 50 series)*\n- [RMBG-3.0-bf16.safetensors](https://huggingface.co/1038lab/RMBG-3.0/resolve/main/RMBG-3.0-bf16.safetensors) *(15.14 GB, full BF16)*\n\n**text_encoders** *(pick one)*\n\n- [qwen3vl_4b_bf16.safetensors](https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_4b_bf16.safetensors) *(recommended)*\n- [qwen3vl_4b_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors) *(lower VRAM)*\n\n**vae**\n\n- [flux2-vae.safetensors](https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors)\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 diffusion_models/\n│   │   └── RMBG-3.0-fp8.safetensors   # or nvfp4 / bf16\n│   ├── 📂 text_encoders/\n│   │   └── qwen3vl_4b_bf16.safetensors # or fp8_scaled\n│   └── 📂 vae/\n│       └── flux2-vae.safetensors\n```\n\n## Loader & Node Settings\n\n- In **Load CLIP**, set **`type` = `fibo2`**, then connect `MODEL`, `CLIP`, and `VAE` directly to **RMBG-3.0 (RMBG)**.\n- Keep **`steps` = `4`** (RMBG-3.0 is distilled for 4 steps).\n- Lower **`sensitivity`** to boost semi-transparent foregrounds (wispy hair, fur, glassware, sheer fabrics); enable **`refine_foreground`** to remove edge color fringes and **`unload_model`** to release the diffusion model from VRAM after each run.\n\n## Report Issue\n\nNote: Please update ComfyUI ([guide](https://docs.comfy.org/installation/update_comfyui)) and **ComfyUI-RMBG** to the latest version first.\n\n- Node / Workflow issues: [ComfyUI-RMBG/issues](https://github.com/1038lab/ComfyUI-RMBG/issues)"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 8,
+      "type": "MarkdownNote",
+      "pos": [
+        -2607.313708691509,
+        44.790348236439584
+      ],
+      "size": [
+        529.8908539096174,
+        710.8876655981904
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "8.0.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "## RMBG-3.0 capabilities and limits\n\nSources: [briaai/RMBG-3.0](https://huggingface.co/briaai/RMBG-3.0), [1038lab/RMBG-3.0](https://huggingface.co/1038lab/RMBG-3.0), and `AILab_RMBG3` node implementation.\n\n### Resolution\n\n| Item | Behavior |\n|------|----------|\n| Internal processing area | **~1M pixels (`1024×1024` target area)** |\n| Aspect ratio | Arbitrary; auto-snapped to nearest aspect-matched **multiple of 16** |\n| Output resolution | Restored to **original input image size** via Lanczos |\n\n### Strengths\n\n- **Fibo 2.0 Diffusion Matting**: Built on BRIA RMBG-3.0 with FLUX.2 VAE (`128` latent channels) and `qwen3vl_4b` (`type = fibo2`).\n- **Studio-Grade Soft Transparency**: Captures wispy hair, pet fur, glassware, sheer fabrics, fences, and motion blur with smooth grayscale alpha gradients instead of hard binary cutouts.\n- **Cluttered Backgrounds**: Separates subjects cleanly even when foreground and background share similar colors.\n- **Native ComfyUI Caching**: Uses standard `Load Diffusion Model`, `Load CLIP`, and `Load VAE`; `unload_model` unloads only the diffusion model while keeping CLIP and VAE cached.\n\n### Limits / notes\n\n- **Strict Loader Requirements**: `Load CLIP` must be set to `type = fibo2` (`46080` text dims), and `Load VAE` must use `flux2-vae.safetensors` (`128` channels) — incompatible loaders will raise a runtime error.\n- **Manual Download Only**: Unlike other RMBG nodes, weights do not auto-download (`NVFP4` 5.43 GB for RTX 50 series, `FP8` 7.57 GB recommended, `BF16` 15.14 GB).\n- **Semi-Transparent Details**: Lower `sensitivity` (below `1.0`) to boost faint hair or glass transparency; enable `refine_foreground` if edge color fringes appear.\n- **VRAM Management**: If VRAM is tight, use `RMBG-3.0-fp8` / `nvfp4` with `qwen3vl_4b_fp8_scaled`, and enable `unload_model`.\n\n---\n\n## Sampling settings (built-in node defaults)\n\n| Setting | Node Value | Notes |\n|---------|------------|-------|\n| Steps | `4` *(range: 1–20)* | Distilled for 4-step inference |\n| CFG | `1.0` *(fixed)* | Internal flow-matching default |\n| Sampler | `euler` *(fixed)* | Built-in `common_ksampler` |\n| Scheduler | `simple` *(fixed)* | Built-in `common_ksampler` |\n| Denoise | `1.0` *(fixed)* | Full matte generation |\n\n`AILab_RMBG3` runs the distilled 4-step sampling loop internally, so no external `KSampler` node is needed. Increasing `steps` slightly above `4` rarely improves quality and slows execution."
+      ],
+      "widgets_values_named": {
+        "text": "## RMBG-3.0 capabilities and limits\n\nSources: [briaai/RMBG-3.0](https://huggingface.co/briaai/RMBG-3.0), [1038lab/RMBG-3.0](https://huggingface.co/1038lab/RMBG-3.0), and `AILab_RMBG3` node implementation.\n\n### Resolution\n\n| Item | Behavior |\n|------|----------|\n| Internal processing area | **~1M pixels (`1024×1024` target area)** |\n| Aspect ratio | Arbitrary; auto-snapped to nearest aspect-matched **multiple of 16** |\n| Output resolution | Restored to **original input image size** via Lanczos |\n\n### Strengths\n\n- **Fibo 2.0 Diffusion Matting**: Built on BRIA RMBG-3.0 with FLUX.2 VAE (`128` latent channels) and `qwen3vl_4b` (`type = fibo2`).\n- **Studio-Grade Soft Transparency**: Captures wispy hair, pet fur, glassware, sheer fabrics, fences, and motion blur with smooth grayscale alpha gradients instead of hard binary cutouts.\n- **Cluttered Backgrounds**: Separates subjects cleanly even when foreground and background share similar colors.\n- **Native ComfyUI Caching**: Uses standard `Load Diffusion Model`, `Load CLIP`, and `Load VAE`; `unload_model` unloads only the diffusion model while keeping CLIP and VAE cached.\n\n### Limits / notes\n\n- **Strict Loader Requirements**: `Load CLIP` must be set to `type = fibo2` (`46080` text dims), and `Load VAE` must use `flux2-vae.safetensors` (`128` channels) — incompatible loaders will raise a runtime error.\n- **Manual Download Only**: Unlike other RMBG nodes, weights do not auto-download (`NVFP4` 5.43 GB for RTX 50 series, `FP8` 7.57 GB recommended, `BF16` 15.14 GB).\n- **Semi-Transparent Details**: Lower `sensitivity` (below `1.0`) to boost faint hair or glass transparency; enable `refine_foreground` if edge color fringes appear.\n- **VRAM Management**: If VRAM is tight, use `RMBG-3.0-fp8` / `nvfp4` with `qwen3vl_4b_fp8_scaled`, and enable `unload_model`.\n\n---\n\n## Sampling settings (built-in node defaults)\n\n| Setting | Node Value | Notes |\n|---------|------------|-------|\n| Steps | `4` *(range: 1–20)* | Distilled for 4-step inference |\n| CFG | `1.0` *(fixed)* | Internal flow-matching default |\n| Sampler | `euler` *(fixed)* | Built-in `common_ksampler` |\n| Scheduler | `simple` *(fixed)* | Built-in `common_ksampler` |\n| Denoise | `1.0` *(fixed)* | Full matte generation |\n\n`AILab_RMBG3` runs the distilled 4-step sampling loop internally, so no external `KSampler` node is needed. Increasing `steps` slightly above `4` rarely improves quality and slows execution."
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      1,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      3,
+      0,
+      1,
+      1,
+      "CLIP"
+    ],
+    [
+      3,
+      4,
+      0,
+      1,
+      2,
+      "VAE"
+    ],
+    [
+      4,
+      5,
+      0,
+      1,
+      3,
+      "IMAGE"
+    ],
+    [
+      5,
+      1,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      6,
+      1,
+      1,
+      6,
+      1,
+      "MASK"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "ds": {
+      "scale": 0.6727499949329143,
+      "offset": [
+        2702.7802536915187,
+        405.46530052265314
+      ]
+    },
+    "frontendVersion": "1.59.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4,
+  "seed_widgets": {
+    "1": 7
+  }
+}

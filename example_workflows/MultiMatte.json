@@ -1,0 +1,430 @@
+{
+  "id": "21b3850c-1f26-4a92-9ba2-47900b124fab",
+  "revision": 0,
+  "last_node_id": 18,
+  "last_link_id": 21,
+  "nodes": [
+    {
+      "id": 5,
+      "type": "AILab_LoadImage",
+      "pos": [
+        -1621.8629601223934,
+        59.187861576280085
+      ],
+      "size": [
+        322.88945261430524,
+        758.6438650520885
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            7
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "WIDTH",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "HEIGHT",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_LoadImage",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        "",
+        "image.jpg",
+        "lanczos",
+        0,
+        1,
+        "longest_side",
+        0,
+        "image"
+      ],
+      "widgets_values_named": {
+        "image_path_or_URL": "",
+        "image": "image.jpg",
+        "upscale_method": "lanczos",
+        "megapixels": 0,
+        "scale_by": 1,
+        "resize_mode": "longest_side",
+        "size": 0,
+        "upload": "image"
+      },
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 7,
+      "type": "MarkdownNote",
+      "pos": [
+        -2044.7495834141355,
+        52.36489459157931
+      ],
+      "size": [
+        390.9983440522933,
+        524.3101093079894
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "8.0.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Guide: [ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG)\n\n## Model Links\n\n- [Hugging Face: 1038lab/MultiMatte](https://huggingface.co/1038lab/MultiMatte)\n\n**RMBG / MultiMatte** *(auto-downloads on first run, or download manually — pick one)*\n\n- [MultiMatte-bf16.safetensors](https://huggingface.co/1038lab/MultiMatte/resolve/main/MultiMatte-bf16.safetensors) *(1.57 GB, default)*\n- [MultiMatte-fp8.safetensors](https://huggingface.co/1038lab/MultiMatte/resolve/main/MultiMatte-fp8.safetensors) *(0.84 GB, low VRAM)*\n- [MultiMatte.safetensors](https://huggingface.co/1038lab/MultiMatte/resolve/main/MultiMatte.safetensors) *(3.13 GB, full FP32)*\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   └── 📂 RMBG/\n│       └── 📂 MultiMatte/\n│           └── MultiMatte-bf16.safetensors   # or fp8 / MultiMatte.safetensors\n```\n\n## Prompt & Node Settings\n\n- **Text-guided or Auto**: Enter an English description in **`prompt`** (e.g., `flowing hair`, `glass bottle`, `woman in red`, `wedding veil`) to extract a specific target, or leave **`prompt`** empty to automatically matte the main foreground subject.\n- **Soft Hair-Level Edges**: Enable **`refine_foreground`** to prevent dark or colored fringes on fine hairs and semi-transparent edges; enable **`unload_model`** to free VRAM immediately after execution.\n\n## Report Issue\n\nNote: Please update ComfyUI ([guide](https://docs.comfy.org/installation/update_comfyui)) and **ComfyUI-RMBG** to the latest version first.\n\n- Node / Workflow issues: [ComfyUI-RMBG/issues](https://github.com/1038lab/ComfyUI-RMBG/issues)"
+      ],
+      "widgets_values_named": {
+        "text": "Guide: [ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG)\n\n## Model Links\n\n- [Hugging Face: 1038lab/MultiMatte](https://huggingface.co/1038lab/MultiMatte)\n\n**RMBG / MultiMatte** *(auto-downloads on first run, or download manually — pick one)*\n\n- [MultiMatte-bf16.safetensors](https://huggingface.co/1038lab/MultiMatte/resolve/main/MultiMatte-bf16.safetensors) *(1.57 GB, default)*\n- [MultiMatte-fp8.safetensors](https://huggingface.co/1038lab/MultiMatte/resolve/main/MultiMatte-fp8.safetensors) *(0.84 GB, low VRAM)*\n- [MultiMatte.safetensors](https://huggingface.co/1038lab/MultiMatte/resolve/main/MultiMatte.safetensors) *(3.13 GB, full FP32)*\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   └── 📂 RMBG/\n│       └── 📂 MultiMatte/\n│           └── MultiMatte-bf16.safetensors   # or fp8 / MultiMatte.safetensors\n```\n\n## Prompt & Node Settings\n\n- **Text-guided or Auto**: Enter an English description in **`prompt`** (e.g., `flowing hair`, `glass bottle`, `woman in red`, `wedding veil`) to extract a specific target, or leave **`prompt`** empty to automatically matte the main foreground subject.\n- **Soft Hair-Level Edges**: Enable **`refine_foreground`** to prevent dark or colored fringes on fine hairs and semi-transparent edges; enable **`unload_model`** to free VRAM immediately after execution.\n\n## Report Issue\n\nNote: Please update ComfyUI ([guide](https://docs.comfy.org/installation/update_comfyui)) and **ComfyUI-RMBG** to the latest version first.\n\n- Node / Workflow issues: [ComfyUI-RMBG/issues](https://github.com/1038lab/ComfyUI-RMBG/issues)"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 8,
+      "type": "MarkdownNote",
+      "pos": [
+        -2607.313708691509,
+        44.790348236439584
+      ],
+      "size": [
+        529.8908539096174,
+        710.8876655981904
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "8.0.1",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "## MultiMatte capabilities and limits\n\nSources: [1038lab/MultiMatte](https://huggingface.co/1038lab/MultiMatte) and `AILab_MultiMatte` node implementation.\n\n### Resolution\n\n| Item | Behavior |\n|------|----------|\n| Internal processing size | **Fixed `1008×1008`** (SAM 3 vision backbone) |\n| Aspect ratio | Arbitrary input supported |\n| Output resolution | Bilinearly interpolated back to **original input image size** |\n\n### Strengths\n\n- **Promptable or One-Click Auto**: Type an English prompt (e.g., `flowing hair`, `glass bottle`, `woman in red`, `wedding veil`) to isolate a specific target, or leave `prompt` empty to automatically matte the main foreground subject.\n- **Hair-Level Continuous Alpha**: Produces smooth, soft alpha mattes instead of jagged SAM binary masks.\n- **Zero Extra Dependencies**: Runs out of the box using bundled SAM 3 code with no external package installs or upgrades.\n- **Built-In Edge Cleanup**: `refine_foreground` is enabled by default (`True`) to remove dark or colored background bleed along semi-transparent edges.\n\n### Limits / notes\n\n- **English Prompts**: `prompt` should be written in English for best grounding accuracy.\n- **Fine Details on Very High-Res Images**: Because inference runs at `1008×1008`, ultra-thin details in 4K+ images may soften slightly; crop first when matting tiny distant objects.\n- **Auto-Download Footprint**: First run downloads the selected checkpoint into `ComfyUI/models/RMBG/MultiMatte/` (`BF16` 1.57 GB default, `FP8` 0.84 GB low VRAM, `FP32` 3.13 GB).\n- **Foreground Refinement Scope**: `refine_foreground` applies when `background` is set to `Alpha`.\n\n---\n\n## Inference & model settings (node defaults)\n\n| Setting | Default | Options / Range |\n|---------|---------|-----------------|\n| Model | `MultiMatte-bf16 (1.57GB)` | `bf16` (1.57 GB) / `fp8` (0.84 GB) / `fp32` (3.13 GB) |\n| Prompt | `\"\"` *(empty = auto)* | Defaults internally to `\"the main foreground subject\"` |\n| Precision (CUDA) | `float16` autocast | Automatic on CUDA devices |\n| Refine Foreground | `True` | Sub-pixel blur-fusion foreground color estimation |\n| Mask Blur / Offset | `0` / `0` | Blur `0–64`, Offset `-64–64` px |"
+      ],
+      "widgets_values_named": {
+        "text": "## MultiMatte capabilities and limits\n\nSources: [1038lab/MultiMatte](https://huggingface.co/1038lab/MultiMatte) and `AILab_MultiMatte` node implementation.\n\n### Resolution\n\n| Item | Behavior |\n|------|----------|\n| Internal processing size | **Fixed `1008×1008`** (SAM 3 vision backbone) |\n| Aspect ratio | Arbitrary input supported |\n| Output resolution | Bilinearly interpolated back to **original input image size** |\n\n### Strengths\n\n- **Promptable or One-Click Auto**: Type an English prompt (e.g., `flowing hair`, `glass bottle`, `woman in red`, `wedding veil`) to isolate a specific target, or leave `prompt` empty to automatically matte the main foreground subject.\n- **Hair-Level Continuous Alpha**: Produces smooth, soft alpha mattes instead of jagged SAM binary masks.\n- **Zero Extra Dependencies**: Runs out of the box using bundled SAM 3 code with no external package installs or upgrades.\n- **Built-In Edge Cleanup**: `refine_foreground` is enabled by default (`True`) to remove dark or colored background bleed along semi-transparent edges.\n\n### Limits / notes\n\n- **English Prompts**: `prompt` should be written in English for best grounding accuracy.\n- **Fine Details on Very High-Res Images**: Because inference runs at `1008×1008`, ultra-thin details in 4K+ images may soften slightly; crop first when matting tiny distant objects.\n- **Auto-Download Footprint**: First run downloads the selected checkpoint into `ComfyUI/models/RMBG/MultiMatte/` (`BF16` 1.57 GB default, `FP8` 0.84 GB low VRAM, `FP32` 3.13 GB).\n- **Foreground Refinement Scope**: `refine_foreground` applies when `background` is set to `Alpha`.\n\n---\n\n## Inference & model settings (node defaults)\n\n| Setting | Default | Options / Range |\n|---------|---------|-----------------|\n| Model | `MultiMatte-bf16 (1.57GB)` | `bf16` (1.57 GB) / `fp8` (0.84 GB) / `fp32` (3.13 GB) |\n| Prompt | `\"\"` *(empty = auto)* | Defaults internally to `\"the main foreground subject\"` |\n| Precision (CUDA) | `float16` autocast | Automatic on CUDA devices |\n| Refine Foreground | `True` | Sub-pixel blur-fusion foreground color estimation |\n| Mask Blur / Offset | `0` / `0` | Blur `0–64`, Offset `-64–64` px |"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 9,
+      "type": "AILab_MultiMatte",
+      "pos": [
+        -1291.8614429657716,
+        -70.8121384237199
+      ],
+      "size": [
+        340,
+        292
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "prompt",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            8
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            9
+          ]
+        },
+        {
+          "name": "MASK_IMAGE",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_MultiMatte",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        "MultiMatte-fp8 (0.84GB)",
+        "",
+        0,
+        0,
+        false,
+        false,
+        true,
+        "Alpha",
+        "#222222"
+      ],
+      "widgets_values_named": {
+        "model": "MultiMatte-fp8 (0.84GB)",
+        "prompt": "",
+        "mask_blur": 0,
+        "mask_offset": 0,
+        "invert_output": false,
+        "refine_foreground": false,
+        "unload_model": true,
+        "background": "Alpha",
+        "background_color": "#222222"
+      },
+      "color": "#222e40",
+      "bgcolor": "#364254"
+    },
+    {
+      "id": 10,
+      "type": "AILab_Preview",
+      "pos": [
+        -939.8614429657716,
+        -70.8121384237199
+      ],
+      "size": [
+        1220.6761840476272,
+        950.3598355461731
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 8
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-rmbg",
+        "ver": "a1ca256ce5ef3d2d990935415bad76c4269aa80d",
+        "Node name for S&R": "AILab_Preview",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {},
+      "color": "#2e3e57",
+      "bgcolor": "#4b5b73"
+    },
+    {
+      "id": 11,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1621.8629601223934,
+        -70.8121384237199
+      ],
+      "size": [
+        318.00151715662173,
+        88
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.46.1",
+        "Node name for S&R": "PrimitiveStringMultiline",
+        "ue_properties": {
+          "version": "8.0.1",
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "title_regex": null,
+          "input_regex": null,
+          "group_regex": null,
+          "title_regex_invert": false,
+          "input_regex_invert": false,
+          "group_regex_invert": false,
+          "apply_to_unrepeated": 0,
+          "send_to_any": 0,
+          "string_to_combo": 0,
+          "repeated_type_rule": 0,
+          "group_restricted": 0,
+          "color_restricted": 0
+        }
+      },
+      "widgets_values": [
+        "woman and tiger"
+      ],
+      "widgets_values_named": {
+        "value": "woman and tiger"
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+    }
+  ],
+  "links": [
+    [
+      7,
+      5,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      8,
+      9,
+      0,
+      10,
+      0,
+      "IMAGE"
+    ],
+    [
+      9,
+      9,
+      1,
+      10,
+      1,
+      "MASK"
+    ],
+    [
+      10,
+      11,
+      0,
+      9,
+      1,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "ds": {
+      "scale": 0.8954302432557114,
+      "offset": [
+        1880.0011699793408,
+        440.98346366998305
+      ]
+    },
+    "frontendVersion": "1.59.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4,
+  "seed_widgets": {}
+}
