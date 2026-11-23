@@ -2581,5 +2581,145 @@
         "tooltip": "Output MASK_LIST tensor"
       }
     }
+  },
+  "AILab_RMBG3": {
+    "display_name": "RMBG-3.0 (RMBG)",
+    "description": "RMBG-3.0 background removal using ComfyUI native Fibo 2.0 MODEL, CLIP, and VAE.",
+    "inputs": {
+      "model": {
+        "name": "Model",
+        "tooltip": "RMBG-3.0 diffusion model loaded via Load Diffusion Model."
+      },
+      "clip": {
+        "name": "Clip",
+        "tooltip": "Fibo 2.0 text encoder (qwen3vl_4b, type=fibo2) loaded via Load CLIP."
+      },
+      "vae": {
+        "name": "Vae",
+        "tooltip": "FLUX.2 VAE (flux2-vae.safetensors) loaded via Load VAE."
+      },
+      "image": {
+        "name": "Image",
+        "tooltip": "Input image batch for RMBG-3.0 background removal."
+      },
+      "steps": {
+        "name": "Steps",
+        "tooltip": "Sampling steps (RMBG-3.0 is distilled for 4 steps)."
+      },
+      "seed": {
+        "name": "Seed",
+        "tooltip": "Random seed for sampling."
+      },
+      "mask_blur": {
+        "name": "Mask Blur",
+        "tooltip": "Gaussian blur radius for softening mask edges."
+      },
+      "mask_offset": {
+        "name": "Mask Offset",
+        "tooltip": "Expand (positive) or shrink (negative) the mask boundary in pixels."
+      },
+      "invert_output": {
+        "name": "Invert Output",
+        "tooltip": "Invert the output mask."
+      },
+      "background": {
+        "name": "Background",
+        "tooltip": "Output format: Alpha for transparent PNG, or Color to composite against background."
+      },
+      "background_color": {
+        "name": "Background Color",
+        "tooltip": "Hex background color used when background mode is set to Color."
+      },
+      "sensitivity": {
+        "name": "Sensitivity",
+        "tooltip": "Adjust matte detection strength (lower values boost semi-transparent foreground)."
+      },
+      "refine_foreground": {
+        "name": "Refine Foreground",
+        "tooltip": "Fast foreground color estimation to remove edge color fringes."
+      },
+      "unload_model": {
+        "name": "Unload Model",
+        "tooltip": "Unload the RMBG-3.0 diffusion model from VRAM after execution (keeps CLIP and VAE cached)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Output IMAGE tensor"
+      },
+      "1": {
+        "name": "MASK",
+        "tooltip": "Output MASK tensor"
+      },
+      "2": {
+        "name": "MASK_IMAGE",
+        "tooltip": "Output MASK_IMAGE tensor"
+      }
+    }
+  },
+  "AILab_MultiMatte": {
+    "display_name": "MultiMatte (RMBG)",
+    "description": "Promptable SAM3 alpha matting using 1038lab/MultiMatte.",
+    "inputs": {
+      "image": {
+        "name": "Image",
+        "tooltip": "Input image batch for promptable alpha matting."
+      },
+      "prompt": {
+        "name": "Prompt",
+        "tooltip": "Text prompt describing the target to matte. Leave empty to matte the main foreground subject."
+      },
+      "score_threshold": {
+        "name": "Score Threshold",
+        "tooltip": "Detection confidence threshold (lower = keep more details, higher = stricter)."
+      },
+      "mask_blur": {
+        "name": "Mask Blur",
+        "tooltip": "Gaussian blur radius for softening mask edges."
+      },
+      "mask_offset": {
+        "name": "Mask Offset",
+        "tooltip": "Expand (positive) or shrink (negative) the mask boundary in pixels."
+      },
+      "invert_output": {
+        "name": "Invert Output",
+        "tooltip": "Invert the output mask."
+      },
+      "refine_foreground": {
+        "name": "Refine Foreground",
+        "tooltip": "Sub-pixel foreground boundary refinement for fine hairs and semi-transparent edges."
+      },
+      "unload_model": {
+        "name": "Unload Model",
+        "tooltip": "Unload model weights from VRAM immediately after execution."
+      },
+      "background": {
+        "name": "Background",
+        "tooltip": "Output format: Alpha for transparent PNG, or Color to composite against background."
+      },
+      "background_color": {
+        "name": "Background Color",
+        "tooltip": "Hex background color used when background mode is set to Color."
+      },
+      "model": {
+        "name": "Model",
+        "tooltip": "Select model precision: BF16 (1.57GB, recommended), FP8 (0.84GB, low VRAM), or FP32 (3.13GB, full precision)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Output IMAGE tensor"
+      },
+      "1": {
+        "name": "MASK",
+        "tooltip": "Output MASK tensor"
+      },
+      "2": {
+        "name": "MASK_IMAGE",
+        "tooltip": "Output MASK_IMAGE tensor"
+      }
+    }
   }
 }

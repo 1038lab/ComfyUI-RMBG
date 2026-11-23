@@ -2578,5 +2578,145 @@
         "name": "マスク"
       }
     }
+  },
+  "AILab_RMBG3": {
+    "display_name": "RMBG-3.0 背景削除 (RMBG)",
+    "description": "ComfyUI ネイティブの Fibo 2.0 MODEL / CLIP / VAE で RMBG-3.0 を実行します。",
+    "inputs": {
+      "model": {
+        "name": "モデル",
+        "tooltip": "Load Diffusion Model で読み込んだ RMBG-3.0 モデル。"
+      },
+      "clip": {
+        "name": "CLIP",
+        "tooltip": "Load CLIP (type=fibo2) で読み込んだ qwen3vl_4b。"
+      },
+      "vae": {
+        "name": "VAE",
+        "tooltip": "Load VAE で読み込んだ flux2-vae.safetensors。"
+      },
+      "image": {
+        "name": "画像",
+        "tooltip": "RMBG-3.0 背景削除用の入力画像バッチ。"
+      },
+      "steps": {
+        "name": "ステップ数",
+        "tooltip": "サンプリングステップ数（RMBG-3.0 は 4 ステップ推奨）。"
+      },
+      "seed": {
+        "name": "シード",
+        "tooltip": "サンプリング用ランダムシード。"
+      },
+      "mask_blur": {
+        "name": "マスクぼかし",
+        "tooltip": "マスク境界を滑らかにするガウスぼかし半径。"
+      },
+      "mask_offset": {
+        "name": "マスクオフセット",
+        "tooltip": "マスク境界の拡張（正）または収縮（負）ピクセル数。"
+      },
+      "invert_output": {
+        "name": "出力を反転",
+        "tooltip": "出力マスクを反転します。"
+      },
+      "background": {
+        "name": "背景",
+        "tooltip": "出力形式：Alpha（透過）または Color（単色背景合成）。"
+      },
+      "background_color": {
+        "name": "背景色",
+        "tooltip": "背景が Color のときに使用する HEX カラー。"
+      },
+      "sensitivity": {
+        "name": "感度",
+        "tooltip": "マット検出強度を調整します（低い値で半透明の前景を強調）。"
+      },
+      "refine_foreground": {
+        "name": "前景エッジ補正",
+        "tooltip": "高速前景色推定によりエッジの色フリンジを除去します。"
+      },
+      "unload_model": {
+        "name": "モデルをアンロード",
+        "tooltip": "実行後に RMBG-3.0 本体のみ VRAM から解放します（CLIP と VAE は保持）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像",
+        "tooltip": "出力画像"
+      },
+      "1": {
+        "name": "マスク",
+        "tooltip": "出力マスク"
+      },
+      "2": {
+        "name": "マスク画像",
+        "tooltip": "出力マスク画像"
+      }
+    }
+  },
+  "AILab_MultiMatte": {
+    "display_name": "MultiMatte マッティング (RMBG)",
+    "description": "SAM3 ベースのプロンプト指定アルファマッティングノード（1038lab/MultiMatte）。",
+    "inputs": {
+      "image": {
+        "name": "画像",
+        "tooltip": "プロンプト指定マッティング用の入力画像バッチ。"
+      },
+      "prompt": {
+        "name": "プロンプト",
+        "tooltip": "切り抜く対象を表すテキスト。空の場合は主要な前景を切り抜きます。"
+      },
+      "score_threshold": {
+        "name": "スコアしきい値",
+        "tooltip": "検出の信頼度しきい値（低いほど細部を保持、高いほど厳格）。"
+      },
+      "mask_blur": {
+        "name": "マスクぼかし",
+        "tooltip": "マスク境界を滑らかにするガウスぼかし半径。"
+      },
+      "mask_offset": {
+        "name": "マスクオフセット",
+        "tooltip": "マスク境界の拡張（正）または収縮（負）ピクセル数。"
+      },
+      "invert_output": {
+        "name": "出力を反転",
+        "tooltip": "出力マスクを反転します。"
+      },
+      "refine_foreground": {
+        "name": "前景エッジ補正",
+        "tooltip": "細い髪や半透明の境界をサブピクセル単位で補正します。"
+      },
+      "unload_model": {
+        "name": "モデルをアンロード",
+        "tooltip": "実行直後に VRAM からモデルを解放します。"
+      },
+      "background": {
+        "name": "背景",
+        "tooltip": "出力形式：Alpha（透過）または Color（単色背景合成）。"
+      },
+      "background_color": {
+        "name": "背景色",
+        "tooltip": "背景が Color のときに使用する HEX カラー。"
+      },
+      "model": {
+        "name": "モデル",
+        "tooltip": "モデルの精度を選択：BF16（1.57GB、推奨）、FP8（0.84GB、低VRAM）、または FP32（3.13GB、フル精度）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "画像",
+        "tooltip": "出力画像"
+      },
+      "1": {
+        "name": "マスク",
+        "tooltip": "出力マスク"
+      },
+      "2": {
+        "name": "マスク画像",
+        "tooltip": "出力マスク画像"
+      }
+    }
   }
 }

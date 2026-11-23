@@ -2578,5 +2578,145 @@
         "name": "마스크"
       }
     }
+  },
+  "AILab_RMBG3": {
+    "display_name": "RMBG-3.0 배경 제거 (RMBG)",
+    "description": "ComfyUI 기본 Fibo 2.0 MODEL, CLIP, VAE를 사용하는 RMBG-3.0 배경 제거 노드.",
+    "inputs": {
+      "model": {
+        "name": "모델",
+        "tooltip": "Load Diffusion Model로 불러온 RMBG-3.0 모델."
+      },
+      "clip": {
+        "name": "CLIP",
+        "tooltip": "Load CLIP (type=fibo2)로 불러온 qwen3vl_4b."
+      },
+      "vae": {
+        "name": "VAE",
+        "tooltip": "Load VAE로 불러온 flux2-vae.safetensors."
+      },
+      "image": {
+        "name": "이미지",
+        "tooltip": "RMBG-3.0 배경 제거를 위한 입력 이미지 배치."
+      },
+      "steps": {
+        "name": "스텝 수",
+        "tooltip": "샘플링 스텝(RMBG-3.0은 4스텝 증류 모델)."
+      },
+      "seed": {
+        "name": "시드",
+        "tooltip": "샘플링 랜덤 시드."
+      },
+      "mask_blur": {
+        "name": "마스크 블러",
+        "tooltip": "마스크 가장자리를 부드럽게 하는 가우시안 블러 반경."
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋",
+        "tooltip": "마스크 경계 확장(양수) 또는 축소(음수) 픽셀."
+      },
+      "invert_output": {
+        "name": "출력 반전",
+        "tooltip": "출력 마스크를 반전합니다."
+      },
+      "background": {
+        "name": "배경",
+        "tooltip": "출력 형식: Alpha(투명 PNG) 또는 Color(단색 배경 합성)."
+      },
+      "background_color": {
+        "name": "배경 색상",
+        "tooltip": "배경이 Color일 때 사용할 HEX 색상."
+      },
+      "sensitivity": {
+        "name": "민감도",
+        "tooltip": "매트 감지 강도 조절(낮은 값은 반투명 전경을 강화)."
+      },
+      "refine_foreground": {
+        "name": "전경 가장자리 보정",
+        "tooltip": "빠른 전경 색상 추정으로 가장자리 색 번짐을 제거합니다."
+      },
+      "unload_model": {
+        "name": "모델 언로드",
+        "tooltip": "실행 후 RMBG-3.0 확산 모델만 VRAM에서 해제합니다(CLIP 및 VAE 유지)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지",
+        "tooltip": "출력 이미지"
+      },
+      "1": {
+        "name": "마스크",
+        "tooltip": "출력 마스크"
+      },
+      "2": {
+        "name": "마스크 이미지",
+        "tooltip": "출력 마스크 이미지"
+      }
+    }
+  },
+  "AILab_MultiMatte": {
+    "display_name": "MultiMatte 매팅 (RMBG)",
+    "description": "SAM3 기반 텍스트 프롬프트 알파 매팅 노드(1038lab/MultiMatte).",
+    "inputs": {
+      "image": {
+        "name": "이미지",
+        "tooltip": "프롬프트 기반 알파 매팅을 위한 입력 이미지 배치."
+      },
+      "prompt": {
+        "name": "프롬프트",
+        "tooltip": "매팅할 대상 설명 텍스트. 비워 두면 주요 전경을 추출합니다."
+      },
+      "score_threshold": {
+        "name": "점수 임계값",
+        "tooltip": "감지 신뢰도 임계값(낮을수록 세부 보존, 높을수록 엄격)."
+      },
+      "mask_blur": {
+        "name": "마스크 블러",
+        "tooltip": "마스크 가장자리를 부드럽게 하는 가우시안 블러 반경."
+      },
+      "mask_offset": {
+        "name": "마스크 오프셋",
+        "tooltip": "마스크 경계 확장(양수) 또는 축소(음수) 픽셀."
+      },
+      "invert_output": {
+        "name": "출력 반전",
+        "tooltip": "출력 마스크를 반전합니다."
+      },
+      "refine_foreground": {
+        "name": "전경 가장자리 보정",
+        "tooltip": "가는 머리카락과 반투명 경계를 서브픽셀 단위로 보정합니다."
+      },
+      "unload_model": {
+        "name": "모델 언로드",
+        "tooltip": "실행 직후 VRAM에서 모델 가중치를 해제합니다."
+      },
+      "background": {
+        "name": "배경",
+        "tooltip": "출력 형식: Alpha(투명 PNG) 또는 Color(단색 배경 합성)."
+      },
+      "background_color": {
+        "name": "배경 색상",
+        "tooltip": "배경이 Color일 때 사용할 HEX 색상."
+      },
+      "model": {
+        "name": "모델",
+        "tooltip": "모델 정밀도 선택: BF16(1.57GB, 권장), FP8(0.84GB, 저사양 VRAM) 또는 FP32(3.13GB, 전체 정밀도)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "이미지",
+        "tooltip": "출력 이미지"
+      },
+      "1": {
+        "name": "마스크",
+        "tooltip": "출력 마스크"
+      },
+      "2": {
+        "name": "마스크 이미지",
+        "tooltip": "출력 마스크 이미지"
+      }
+    }
   }
 }

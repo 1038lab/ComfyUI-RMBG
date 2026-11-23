@@ -2575,5 +2575,145 @@
         "name": "MASQUE"
       }
     }
+  },
+  "AILab_RMBG3": {
+    "display_name": "RMBG-3.0 (RMBG)",
+    "description": "Suppression d'arrière-plan RMBG-3.0 via MODEL, CLIP et VAE Fibo 2.0 natifs de ComfyUI.",
+    "inputs": {
+      "model": {
+        "name": "Modèle",
+        "tooltip": "Modèle RMBG-3.0 chargé via Load Diffusion Model."
+      },
+      "clip": {
+        "name": "CLIP",
+        "tooltip": "Encodeur Fibo 2.0 (qwen3vl_4b, type=fibo2) chargé via Load CLIP."
+      },
+      "vae": {
+        "name": "VAE",
+        "tooltip": "VAE FLUX.2 (flux2-vae.safetensors) chargé via Load VAE."
+      },
+      "image": {
+        "name": "Image",
+        "tooltip": "Lot d'images d'entrée pour RMBG-3.0."
+      },
+      "steps": {
+        "name": "Étapes",
+        "tooltip": "Étapes d'échantillonnage (4 étapes par défaut pour RMBG-3.0)."
+      },
+      "seed": {
+        "name": "Graine",
+        "tooltip": "Graine aléatoire pour l'échantillonnage."
+      },
+      "mask_blur": {
+        "name": "Flou du masque",
+        "tooltip": "Rayon du flou gaussien pour adoucir les bords."
+      },
+      "mask_offset": {
+        "name": "Décalage du masque",
+        "tooltip": "Dilater (positif) ou éroder (négatif) le masque en pixels."
+      },
+      "invert_output": {
+        "name": "Inverser la sortie",
+        "tooltip": "Inverse le masque de sortie."
+      },
+      "background": {
+        "name": "Arrière-plan",
+        "tooltip": "Format de sortie : Alpha (transparent) ou Color (fond uni)."
+      },
+      "background_color": {
+        "name": "Couleur d'arrière-plan",
+        "tooltip": "Code hexadécimal du fond lorsque Color est sélectionné."
+      },
+      "sensitivity": {
+        "name": "Sensibilité",
+        "tooltip": "Ajuste la détection du matte (plus bas = renforce la semi-transparence)."
+      },
+      "refine_foreground": {
+        "name": "Affiner le premier plan",
+        "tooltip": "Estimation rapide des couleurs du premier plan pour supprimer les franges."
+      },
+      "unload_model": {
+        "name": "Décharger le modèle",
+        "tooltip": "Décharge uniquement le modèle RMBG-3.0 de la VRAM (garde CLIP et VAE)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Image de sortie"
+      },
+      "1": {
+        "name": "MASQUE",
+        "tooltip": "Masque de sortie"
+      },
+      "2": {
+        "name": "IMAGE_MASQUE",
+        "tooltip": "Image du masque"
+      }
+    }
+  },
+  "AILab_MultiMatte": {
+    "display_name": "MultiMatte (RMBG)",
+    "description": "Détourage alpha SAM3 piloté par prompt texte (1038lab/MultiMatte).",
+    "inputs": {
+      "image": {
+        "name": "Image",
+        "tooltip": "Lot d'images d'entrée pour le détourage alpha."
+      },
+      "prompt": {
+        "name": "Invite",
+        "tooltip": "Description de la cible à détourer. Vide = sujet principal."
+      },
+      "score_threshold": {
+        "name": "Seuil de score",
+        "tooltip": "Seuil de confiance (plus bas = plus de détails, plus haut = plus strict)."
+      },
+      "mask_blur": {
+        "name": "Flou du masque",
+        "tooltip": "Rayon du flou gaussien pour adoucir les bords."
+      },
+      "mask_offset": {
+        "name": "Décalage du masque",
+        "tooltip": "Dilater (positif) ou éroder (négatif) le masque en pixels."
+      },
+      "invert_output": {
+        "name": "Inverser la sortie",
+        "tooltip": "Inverse le masque de sortie."
+      },
+      "refine_foreground": {
+        "name": "Affiner le premier plan",
+        "tooltip": "Affinage sous-pixel pour cheveux fins et zones semi-transparentes."
+      },
+      "unload_model": {
+        "name": "Décharger le modèle",
+        "tooltip": "Libère le modèle de la VRAM juste après l'exécution."
+      },
+      "background": {
+        "name": "Arrière-plan",
+        "tooltip": "Format de sortie : Alpha (transparent) ou Color (fond uni)."
+      },
+      "background_color": {
+        "name": "Couleur d'arrière-plan",
+        "tooltip": "Code hexadécimal du fond lorsque Color est sélectionné."
+      },
+      "model": {
+        "name": "Modèle",
+        "tooltip": "Sélectionner la précision du modèle : BF16 (1,57 Go, recommandé), FP8 (0,84 Go, faible VRAM) ou FP32 (3,13 Go, pleine précision)."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "IMAGE",
+        "tooltip": "Image de sortie"
+      },
+      "1": {
+        "name": "MASQUE",
+        "tooltip": "Masque de sortie"
+      },
+      "2": {
+        "name": "IMAGE_MASQUE",
+        "tooltip": "Image du masque"
+      }
+    }
   }
 }

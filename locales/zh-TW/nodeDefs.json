@@ -2575,5 +2575,145 @@
         "name": "遮罩"
       }
     }
+  },
+  "AILab_RMBG3": {
+    "display_name": "RMBG-3.0 背景移除 (RMBG)",
+    "description": "使用 ComfyUI 原生 Fibo 2.0 MODEL、CLIP 與 VAE 運行 RMBG-3.0 精細去背。",
+    "inputs": {
+      "model": {
+        "name": "模型",
+        "tooltip": "透過 Load Diffusion Model 載入的 RMBG-3.0 模型。"
+      },
+      "clip": {
+        "name": "CLIP",
+        "tooltip": "透過 Load CLIP (type=fibo2) 載入的 qwen3vl_4b 文本編碼器。"
+      },
+      "vae": {
+        "name": "VAE",
+        "tooltip": "透過 Load VAE 載入的 flux2-vae.safetensors。"
+      },
+      "image": {
+        "name": "圖像",
+        "tooltip": "用於 RMBG-3.0 背景移除的輸入圖像批次。"
+      },
+      "steps": {
+        "name": "步數",
+        "tooltip": "採樣步數（RMBG-3.0 官方蒸餾為 4 步）。"
+      },
+      "seed": {
+        "name": "隨機種子",
+        "tooltip": "採樣隨機種子。"
+      },
+      "mask_blur": {
+        "name": "遮罩模糊",
+        "tooltip": "柔化遮罩邊緣的高斯模糊半徑。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "擴展（正值）或收縮（負值）遮罩邊界像素。"
+      },
+      "invert_output": {
+        "name": "反轉輸出",
+        "tooltip": "反轉輸出的遮罩。"
+      },
+      "background": {
+        "name": "背景類型",
+        "tooltip": "輸出格式：Alpha（透明通道）或 Color（純色背景合成）。"
+      },
+      "background_color": {
+        "name": "背景顏色",
+        "tooltip": "背景類型為 Color 時使用的十六進位背景顏色。"
+      },
+      "sensitivity": {
+        "name": "靈敏度",
+        "tooltip": "調節遮罩偵測強度（較低值可增強半透明前景保留）。"
+      },
+      "refine_foreground": {
+        "name": "前景邊緣優化",
+        "tooltip": "快速前景色彩修復，消除半透明邊緣雜邊。"
+      },
+      "unload_model": {
+        "name": "卸載模型",
+        "tooltip": "執行完成後僅從顯存卸載 RMBG-3.0 主模型（保留 CLIP 與 VAE 快取）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "圖像",
+        "tooltip": "輸出圖像"
+      },
+      "1": {
+        "name": "遮罩",
+        "tooltip": "輸出遮罩"
+      },
+      "2": {
+        "name": "遮罩圖像",
+        "tooltip": "輸出遮罩圖像"
+      }
+    }
+  },
+  "AILab_MultiMatte": {
+    "display_name": "MultiMatte 提示去背 (RMBG)",
+    "description": "基於 SAM3 的文字提示精細 Alpha 去背節點（1038lab/MultiMatte）。",
+    "inputs": {
+      "image": {
+        "name": "圖像",
+        "tooltip": "用於提示詞精細去背的輸入圖像批次。"
+      },
+      "prompt": {
+        "name": "提示詞",
+        "tooltip": "描述需要去背的目標物件；留空時自動去背前景主體。"
+      },
+      "score_threshold": {
+        "name": "置信度閾值",
+        "tooltip": "偵測置信度閾值（越低保留越多細節，越高越嚴格）。"
+      },
+      "mask_blur": {
+        "name": "遮罩模糊",
+        "tooltip": "柔化遮罩邊緣的高斯模糊半徑。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "擴展（正值）或收縮（負值）遮罩邊界像素。"
+      },
+      "invert_output": {
+        "name": "反轉輸出",
+        "tooltip": "反轉輸出的遮罩。"
+      },
+      "refine_foreground": {
+        "name": "前景邊緣優化",
+        "tooltip": "針對細微髮絲與半透明邊緣進行亞像素前景色彩修復。"
+      },
+      "unload_model": {
+        "name": "卸載模型",
+        "tooltip": "執行完成後立即從顯存卸載模型權重。"
+      },
+      "background": {
+        "name": "背景類型",
+        "tooltip": "輸出格式：Alpha（透明通道）或 Color（純色背景合成）。"
+      },
+      "background_color": {
+        "name": "背景顏色",
+        "tooltip": "背景類型為 Color 時使用的十六進位背景顏色。"
+      },
+      "model": {
+        "name": "模型",
+        "tooltip": "選擇模型精度：BF16（1.57GB，推薦）、FP8（0.84GB，低顯存）或 FP32（3.13GB，全精度）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "圖像",
+        "tooltip": "輸出圖像"
+      },
+      "1": {
+        "name": "遮罩",
+        "tooltip": "輸出遮罩"
+      },
+      "2": {
+        "name": "遮罩圖像",
+        "tooltip": "輸出遮罩圖像"
+      }
+    }
   }
 }

@@ -2579,5 +2579,145 @@
         "tooltip": "输出遮罩列表"
       }
     }
+  },
+  "AILab_RMBG3": {
+    "display_name": "RMBG-3.0 背景移除 (RMBG)",
+    "description": "使用 ComfyUI 原生 Fibo 2.0 MODEL、CLIP 与 VAE 运行 RMBG-3.0 精细抠图。",
+    "inputs": {
+      "model": {
+        "name": "模型",
+        "tooltip": "通过 Load Diffusion Model 加载的 RMBG-3.0 模型。"
+      },
+      "clip": {
+        "name": "CLIP",
+        "tooltip": "通过 Load CLIP (type=fibo2) 加载的 qwen3vl_4b 文本编码器。"
+      },
+      "vae": {
+        "name": "VAE",
+        "tooltip": "通过 Load VAE 加载的 flux2-vae.safetensors。"
+      },
+      "image": {
+        "name": "图像",
+        "tooltip": "用于 RMBG-3.0 背景移除的输入图像批次。"
+      },
+      "steps": {
+        "name": "步数",
+        "tooltip": "采样步数（RMBG-3.0 官方蒸馏为 4 步）。"
+      },
+      "seed": {
+        "name": "随机种子",
+        "tooltip": "采样随机种子。"
+      },
+      "mask_blur": {
+        "name": "遮罩模糊",
+        "tooltip": "柔化遮罩边缘的高斯模糊半径。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "扩展（正值）或收缩（负值）遮罩边界像素。"
+      },
+      "invert_output": {
+        "name": "反转输出",
+        "tooltip": "反转输出的遮罩。"
+      },
+      "background": {
+        "name": "背景类型",
+        "tooltip": "输出格式：Alpha（透明通道）或 Color（纯色背景合成）。"
+      },
+      "background_color": {
+        "name": "背景颜色",
+        "tooltip": "背景类型为 Color 时使用的十六进制背景颜色。"
+      },
+      "sensitivity": {
+        "name": "灵敏度",
+        "tooltip": "调节遮罩检测强度（较低值可增强半透明前景保留）。"
+      },
+      "refine_foreground": {
+        "name": "前景边缘优化",
+        "tooltip": "快速前景色彩修复，消除半透明边缘杂边。"
+      },
+      "unload_model": {
+        "name": "卸载模型",
+        "tooltip": "执行完成后仅从显存卸载 RMBG-3.0 主模型（保留 CLIP 与 VAE 缓存）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像",
+        "tooltip": "输出图像"
+      },
+      "1": {
+        "name": "遮罩",
+        "tooltip": "输出遮罩"
+      },
+      "2": {
+        "name": "遮罩图像",
+        "tooltip": "输出遮罩图像"
+      }
+    }
+  },
+  "AILab_MultiMatte": {
+    "display_name": "MultiMatte 提示抠图 (RMBG)",
+    "description": "基于 SAM3 的文字提示精细 Alpha 抠图节点（1038lab/MultiMatte）。",
+    "inputs": {
+      "image": {
+        "name": "图像",
+        "tooltip": "用于提示词精细抠图的输入图像批次。"
+      },
+      "prompt": {
+        "name": "提示词",
+        "tooltip": "描述需要抠取的目标对象；留空时自动抠取主体前景。"
+      },
+      "score_threshold": {
+        "name": "置信度阈值",
+        "tooltip": "检测置信度阈值（越低保留越多细节，越高越严格）。"
+      },
+      "mask_blur": {
+        "name": "遮罩模糊",
+        "tooltip": "柔化遮罩边缘的高斯模糊半径。"
+      },
+      "mask_offset": {
+        "name": "遮罩偏移",
+        "tooltip": "扩展（正值）或收缩（负值）遮罩边界像素。"
+      },
+      "invert_output": {
+        "name": "反转输出",
+        "tooltip": "反转输出的遮罩。"
+      },
+      "refine_foreground": {
+        "name": "前景边缘优化",
+        "tooltip": "针对细微发丝与半透明边缘进行亚像素前景色彩修复。"
+      },
+      "unload_model": {
+        "name": "卸载模型",
+        "tooltip": "执行完成后立即从显存卸载模型权重。"
+      },
+      "background": {
+        "name": "背景类型",
+        "tooltip": "输出格式：Alpha（透明通道）或 Color（纯色背景合成）。"
+      },
+      "background_color": {
+        "name": "背景颜色",
+        "tooltip": "背景类型为 Color 时使用的十六进制背景颜色。"
+      },
+      "model": {
+        "name": "模型",
+        "tooltip": "选择模型精度：BF16（1.57GB，推荐）、FP8（0.84GB，低显存）或 FP32（3.13GB，全精度）。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "图像",
+        "tooltip": "输出图像"
+      },
+      "1": {
+        "name": "遮罩",
+        "tooltip": "输出遮罩"
+      },
+      "2": {
+        "name": "遮罩图像",
+        "tooltip": "输出遮罩图像"
+      }
+    }
   }
 }
