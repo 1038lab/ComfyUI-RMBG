@@ -26,8 +26,9 @@ export function hexToRgb(hex) {
 }
 
 const g = typeof window !== "undefined" ? window : globalThis;
-g.__AILAB_WORKFLOW_UTILS__ = g.__AILAB_WORKFLOW_UTILS__ || {
-    configs: [],
+const workflowUtils = g.__AILAB_WORKFLOW_UTILS__ || (g.__AILAB_WORKFLOW_UTILS__ = { configs: [] });
+workflowUtils.configs = workflowUtils.configs || [];
+Object.assign(workflowUtils, {
     register(cfg) {
         if (cfg) this.configs.push(cfg);
     },
@@ -55,16 +56,47 @@ g.__AILAB_WORKFLOW_UTILS__ = g.__AILAB_WORKFLOW_UTILS__ || {
         }
         return merged;
     },
+    getMergedKeywords() {
+        const set = new Set();
+        for (const c of this.configs) {
+            for (const kw of (c.keywords || [])) {
+                if (kw) set.add(String(kw).toLowerCase());
+            }
+        }
+        return Array.from(set);
+    },
+    getMergedNodes() {
+        const set = new Set();
+        for (const c of this.configs) {
+            for (const n of (c.nodes || [])) set.add(n);
+            for (const n of Object.keys(c.metrics || {})) set.add(n);
+            for (const dir of ["input", "output"]) {
+                for (const list of Object.values(c.rules?.[dir] || {})) {
+                    for (const n of list) set.add(n);
+                }
+            }
+            for (const dir of ["in", "out"]) {
+                for (const list of Object.values(c.defaultSlots?.[dir] || {})) {
+                    for (const n of list) set.add(n);
+                }
+            }
+        }
+        return set;
+    },
     isMatchingNode(node) {
         if (!node) return false;
         const name = node.name || node.type || node.comfyClass || "";
-        if (name.startsWith("AILab_") || name === "RMBG" || name.startsWith("SAM")) return true;
-        const category = node.category || "";
-        if (category.includes("AILab") || category.includes("RMBG")) return true;
-        const displayName = node.display_name || "";
-        return displayName.includes("(RMBG)") || displayName.includes("AILab");
+        if (this.getMergedNodes().has(name)) return true;
+        const keywords = this.getMergedKeywords();
+        if (keywords.length === 0) return false;
+        const haystacks = [
+            name.toLowerCase(),
+            (node.category || "").toLowerCase(),
+            (node.display_name || "").toLowerCase()
+        ];
+        return keywords.some(kw => haystacks.some(h => h.includes(kw)));
     }
-};
+});
 
 if (SLOT_AFFINITY) {
     g.__AILAB_WORKFLOW_UTILS__.register(SLOT_AFFINITY);
@@ -118,8 +150,10 @@ function reorderResults(results, filters, query) {
     }
 
     const mergedRules = g.__AILAB_WORKFLOW_UTILS__.getMergedRules();
+    const keywords = g.__AILAB_WORKFLOW_UTILS__.getMergedKeywords();
+    const isKeyword = Boolean(trimmed && keywords.includes(trimmed));
 
-    if (dir && slotType && (!trimmed || trimmed === "rmbg" || trimmed === "ailab")) {
+    if (dir && slotType && (!trimmed || isKeyword)) {
         const priority = mergedRules[dir]?.[slotType] || [];
         if (priority.length > 0) {
             const pinned = [];
@@ -139,27 +173,13 @@ function reorderResults(results, filters, query) {
                 }
             }
 
-            if (dir === "output") {
-                const previewSet = new Set(["AILab_ImagePreview", "AILab_Preview", "AILab_MaskPreview"]);
-                const normal = [];
-                const previews = [];
-                for (const item of rest) {
-                    if (previewSet.has(item.name || item.type)) {
-                        previews.push(item);
-                    } else {
-                        normal.push(item);
-                    }
-                }
-                return [...pinned, ...normal, ...previews];
-            }
-
             if (pinned.length > 0) {
                 return [...pinned, ...rest];
             }
         }
     }
 
-    if (trimmed && (trimmed === "rmbg" || trimmed === "sam" || trimmed === "ailab")) {
+    if (isKeyword) {
         const matched = [];
         const normal = [];
 
