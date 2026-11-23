@@ -9,6 +9,7 @@ const COLOR_THEMES = {
 const NODE_COLORS = {
     // Segmentation nodes
     "RMBG": "segment",
+    "AILab_RMBG3": "segment",
     "Segment": "segment",
     "SegmentV2": "segment",
     "FaceSegment": "segment",
@@ -26,6 +27,7 @@ const NODE_COLORS = {
     "AILab_Yolo": "segment",
     "AILab_VRMBG": "segment",
     "AILab_FeyNoBg": "segment",
+    "AILab_MultiMatte": "segment",
     "AILab_FinegrainBoxSegment": "segment",
 
     // Utility nodes
@@ -90,6 +92,8 @@ const ext = {
 };
 
 export const SLOT_AFFINITY = {
+    keywords: ["rmbg", "sam", "ailab"],
+    nodes: Object.keys(NODE_COLORS),
     rules: {
         input: {
             IMAGE: [
@@ -128,6 +132,9 @@ export const SLOT_AFFINITY = {
             BBOXES: [
                 "AILab_Florence2",
                 "SAM3Segment"
+            ],
+            LATENT: [
+                "AILab_Resolution_Selector"
             ]
         }
     },
@@ -141,7 +148,8 @@ export const SLOT_AFFINITY = {
         "AILab_ColorToMask": 4200,
         "SAM3Segment": 4200,
         "AILab_Florence2": 4200,
-        "AILab_FinegrainBoxSegment": 4200
+        "AILab_FinegrainBoxSegment": 4200,
+        "AILab_Resolution_Selector": 4200
     },
     defaultSlots: {
         out: {
@@ -154,7 +162,8 @@ export const SLOT_AFFINITY = {
             IMAGE: ["AILab_LoadImage"],
             MASK: ["RMBG"],
             BBOX: ["AILab_Florence2", "SAM3Segment"],
-            BBOXES: ["AILab_Florence2", "SAM3Segment"]
+            BBOXES: ["AILab_Florence2", "SAM3Segment"],
+            LATENT: ["AILab_Resolution_Selector"]
         }
     }
 };
