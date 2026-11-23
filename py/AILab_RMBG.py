@@ -343,7 +343,26 @@ class InspyrenetModel(BaseModelLoader):
             self.clear_model()
             
             try:
-                import transparent_background
+                try:
+                    import transparent_background
+                except ImportError:
+                    for k in list(sys.modules.keys()):
+                        if k.startswith(("transparent_background", "albumentations")):
+                            del sys.modules[k]
+                    a_mod = types.ModuleType("albumentations")
+                    a_mod.Resize = lambda *a, **k: None
+                    a_mod.Normalize = lambda *a, **k: None
+                    a_mod.Compose = lambda *a, **k: None
+                    ap_mod = types.ModuleType("albumentations.pytorch")
+                    ap_mod.ToTensorV2 = lambda *a, **k: None
+                    ac_mod = types.ModuleType("albumentations.core")
+                    act_mod = types.ModuleType("albumentations.core.transforms_interface")
+                    act_mod.ImageOnlyTransform = object
+                    sys.modules["albumentations"] = a_mod
+                    sys.modules["albumentations.pytorch"] = ap_mod
+                    sys.modules["albumentations.core"] = ac_mod
+                    sys.modules["albumentations.core.transforms_interface"] = act_mod
+                    import transparent_background
                 self.model = transparent_background.Remover()
                 self.current_model_version = model_name
             except Exception as e:
