@@ -4,7 +4,7 @@ import os
 import importlib.util
 
 __repo_name__ = "ComfyUI-RMBG"
-__version__ = "3.3.1"
+__version__ = "3.4.0"
 
 current_dir = Path(__file__).parent
 nodes_dir = current_dir / "py"
