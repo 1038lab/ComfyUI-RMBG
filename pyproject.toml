@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-rmbg"
 description = "A sophisticated ComfyUI custom node engineered for advanced image and video background removal and precise segmentation of objects, faces, clothing, and fashion elements. This tool leverages a diverse array of models, including RMBG-2.0, VRMBG-3.0, FeyNoBg, Finegrain Box Segmenter, INSPYRENET, BEN, BEN2, BiRefNet, SDMatte, SAM, SAM2, SAM3, Florence-2, and YOLO, while also incorporating an interactive Canvas studio, real-time background replacement, and instant VRAM unloading."
-version = "3.3.1"
+version = "3.4.0"
 license = {file = "LICENSE"}
 
 dependencies = [
