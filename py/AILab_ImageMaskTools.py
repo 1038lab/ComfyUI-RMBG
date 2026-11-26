@@ -50,6 +50,7 @@ import random
 import folder_paths
 import numpy as np
 import hashlib
+import traceback
 import torch
 import re
 import math
@@ -2178,7 +2179,7 @@ class AILab_ImageResize:
 
                 sigma = max(1.0, 0.006 * float(min(padded_height, padded_width)))
                 kernel_size = int(round(sigma * 2)) * 2 + 1
-                bg = gaussian_blur(bg, kernel_size=[kernel_size, kernel_size], sigma=sigma)
+                bg = T.gaussian_blur(bg, kernel_size=[kernel_size, kernel_size], sigma=sigma)
                 
                 dim = 0.35
                 bg = torch.clamp(bg * dim, 0.0, 1.0)
@@ -2257,7 +2258,7 @@ class AILab_ImageResize:
         if device == "gpu":
             if upscale_method == "lanczos":
                 raise Exception("Lanczos is not supported on the GPU")
-            target_device = model_management.get_torch_device()
+            target_device = comfy.model_management.get_torch_device()
         
         out_image = image.clone().to(target_device)
         out_mask = mask.clone().to(target_device) if mask is not None else None
