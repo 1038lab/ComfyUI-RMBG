@@ -50,6 +50,7 @@ import random
 import folder_paths
 import numpy as np
 import hashlib
+import traceback
 import torch
 import re
 import math
